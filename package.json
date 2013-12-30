@@ -1,6 +1,10 @@
 {
   "name": "quotes4you",
   "version": "0.0.1",
+  "engines":
+  {
+	"node": "0.10.x"
+  },
   "description": "wisdom shared throught centuries are represented in here. read it anywhere, everywhere.",
   "main": "server.js",
   "dependencies": {

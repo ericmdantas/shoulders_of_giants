@@ -5,7 +5,7 @@ var express         = require('express'),
     os              = require('os'),
     app             = express();
 
-app.listen(7777);
+app.listen(process.env.PORT || 7777);
 
 configurator.me(app, express, __dirname);
 dbase.initDB();

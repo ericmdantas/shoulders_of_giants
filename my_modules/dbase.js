@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var dbase = (function()
 {
     var Quote,
-        url_banco = 'mongodb://localhost/quotes';
+        url_banco = 'mongodb://ericmendesdantas:umdoistres123@ds059938.mongolab.com:59938/quotes4you';//'mongodb://localhost/quotes';
 
     function inicializaBanco()
     {
