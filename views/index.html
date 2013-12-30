@@ -1,0 +1,47 @@
+<!doctype html>
+<html ng-app="q">
+    <head>
+        <title>q</title>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="css/position.css">
+        <link rel="stylesheet" type="text/css" href="css/qunit-1.12.0.css">
+    </head>
+    <body>
+        <div id="main-container" ng-controller="MainController">
+            <div class="form espaco-bottom" ng-controller="AdminController">
+                <input type="text" ng-model="author.name" autofocus/>
+                <textarea type="text" ng-model="author.quote" rows="25"></textarea>
+                <button type="button"
+                        ng-click="addQuote(author.name, author.quote)"
+                        ng-show="!!author.name && !!author.quote">
+                    add
+                </button>
+            </div>
+
+            <div id="quotes-container" ng-controller="QuotesController">
+                <div ng-repeat="q in quotes track by $index" class="cards transition espaco-bottom">
+                    <p class="quote">"{{q.quote}}"</p>
+                    <span class="author transition right">{{q.author}}</span>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- frameworks -->
+        <script type="text/javascript" src="js/frameworks/angular.min.js"></script>
+        <script type="text/javascript" src="js/frameworks/qunit-1.12.0.js"></script>
+
+        <!-- lib -->
+        <script type="text/javascript" src="js/app/utils/lib.js"></script>
+
+        <!-- application -->
+        <script type="text/javascript" src="js/app.js"></script>
+
+        <!-- controllers -->
+        <script type="text/javascript" src="js/app/controllers/mainController.js"></script>
+        <script type="text/javascript" src="js/app/controllers/quotesController.js"></script>
+        <script type="text/javascript" src="js/app/controllers/adminController.js"></script>
+
+        <!-- directives -->
+    </body>
+</html>

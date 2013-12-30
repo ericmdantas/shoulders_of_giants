@@ -1,0 +1,30 @@
+{
+  "name": "quotes4you",
+  "version": "0.0.1",
+  "description": "wisdom shared throught centuries are represented in here. read it anywhere, everywhere.",
+  "main": "server.js",
+  "dependencies": {
+    "express": "~3.4.7",
+    "mongoose": "~3.8.3",
+    "grunt": "~0.4.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "git@heroku.com:quotes4you.git",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@heroku.com:quotes4you.git"
+  },
+  "keywords": [
+    "quotes",
+    "wisdom",
+    "greatest",
+    "motivation",
+    "inspiration",
+    "knowledge"
+  ],
+  "author": "eric mendes dantas",
+  "license": "BSD-2-Clause"
+}

@@ -1,0 +1,22 @@
+#main-container {margin: 0 auto;}
+
+.right {float: right;}
+.cards {padding: 1.3em 2em; overflow: hidden;}
+.cards.espaco-bottom {margin-bottom: .5em;}
+
+
+/*ADDING QUOTES ONLY*/
+.form input {outline: 0;}
+.form textarea {width: 70em; display: block; outline: 0;}
+.form button {width: 70em; padding: 12px 6px; vertical-align: top; background-color: limegreen; color: white; border: 0;}
+.form button:hover {cursor: pointer;}
+/*ADDING QUOTES ONLY*/
+
+body {margin: 0;}
+
+@media (min-width: 40em)
+{
+    #main-container {width: 70%; margin: 2em auto;}
+    .cards.espaco-bottom {margin-bottom: 1em;}
+}
+

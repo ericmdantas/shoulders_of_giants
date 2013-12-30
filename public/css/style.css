@@ -1,0 +1,23 @@
+.form input[type=text] {padding: 7px 5px;}
+.quote {color: #333; font-size: 1.1em;}
+.cards {border-bottom: 3px solid #f1f2f3; border-radius: 0; background-color: #f1f2f3;}
+.cards .author {color: #ccc;}
+.cards:hover {border-bottom-color: limegreen;}
+.cards:hover .author {color: #aaa;}
+.transition
+{
+    -webkit-transition: all 222ms;
+    -moz-transition: all 222ms;
+    -ms-transition: all 222ms;
+    -o-transition: all 222ms;
+    transition: all 222ms;
+}
+
+body {font-family: Segoe UI, Verdana, Arial; background: url(../img/flora_and_fauna.jpg) fixed;}
+h1, h2, h3, h4 {font-weight: normal;}
+
+@media (min-width: 30em)
+{
+    .cards {border: 1px solid #f1f2f3; border-radius: 3px;}
+    .cards:hover {border-color: lightgray;}
+}
