@@ -1,28 +1,14 @@
-var fs      = require('fs');
+"use strict";
 
-var routes = (function()
+(function(content, quotes)
 {
-    function paginaPrincipal(req, res)
+    function _init(app)
     {
-        res.setHeader('Content-Type', 'text/html');
-        fs.readFile('views/index.html', function(err, obj)
-        {
-            if (err) res.send(500);
-
-            res.send(obj);
-        })
+        app.get('/', content.index);
+        app.get('/api/quotes', quotes.getAllQuotes);
+        app.get('/*', content.redirect);
     }
 
-    function redireciona(req, res)
-    {
-        res.redirect('/');
-    }
+    exports.init = _init;
 
-    return {
-                indexPage: paginaPrincipal,
-                redirectPage: redireciona
-           };
-}())
-
-exports.indexPage = routes.indexPage;
-exports.redirectPage = routes.redirectPage;
+}(require('../controllers/ContentController'), require('../controllers/QuotesController')))

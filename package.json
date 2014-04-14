@@ -1,34 +1,32 @@
 {
-  "name": "quotes4you",
-  "version": "0.0.1",
-  "engines":
-  {
-	"node": "0.10.x"
-  },
-  "description": "wisdom shared throught centuries are represented in here. read it anywhere, everywhere.",
+  "name": "shoulder_of_giants",
+  "version": "0.0.0",
+  "description": "Wisdom. Anywhere. Everywhere.",
   "main": "server.js",
+  "directories": {
+    "test": "tests"
+  },
   "dependencies": {
     "express": "~3.4.7",
-    "mongoose": "~3.8.3",
-    "grunt": "~0.4.2"
+    "mongoose": "~3.8.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "karma": "~0.12.8",
+    "karma-chrome-launcher": "~0.1.3",
+    "karma-firefox-launcher": "~0.1.3"
+  },
   "scripts": {
-    "test": "git@heroku.com:quotes4you.git",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git@heroku.com:quotes4you.git"
+    "url": "https://github.com/ericmdantas/shoulders_of_giants.git"
   },
-  "keywords": [
-    "quotes",
-    "wisdom",
-    "greatest",
-    "motivation",
-    "inspiration",
-    "knowledge"
-  ],
-  "author": "eric mendes dantas",
-  "license": "BSD-2-Clause"
+  "author": "Eric Mendes Dantas",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/ericmdantas/shoulders_of_giants/issues"
+  },
+  "homepage": "https://github.com/ericmdantas/shoulders_of_giants"
 }
