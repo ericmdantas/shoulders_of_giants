@@ -1,11 +1,13 @@
-@media (min-width: 30em)
-{
-    .cards {border: 1px solid #f1f2f3; border-radius: 3px;}
-    .cards:hover {border-color: lightgray;}
-}
-
 @media (min-width: 40em)
 {
-    #main-container {width: 70%; margin: 2em auto;}
+    #main-container {width: 90%;}
     .cards.espaco-bottom {margin-bottom: 1em;}
+}
+
+@media (min-width: 60em)
+{
+    #main-container {margin: 2em 1em 2em 0; width: 75%; float: right;}
+    #navigation {margin: 2em 0 0 1em; width: 20%; float: left;}
+    #navigation li {border-radius: 3px; padding: 1em; margin-bottom: .3em; display: block;}
+    #to-the-top {left: 1em;}
 }

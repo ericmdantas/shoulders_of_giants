@@ -1,13 +1,20 @@
 <!doctype html>
 <html ng-app="quotes">
     <head>
-        <title>_shoulders of giants</title>
+        <title>shoulders of giants</title>
         <link rel="stylesheet" type="text/css" href="css/style.css">
         <link rel="stylesheet" type="text/css" href="css/position.css">
         <link rel="stylesheet" type="text/css" href="css/media_queries.css">
+        <link rel="shortcut icon" type="image/ico" href="/img/favicon.ico"/>
     </head>
-    <body>
-        <div id="main-container" ng-controller="MainController">
+    <body ng-controller="MainController">
+        <div id="navigation" class="transition text-centered" ng-controller="NavController">
+            <ul>
+                <li ng-repeat="nav in navigationOptions" class="transition" ng-click="">{{nav.name}}</li>
+            </ul>
+        </div>
+
+        <div id="main-container" class="transition">
             <div id="quotes-container" ng-controller="QuotesController">
                 <div ng-repeat="q in quotes track by $index" class="cards transition espaco-bottom">
                     <p class="quote"><span class="quotation-mark">"</span>{{q.quote}}<span class="quotation-mark">"</span></p>
@@ -17,8 +24,14 @@
             </div>
         </div>
 
+        <br/><br/><br/>
+
+        <div id="to-the-top" class="transition">top</div>
+
         <!-- frameworks -->
+        <script type="text/javascript" src="js/frameworks/jquery-2.1.0.min.js"></script>
         <script type="text/javascript" src="js/frameworks/angular.min.js"></script>
+        <script type="text/javascript" src="js/frameworks/angular-route.min.js"></script>
 
         <!-- lib -->
         <script type="text/javascript" src="js/app/services/lib.js"></script>
@@ -26,9 +39,13 @@
         <!-- application -->
         <script type="text/javascript" src="js/application/app.js"></script>
 
+        <!-- services -->
+        <script type="text/javascript" src="js/application/services/QuotesService.js"></script>
+
         <!-- controllers -->
-        <script type="text/javascript" src="js/application/controllers/mainController.js"></script>
-        <script type="text/javascript" src="js/application/controllers/quotesController.js"></script>
+        <script type="text/javascript" src="js/application/controllers/MainController.js"></script>
+        <script type="text/javascript" src="js/application/controllers/QuotesController.js"></script>
+        <script type="text/javascript" src="js/application/controllers/NavController.js"></script>
 
         <!-- directives -->
     </body>

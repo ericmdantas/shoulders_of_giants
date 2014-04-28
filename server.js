@@ -3,7 +3,7 @@ var express         = require('express'),
     db              = require('./config/dbase'),
     routes          = require('./routes/routes'),
     os              = require('os'),
-    port            = process.env.PORT || 7777,
+    port            = process.env.PORT || 3333,
     app             = express();
 
 configurator.me(app, express, __dirname);

@@ -1,9 +1,17 @@
-function QuotesController($scope, $http)
-{
-    $scope.quotes = undefined;
+"use strict";
 
-    $http.get('/api/quotes').success(function(data)
-                                    {
-                                        $scope.quotes = data.quotes;
-                                    })
-}
+quotesApp.controller('QuotesController', ['$scope', '$http', 'QuotesService', function($scope, $http, QuotesService)
+{
+    $scope.quotes = [];
+
+    $scope.getQuotes = function()
+    {
+        QuotesService.getQuotes()
+             .success(function(data)
+                     {
+                        $scope.quotes = (data && data.quotes) ? data.quotes : [];
+                     })
+    }
+
+    $scope.getQuotes();
+}])

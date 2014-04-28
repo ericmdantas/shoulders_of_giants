@@ -1,2 +1,2 @@
-var app = angular.module('quotes', []);
+var quotesApp = angular.module('quotes', ['ngRoute']);
 

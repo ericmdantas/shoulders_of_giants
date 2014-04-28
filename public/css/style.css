@@ -1,17 +1,35 @@
-.quotation-mark {font-family: Monaco, Verdana; font-size: 2em; color: #ddd;}
+/* IDs */
+
+#navigation {opacity: .8;}
+#to-the-top {border-radius: 100%; background-color: black; color: white; opacity: .4;}
+
+/* CLASSES */
+
+.quotation-mark {font-size: 2em; color: #ddd;}
 .quote {color: #333; font-size: 1.1em;}
 .cards {border-bottom: 3px solid #f1f2f3; border-radius: 0; background-color: #f1f2f3;}
 .cards .author {color: #ccc;}
-.cards:hover {border-bottom-color: limegreen;}
-.cards:hover .author {color: #aaa;}
 .transition
 {
-    -webkit-transition: all 222ms;
-    -moz-transition: all 222ms;
-    -ms-transition: all 222ms;
-    -o-transition: all 222ms;
-    transition: all 222ms;
+    -webkit-transition: all 666ms;
+    -moz-transition: all 666ms;
+    -ms-transition: all 666ms;
+    -o-transition: all 666ms;
+    transition: all 666ms;
 }
+
+/* ELEMENTS */
 
 body {font-family: Segoe UI, Verdana, Arial; background: url(../img/flora_and_fauna.jpg) fixed;}
 h1, h2, h3, h4 {font-weight: normal;}
+ul li {list-style: none;}
+
+/* EVENTS */
+
+#navigation:hover {opacity: 1;}
+#navigation li:hover {cursor: pointer;}
+#navigation li:active {background-color: rgba(232, 177, 12, .7); color: white;}
+#to-the-top:hover {opacity: .7; cursor: pointer;}
+.cards:hover {border-color: lightgray; border-bottom-color: limegreen;}
+.cards:hover .author {color: #aaa;}
+::selection {background-color: yellow;}

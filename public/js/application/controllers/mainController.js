@@ -1,4 +1,6 @@
-function MainController($scope)
+"use strict";
+
+quotesApp.controller('MainController', ['$scope', function($scope)
 {
 
-}
+}])

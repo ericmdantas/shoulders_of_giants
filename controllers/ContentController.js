@@ -8,12 +8,12 @@ function ContentController()
     {
         res.setHeader('Content-Type', 'text/html');
         fs.readFile('views/index.html', function(err, obj)
-                                           {
-                                               if (err)
-                                                   throw err;
+                                        {
+                                            if (err)
+                                                throw err;
 
-                                               res.send(obj);
-                                           })
+                                            res.send(obj);
+                                        })
     }
 
     this.redirect = function (req, res)
