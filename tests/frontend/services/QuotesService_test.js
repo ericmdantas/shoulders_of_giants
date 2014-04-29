@@ -25,7 +25,7 @@ describe('QuotesService', function()
     {
         it('should fetch request correctly', function()
         {
-            httpMock.expectGET('/api/quotes/best_of').respond();
+            httpMock.expectGET('/api/quotes/most_liked').respond();
             QuotesService.getBestQuotes();
             httpMock.flush();
         })

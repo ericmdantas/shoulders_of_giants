@@ -1,7 +1,12 @@
 "use strict";
 
-quotesApp.controller('NavController', ['$scope', function($scope)
+quotesApp.controller('NavController', ['$scope', '$location', function($scope, $location)
 {
-    var _userOptions = [{name: 'best of', location: '/best_of'}];
-    $scope.navigationOptions = _userOptions;
+    $scope.changeOption = function(url)
+    {
+        if (lib.isStringInvalid(url))
+            throw new Error('Opção inválida. Url não é uma string válida.');
+
+        $location.path(url);
+    }
 }])

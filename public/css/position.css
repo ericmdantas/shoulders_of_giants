@@ -1,7 +1,6 @@
 /* IDs */
 
-#main-container, #navigation {margin: .5em auto;}
-#main-container {margin-top: 5em; width: 90%; max-width: 70em;}
+#navigation, .quotes-container {margin: .5em auto;}
 #navigation {margin: .5em 0 1em 0; position: fixed; top: 0}
 #navigation li {background-color: white; display: inline-block; padding: .5em; margin-left: .5em; border-radius: 3px;}
 #to-the-top {position: fixed; left: 45%; bottom: 1em; padding: 1em;}
@@ -13,6 +12,7 @@
 .cards {padding: 1.3em 2em; overflow: hidden; border: 1px solid #f1f2f3; border-radius: 3px;}
 .cards.espaco-bottom {margin-bottom: .5em;}
 .text-centered {text-align: center;}
+.quotes-container {margin-top: 5em; width: 90%; max-width: 70em;}
 
 /* ELEMENTS */
 

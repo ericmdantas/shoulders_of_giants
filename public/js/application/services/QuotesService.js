@@ -11,7 +11,7 @@ quotesApp.factory('QuotesService', ['$http', function($http)
 
     function _getBestQuotes()
     {
-        return $http.get(url + '/best_of');
+        return $http.get(url + '/most_liked');
     }
 
     return {
