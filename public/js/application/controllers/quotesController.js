@@ -4,6 +4,14 @@ quotesApp.controller('QuotesController', ['$scope', '$http', 'QuotesService', fu
 {
     $scope.quotes = [];
 
+    $scope.setOrder = function(order)
+    {
+        if (lib.isStringInvalid(order))
+            throw new Error('Ordenação incorreta. O tipo do parâmetro deve ser uma string.');
+
+        $scope.getOrder = order;
+    }
+
     $scope.getQuotes = function()
     {
         QuotesService.getQuotes()
@@ -14,4 +22,5 @@ quotesApp.controller('QuotesController', ['$scope', '$http', 'QuotesService', fu
     }
 
     $scope.getQuotes();
+    $scope.setOrder('quote');
 }])

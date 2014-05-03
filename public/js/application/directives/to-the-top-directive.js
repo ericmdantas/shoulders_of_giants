@@ -2,7 +2,7 @@
 
 quotesApp.directive('toTheTop', ['$window', function($window)
 {
-    var _template = '<div id="to-the-top">top</div>';
+    var _template = '<div id="to-the-top" class="transition">top</div>';
 
     var _link = function(scope, element, attrs)
     {

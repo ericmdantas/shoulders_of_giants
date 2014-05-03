@@ -5,6 +5,8 @@
 
 /* CLASSES */
 
+.title {font-weight: bold; color: #fff; border-bottom: 3px solid gold; background-color: rgba(39, 83, 109, .7);}
+.active {background-color: yellow !important; color: #555; font-weight: bold;}
 .quotation-mark {font-size: 2em; color: #ddd;}
 .quote {color: #333; font-size: 1.1em;}
 .cards {border-bottom: 3px solid #f1f2f3; border-radius: 0; background-color: #f1f2f3;}
@@ -28,8 +30,7 @@ ul li {list-style: none;}
 
 #navigation:hover {opacity: 1;}
 #navigation li:hover {cursor: pointer;}
-#navigation li:active {background-color: rgba(232, 177, 12, .7); color: white;}
 #to-the-top:hover {opacity: .7; cursor: pointer;}
 .cards:hover {border-color: lightgray; border-bottom-color: limegreen;}
-.cards:hover .author {color: #aaa;}
+.cards:hover .author {color: #777;}
 ::selection {background-color: yellow;}

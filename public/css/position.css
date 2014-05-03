@@ -1,7 +1,7 @@
 /* IDs */
 
 #navigation, .quotes-container {margin: .5em auto;}
-#navigation {margin: .5em 0 1em 0; position: fixed; top: 0}
+#navigation {margin: 0 0 1em 0; position: static}
 #navigation li {background-color: white; display: inline-block; padding: .5em; margin-left: .5em; border-radius: 3px;}
 #to-the-top {position: fixed; left: 45%; bottom: 1em; padding: 1em;}
 
@@ -13,6 +13,7 @@
 .cards.espaco-bottom {margin-bottom: .5em;}
 .text-centered {text-align: center;}
 .quotes-container {margin-top: 5em; width: 90%; max-width: 70em;}
+.title {padding: 1.5em;}
 
 /* ELEMENTS */
 

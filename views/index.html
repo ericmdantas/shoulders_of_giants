@@ -11,7 +11,14 @@
         <navigation></navigation>
 
         <div class="quotes-container">
-            <ng-view></ng-view>
+            <div class="transition">
+                <div>
+                    <div ng-repeat="q in quotes | orderBy: getOrder" class="cards transition espaco-bottom">
+                        <p class="quote"><span class="quotation-mark">"</span>{{q.quote}}<span class="quotation-mark">"</span></p>
+                        <span class="author transition right">{{q.author}}</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <br/><br/><br/>
@@ -33,7 +40,6 @@
 
         <!-- controllers -->
         <script type="text/javascript" src="js/application/controllers/QuotesController.js"></script>
-        <script type="text/javascript" src="js/application/controllers/NavController.js"></script>
 
         <!-- directives -->
         <script type="text/javascript" src="js/application/directives/navigation-directive.js"></script>
