@@ -11,7 +11,7 @@ describe('toTheTop', function()
         _compile = $injector.get('$compile');
         _windowMock = $injector.get('$window');
 
-        var _html = '<div id="to-the-top" style="height: 1000px;">top</div>';
+        var _html = '<div id="to-the-top">top</div>';
 
         _element = angular.element(_html);
         _compile(_element)(_scope);
@@ -22,7 +22,7 @@ describe('toTheTop', function()
     {
         it('should redirect the page to the top', function()
         {
-
+            expect(_element).toBeDefined();
         })
     })
 })

@@ -6,12 +6,13 @@
 
 @media (min-width: 60em)
 {
-    #navigation {margin: 2em 0 0 1em; width: 20%; float: left; position: fixed; top: 0}
+    #navigation {margin: 2em 0 0 1em; width: 20%; float: left; position: fixed; top: 0; opacity: .5;}
     #navigation li {border-radius: 3px; padding: 1em; margin-bottom: .2em; display: block;}
-    #navigation ul {margin-left: -.5em;}
+    #navigation ul {margin: 0 -.25em; background-color: transparent; border-bottom: none; padding: 0;}
     #to-the-top {left: 1em;}
 
     .quotes-container {margin: 2em 1em 2em 0; width: 75%; float: right;}
     .espaco-top {margin-top: 1em;}
     .title {margin: 0 0 .5em 0;}
+    .visible-phone {display: none;}
 }

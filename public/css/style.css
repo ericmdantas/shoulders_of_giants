@@ -1,16 +1,22 @@
 /* IDs */
 
-#navigation {opacity: .8;}
-#to-the-top {border-radius: 100%; background-color: black; color: white; opacity: .4;}
+#navigation {opacity: 1;}
+#navigation ul {padding: 1em; background-color: rgba(128, 117, 10, .3); border-bottom: 3px solid gold;}
+#navigation li {font-size: 1.2em;}
+#to-the-top {border-radius: 100%;}
+#selected-order {border-radius: 4px;}
+#to-the-top, #selected-order {background-color: black; color: white; opacity: .4;}
 
 /* CLASSES */
 
-.title {font-weight: bold; color: #fff; border-bottom: 3px solid gold; background-color: rgba(39, 83, 109, .7);}
-.active {background-color: yellow !important; color: #555; font-weight: bold;}
+.number-likes {opacity: .2; color: #aaa;}
+.like {border-radius: 100%; opacity: .2;}
+.title {font-weight: bold; color: #fff; border-bottom: 3px solid gold; background-color: rgba(39, 83, 109, .7); margin: 0; font-size: 1.4em;}
+.active {background-color: orange !important; color: #fff; font-weight: bold;}
 .quotation-mark {font-size: 2em; color: #ddd;}
-.quote {color: #333; font-size: 1.1em;}
-.cards {border-bottom: 3px solid #f1f2f3; border-radius: 0; background-color: #f1f2f3;}
-.cards .author {color: #ccc;}
+.quote {color: #555; font-size: 1.25em;}
+.cards {border-radius: 3px; background-color: #f1f2f3;}
+.author {color: #ccc;}
 .transition
 {
     -webkit-transition: all 666ms;
@@ -22,7 +28,7 @@
 
 /* ELEMENTS */
 
-body {font-family: Segoe UI, Verdana, Arial; background: url(../img/flora_and_fauna.jpg) fixed;}
+body {font-family: Segoe UI, Verdana, Arial; background: url(../img/bg.jpg) fixed;}
 h1, h2, h3, h4 {font-weight: normal;}
 ul li {list-style: none;}
 
@@ -30,7 +36,13 @@ ul li {list-style: none;}
 
 #navigation:hover {opacity: 1;}
 #navigation li:hover {cursor: pointer;}
-#to-the-top:hover {opacity: .7; cursor: pointer;}
-.cards:hover {border-color: lightgray; border-bottom-color: limegreen;}
+#to-the-top:hover, #selected-order:hover {cursor: pointer; opacity: .7;}
+
+.cards:hover {border-color: lightgray;}
 .cards:hover .author {color: #777;}
+.cards:hover .like {opacity: 1;}
+.cards:hover .number-likes {opacity: 1;}
+.like:hover {cursor: pointer;}
+.like:active {box-shadow: 1px 1px 33px gold; background-color: lemonchiffon;}
+
 ::selection {background-color: yellow;}

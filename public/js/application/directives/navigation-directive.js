@@ -6,7 +6,7 @@ quotesApp.directive('navigation', ['$window', function($window)
                         '<div>'+
                             '<h3 class="title">Order By</h3>'+
                             '<ul>'+
-                                  '<li class="transition" ng-click="setOrder(\'author\')">author</li>'+
+                                  '<li class="transition active" ng-click="setOrder(\'author\')">author</li>'+
                                   '<li class="transition" ng-click="setOrder(\'quote\')">quote</li>'+
                                   '<li class="transition" ng-click="setOrder(\'-likes\')">best of</li>'+
                             '</ul>'+

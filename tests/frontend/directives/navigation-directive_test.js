@@ -2,14 +2,14 @@
 
 describe('navigation-directive', function()
 {
-    var _scope, _element;
+    var _scope, _element, _compile;
 
     beforeEach(module('quotes'));
 
     beforeEach(inject(function($injector)
     {
         _scope = $injector.get('$rootScope').$new();
-        var _compile = $injector.get('$compile');
+        _compile = $injector.get('$compile');
 
         var _html = '<nav id="navigation" class="transition text-centered">'+
                         '<div>'+
@@ -34,5 +34,7 @@ describe('navigation-directive', function()
         {
             expect(_element).toBeDefined();
         })
+
+        //TODO: ADD MORE TESTS
     })
 })

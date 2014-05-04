@@ -12,17 +12,17 @@
 
         <div class="quotes-container">
             <div class="transition">
-                <div>
-                    <div ng-repeat="q in quotes | orderBy: getOrder" class="cards transition espaco-bottom">
-                        <p class="quote"><span class="quotation-mark">"</span>{{q.quote}}<span class="quotation-mark">"</span></p>
-                        <span class="author transition right">{{q.author}}</span>
-                    </div>
+                <div ng-repeat="q in quotes | orderBy: getOrder" class="cards transition espaco-bottom">
+                    <like liked="favQuote(q._id)" numberlikes="{{q.likes}}"></like>
+                    <p class="quote"><span class="quotation-mark">"</span>{{q.quote}}<span class="quotation-mark">"</span></p>
+                    <span class="author transition">{{q.author}}</span>
                 </div>
             </div>
         </div>
 
-        <br/><br/><br/>
+        <br/><br/><br/><br/>
         <to-the-top></to-the-top>
+        <div id="selected-order" class="visible-phone transition">ordered by: <strong>{{getOrder}}</strong></div>
 
         <!-- frameworks -->
         <script type="text/javascript" src="js/frameworks/jquery-2.1.0.min.js"></script>
@@ -44,5 +44,6 @@
         <!-- directives -->
         <script type="text/javascript" src="js/application/directives/navigation-directive.js"></script>
         <script type="text/javascript" src="js/application/directives/to-the-top-directive.js"></script>
+        <script type="text/javascript" src="js/application/directives/like-directive.js"></script>
     </body>
 </html>

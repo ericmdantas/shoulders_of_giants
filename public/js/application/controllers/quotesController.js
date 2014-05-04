@@ -21,6 +21,32 @@ quotesApp.controller('QuotesController', ['$scope', '$http', 'QuotesService', fu
                      })
     }
 
+    $scope.favQuote = function(id)
+    {
+        if (lib.isStringInvalid(id))
+            throw new Error('O id passado não é uma string válida. Não será possível favoritar a mensagem [controller].');
+
+        QuotesService.favQuote(id)
+            .success(function(data)
+            {
+                var _updatedQuote;
+
+                if (data && data.updated)
+                {
+                    _updatedQuote = data.updated;
+
+                    for (var i = 0; i < $scope.quotes.length; i++)
+                    {
+                        if (_updatedQuote._id === $scope.quotes[i]._id)
+                        {
+                            $scope.quotes[i] = _updatedQuote;
+                            break;
+                        }
+                    }
+                }
+            })
+    }
+
     $scope.getQuotes();
-    $scope.setOrder('quote');
+    $scope.setOrder('author');
 }])
