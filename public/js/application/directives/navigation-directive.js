@@ -24,7 +24,7 @@ quotesApp.directive('navigation', ['$window', function($window)
     }
 
     return {
-                restrict: 'EA',
+                restrict: 'E',
                 template: _template,
                 link: _link
            }

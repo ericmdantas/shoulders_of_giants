@@ -21,6 +21,7 @@ describe('like-directive', function()
         _element = angular.element(_html);
 
         _compile(_element)(_scope);
+        _scope.$digest();
     }))
 
     describe('checks elements creation', function()
