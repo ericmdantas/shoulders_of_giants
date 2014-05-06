@@ -13,20 +13,18 @@ quotesApp.directive('navigation', ['$window', function($window)
                         '</div>'+
                      '</nav>';
 
-    var CLICKABLE_ELEMENT = '#navigation li';
-
     var _link = function(scope, element, attrs)
     {
-        $(CLICKABLE_ELEMENT).on('click', function()
+        element.find('#navigation li').on('click', function()
         {
-            $(CLICKABLE_ELEMENT).removeClass('active');
-            $(this).addClass('active');
+            element.find('#navigation li').removeClass('active');
+            element.find(this).addClass('active');
             $window.scrollTo(0, 0);
         })
     }
 
     return {
-                restrict: 'E',
+                restrict: 'EA',
                 template: _template,
                 link: _link
            }

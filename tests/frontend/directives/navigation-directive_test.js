@@ -11,16 +11,18 @@ describe('navigation-directive', function()
         _scope = $injector.get('$rootScope').$new();
         _compile = $injector.get('$compile');
 
-        var _html = '<nav id="navigation" class="transition text-centered">'+
-                        '<div>'+
-                            '<h3 class="title">Order By</h3>'+
-                            '<ul>'+
-                                '<li class="transition" ng-click="setOrder(\'author\')">author</li>'+
-                                '<li class="transition" ng-click="setOrder(\'quote\')">quote</li>'+
-                                '<li class="transition" ng-click="setOrder(\'-likes\')">best of</li>'+
-                            '</ul>'+
-                        '</div>'+
-                    '</nav>';
+        var _html = '<navigation>'+
+                        '<nav id="navigation" class="transition text-centered">'+
+                            '<div>'+
+                                '<h3 class="title">Order By</h3>'+
+                                '<ul>'+
+                                    '<li class="transition active" ng-click="setOrder(\'author\')">author</li>'+
+                                    '<li class="transition" ng-click="setOrder(\'quote\')">quote</li>'+
+                                    '<li class="transition" ng-click="setOrder(\'-likes\')">best of</li>'+
+                                '</ul>'+
+                            '</div>'+
+                        '</nav>'+
+                    '</navigation>';
 
         _element = angular.element(_html);
 
@@ -35,6 +37,59 @@ describe('navigation-directive', function()
             expect(_element).toBeDefined();
         })
 
-        //TODO: ADD MORE TESTS
+        it('should have three elements', function()
+        {
+            var _length = _element.find('#navigation li').length;
+            expect(_length).toEqual(3);
+        })
+
+        it('checks if the options match', function()
+        {
+            expect(_element.find('#navigation div ul li').eq(0).text()).toEqual('author');
+            expect(_element.find('#navigation div ul li').eq(1).text()).toEqual('quote');
+            expect(_element.find('#navigation div ul li').eq(2).text()).toEqual('best of');
+        })
+
+        it('should have active class only in the first navigation li', function()
+        {
+            var _listedItems = _element.find('#navigation li');
+
+            expect(_listedItems.eq(0).hasClass('active')).toBeTruthy();
+            expect(_listedItems.eq(1).hasClass('active')).toBeFalsy();
+            expect(_listedItems.eq(2).hasClass('active')).toBeFalsy();
+        })
+    })
+
+    describe('checks if click is working', function()
+    {
+        it('should check if the click on navigation li is working - first li click', function()
+        {
+            var listedItems = _element.find('#navigation li');
+            listedItems.eq(0).click();
+
+            expect(listedItems.eq(0).hasClass('active')).toBeTruthy();
+            expect(listedItems.eq(1).hasClass('active')).toBeFalsy();
+            expect(listedItems.eq(2).hasClass('active')).toBeFalsy();
+        })
+
+        it('should check if the click on navigation li is working - second li click', function()
+        {
+            var listedItems = _element.find('#navigation li');
+            listedItems.eq(1).click();
+
+            expect(listedItems.eq(0).hasClass('active')).toBeFalsy();
+            expect(listedItems.eq(1).hasClass('active')).toBeTruthy();
+            expect(listedItems.eq(2).hasClass('active')).toBeFalsy();
+        })
+
+        it('should check if the click on navigation li is working - third li click', function()
+        {
+             var listedItems = _element.find('#navigation li');
+             listedItems.eq(2).click();
+
+             expect(listedItems.eq(0).hasClass('active')).toBeFalsy();
+             expect(listedItems.eq(1).hasClass('active')).toBeFalsy();
+             expect(listedItems.eq(2).hasClass('active')).toBeTruthy();
+        })
     })
 })

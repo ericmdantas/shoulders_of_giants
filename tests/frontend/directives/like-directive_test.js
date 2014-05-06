@@ -11,15 +11,16 @@ describe('like-directive', function()
         _scope = $injector.get('$rootScope').$new();
         _compile = $injector.get('$compile');
 
-        var _html = '<div class="like-container transition">' +
-                        '<span class="number-likes transition">{{numberlikes}}</span>' +
-                        '<img src="../img/star.png" class="like transition" ng-click="liked(id)" title="click to like! :D"/>';
-                    '</div>';
+        var _html = '<like>'+
+                        '<div class="like-container transition">' +
+                            '<span class="number-likes transition">{{numberlikes}}</span>' +
+                            '<img src="../img/star.png" class="like transition" ng-click="liked(id)" title="click to like! :D"/>';
+                        '</div>'+
+                    '</like>';
 
         _element = angular.element(_html);
 
         _compile(_element)(_scope);
-        _scope.$digest();
     }))
 
     describe('checks elements creation', function()

@@ -11,18 +11,36 @@ describe('toTheTop', function()
         _compile = $injector.get('$compile');
         _windowMock = $injector.get('$window');
 
-        var _html = '<div id="to-the-top">top</div>';
+        var _html = '<to-the-top><div id="to-the-top">top</div></to-the-top>';
 
         _element = angular.element(_html);
         _compile(_element)(_scope);
         _scope.$digest();
     }))
 
-    describe('click', function()
+    describe('checks elements creation', function()
     {
-        it('should redirect the page to the top', function()
+        it('element should exist', function()
         {
             expect(_element).toBeDefined();
+        })
+
+        it('should have the sayings \'top\'', function()
+        {
+            expect(_element.text()).toEqual('top');
+        })
+
+        it('should have id to-the-top', function()
+        {
+            expect(_element.find('div').attr('id')).toEqual('to-the-top');
+        })
+    })
+
+    describe('checks if the click is working', function()
+    {
+        it('should display a message', function()
+        {
+            _element.find('div').click();
         })
     })
 })
