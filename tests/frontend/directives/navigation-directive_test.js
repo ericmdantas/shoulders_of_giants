@@ -40,7 +40,7 @@ describe('navigation-directive', function()
         it('should have three elements', function()
         {
             var _length = _element.find('#navigation li').length;
-            expect(_length).toEqual(3);
+            expect(_length).toEqual(4);
         })
 
         it('checks if the options match', function()

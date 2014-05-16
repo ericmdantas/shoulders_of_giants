@@ -9,6 +9,7 @@
 
 /* CLASSES */
 
+.filter {width: 100%; font-size: 1.2em; padding: 10px 0; text-indent: 10px; text-align: center; outline: 0;}
 .author {position: absolute; right: 1em;}
 .like-container {position: absolute; right: .3em; top: .3em;}
 .like {width: 2em; padding: 5px;}

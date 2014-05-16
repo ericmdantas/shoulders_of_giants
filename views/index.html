@@ -12,7 +12,12 @@
 
         <div class="quotes-container">
             <div class="transition">
-                <div ng-repeat="q in quotes | orderBy: getOrder" class="cards transition espaco-bottom">
+                <div ng-if="!quotes.length" class="cards transition espaco-bottom">
+                    <p class="quote"><span class="quotation-mark">"</span>Nothing to see here =[<span class="quotation-mark">"</span></p>
+                    <span class="author transition">Sad Panda</span>
+                </div>
+
+                <div ng-repeat="q in quotes | orderBy: getOrder | filter: search" class="cards transition espaco-bottom">
                     <like liked="favQuote(q._id)" numberlikes="{{q.likes}}"></like>
                     <p class="quote"><span class="quotation-mark">"</span>{{q.quote}}<span class="quotation-mark">"</span></p>
                     <span class="author transition">{{q.author}}</span>

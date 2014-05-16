@@ -9,6 +9,7 @@
 
 /* CLASSES */
 
+.filter {color: #555; border: 1px solid lightgray; border-radius: 4px;}
 .number-likes {opacity: .2; color: #aaa;}
 .like {border-radius: 100%; opacity: .2;}
 .title {font-weight: bold; color: #fff; border-bottom: 3px solid gold; background-color: rgba(39, 83, 109, .7); margin: 0; font-size: 1.4em;}
@@ -38,7 +39,7 @@ ul li {list-style: none;}
 #navigation li:hover {cursor: pointer;}
 #to-the-top:hover, #selected-order:hover {cursor: pointer; opacity: .7;}
 
-.cards:hover {border-color: lightgray;}
+.cards:hover {border-color: lightgray; background-color: #fafbfc;}
 .cards:hover .author {color: #777;}
 .cards:hover .like {opacity: 1;}
 .cards:hover .number-likes {opacity: 1;}
