@@ -8,7 +8,7 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name : ['shoulders of giants'],
+  app_name : ['shoulders-of-giants'],
   /**
    * Your New Relic license key.
    */
