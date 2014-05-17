@@ -1,3 +1,5 @@
+require('newrelic');
+
 var express         = require('express'),
     configurator    = require('./config/configurator'),
     db              = require('./config/dbase'),
