@@ -7,7 +7,7 @@ quotesApp.controller('QuotesController', ['$scope', '$http', 'QuotesService', fu
     $scope.setOrder = function(order)
     {
         if (lib.isStringInvalid(order))
-            throw new Error('Ordenação incorreta. O tipo do parâmetro deve ser uma string.');
+            throw new Error('Ordenacao incorreta. O tipo do parametro deve ser uma string.');
 
         $scope.getOrder = order;
     }
@@ -24,7 +24,7 @@ quotesApp.controller('QuotesController', ['$scope', '$http', 'QuotesService', fu
     $scope.favQuote = function(id)
     {
         if (lib.isStringInvalid(id))
-            throw new Error('O id passado não é uma string válida. Não será possível favoritar a mensagem [controller].'   );
+            throw new Error('O id passado nao e uma string valida. Nao sera possivel favoritar a mensagem [controller].');
 
         QuotesService.favQuote(id)
             .success(function(data)
