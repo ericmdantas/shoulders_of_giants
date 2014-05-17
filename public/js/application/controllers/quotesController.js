@@ -24,7 +24,7 @@ quotesApp.controller('QuotesController', ['$scope', '$http', 'QuotesService', fu
     $scope.favQuote = function(id)
     {
         if (lib.isStringInvalid(id))
-            throw new Error('O id passado não é uma string válida. Não será possível favoritar a mensagem [controller].');
+            throw new Error('O id passado não é uma string válida. Não será possível favoritar a mensagem [controller].'   );
 
         QuotesService.favQuote(id)
             .success(function(data)
