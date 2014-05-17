@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 
 (function()
 {
-    var url_banco = 'mongodb://localhost/quotes';
+    var url_banco = 'mongodb://eric:112233@oceanic.mongohq.com:10029/quotes';
 
     function _init()
     {
