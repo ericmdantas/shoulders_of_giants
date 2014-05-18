@@ -13,8 +13,7 @@
         <div class="quotes-container">
             <div class="transition">
                 <div ng-if="!quotes.length" class="cards transition espaco-bottom">
-                    <p class="quote"><span class="quotation-mark">"</span>Nothing to see here =[<span class="quotation-mark">"</span></p>
-                    <span class="author transition">Sad Panda</span>
+                    <p class="quote"><span class="quotation-mark">"</span>Loading... =]<span class="quotation-mark">"</span></p>
                 </div>
 
                 <div ng-repeat="q in quotes | orderBy: getOrder | filter: search" class="cards transition espaco-bottom">
