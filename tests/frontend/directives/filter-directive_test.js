@@ -1,6 +1,6 @@
 "use strict";
 
-describe('like-directive', function()
+describe('filter-directive', function()
 {
     var _scope, _element, _compile;
 
@@ -11,19 +11,28 @@ describe('like-directive', function()
         _scope = $injector.get('$rootScope').$new();
         _compile = $injector.get('$compile');
 
-        var _html = '<like></like>';
+        var _html = '<filter></filter>';
 
         _element = angular.element(_html);
 
         _compile(_element)(_scope);
+
         _scope.$digest();
     }))
 
     describe('checks elements creation', function()
     {
-        it('should check if element was created', function()
+        it('element should have been created', function()
         {
             expect(_element).toBeDefined();
+        })
+    })
+
+    describe('checks if the focus event is working', function()
+    {
+        it('should have focus working', function()
+        {
+            _element.find('#filter .filter').eq(0).focus();
         })
     })
 })

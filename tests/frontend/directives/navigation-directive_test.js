@@ -11,18 +11,9 @@ describe('navigation-directive', function()
         _scope = $injector.get('$rootScope').$new();
         _compile = $injector.get('$compile');
 
-        var _html = '<navigation>'+
-                        '<nav id="navigation" class="transition text-centered">'+
-                            '<div>'+
-                                '<h3 class="title">Order By</h3>'+
-                                '<ul>'+
-                                    '<li class="transition active" ng-click="setOrder(\'author\')">author</li>'+
-                                    '<li class="transition" ng-click="setOrder(\'quote\')">quote</li>'+
-                                    '<li class="transition" ng-click="setOrder(\'-likes\')">best of</li>'+
-                                '</ul>'+
-                            '</div>'+
-                        '</nav>'+
-                    '</navigation>';
+        var _html = '<navigation></navigation>';
+
+        _scope.quotes = [];
 
         _element = angular.element(_html);
 
@@ -40,7 +31,7 @@ describe('navigation-directive', function()
         it('should have three elements', function()
         {
             var _length = _element.find('#navigation li').length;
-            expect(_length).toEqual(4);
+            expect(_length).toEqual(3);
         })
 
         it('checks if the options match', function()

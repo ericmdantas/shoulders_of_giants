@@ -1,11 +1,13 @@
 /* IDs */
 
 #navigation {margin: -1.1em;}
-#navigation {margin: 0 0 1em 0; position: static}
-#navigation li {background-color: white; display: inline-block; padding: .5em; margin: .25em .25em; border-radius: 3px;}
+#navigation {margin: 0; position: static}
+#navigation li, #type-of-visualization li {display: inline-block; padding: .5em; margin: .25em .25em;}
+#filter li {padding: .5em;}
 #to-the-top {left: 1em;}
 #selected-order {right: 1em;}
 #to-the-top, #selected-order {position: fixed; bottom: 1em; padding: 1em;}
+#randomize {padding: .5em; margin-top: 0;}
 
 /* CLASSES */
 
@@ -20,7 +22,7 @@
 .cards.espaco-bottom {margin-bottom: .5em;}
 .text-centered {text-align: center;}
 .quotes-container {margin: 2em auto 0 auto; width: 90%; max-width: 70em;}
-.title {padding: 1.5em;}
+.title {padding: 1em;}
 
 /* ELEMENTS */
 

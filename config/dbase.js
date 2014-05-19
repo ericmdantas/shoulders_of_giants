@@ -4,7 +4,8 @@ var mongoose = require('mongoose');
 
 (function()
 {
-    var url_banco = 'mongodb://eric:112233@oceanic.mongohq.com:10029/quotes';
+    var url_banco = (process.env.NODE_ENV === 'production') ? process.env.MONGOHQ_URL :
+                                                              'mongodb://localhost/quotes';
 
     function _init()
     {
@@ -15,4 +16,3 @@ var mongoose = require('mongoose');
 
     exports.init = _init;
 }())
-

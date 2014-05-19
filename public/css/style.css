@@ -1,11 +1,13 @@
 /* IDs */
 
 #navigation {opacity: 1;}
-#navigation ul {padding: 1em; background-color: rgba(128, 117, 10, .3); border-bottom: 3px solid gold;}
-#navigation li {font-size: 1.2em;}
+#navigation ul, #type-of-visualization ul {padding: 1em; background-color: rgba(128, 117, 10, .3); border-bottom: 3px solid gold;}
+#navigation li, #filter li, #type-of-visualization li {font-size: 1.2em; background-color: white; border-radius: 3px;}
 #to-the-top {border-radius: 100%;}
 #selected-order {border-radius: 4px;}
 #to-the-top, #selected-order {background-color: black; color: white; opacity: .4;}
+#randomize {background-color: #fafbfc; color: gold; text-shadow: 1px 1px gray; border-radius: 4px;}
+
 
 /* CLASSES */
 
@@ -26,6 +28,13 @@
     -o-transition: all 666ms;
     transition: all 666ms;
 }
+.not-selectable
+{
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
 
 /* ELEMENTS */
 
@@ -35,15 +44,17 @@ ul li {list-style: none;}
 
 /* EVENTS */
 
-#navigation:hover {opacity: 1;}
-#navigation li:hover {cursor: pointer;}
+#navigation:hover, #filter:hover, #type-of-visualization:hover {opacity: 1;}
+#navigation li:hover, #type-of-visualization li:hover {cursor: pointer;}
 #to-the-top:hover, #selected-order:hover {cursor: pointer; opacity: .7;}
+#randomize:hover {cursor: pointer;}
+#randomize:active {background-color: gold; color: snow;}
 
 .cards:hover {border-color: lightgray; background-color: #fafbfc;}
 .cards:hover .author {color: #777;}
 .cards:hover .like {opacity: 1;}
 .cards:hover .number-likes {opacity: 1;}
-.like:hover {cursor: pointer;}
+.like:hover, .title:hover {cursor: pointer;}
 .like:active {box-shadow: 1px 1px 33px gold; background-color: lemonchiffon;}
 
 ::selection {background-color: yellow;}

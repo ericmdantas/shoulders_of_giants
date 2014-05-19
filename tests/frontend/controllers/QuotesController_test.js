@@ -26,6 +26,7 @@ describe('QuotesController', function()
             $controller('QuotesController', {$scope: _scope});
             _httpMock.flush();
             expect(_scope.quotes).toEqual([]);
+            expect(_scope.quotesKeeper).toEqual([]);
         }))
 
         it('should save the response from the server - no quotes', inject(function($controller)
@@ -34,6 +35,7 @@ describe('QuotesController', function()
             $controller('QuotesController', {$scope: _scope});
             _httpMock.flush();
             expect(_scope.quotes).toEqual([]);
+            expect(_scope.quotesKeeper).toEqual([]);
         }))
 
         it('should save the response from the server - no quotes', inject(function($controller)
@@ -42,7 +44,9 @@ describe('QuotesController', function()
             $controller('QuotesController', {$scope: _scope});
             _httpMock.flush();
             expect(_scope.quotes.length).toEqual(1);
+            expect(_scope.quotesKeeper.length).toEqual(1);
             expect(_scope.quotes[0]).toEqual({author: "Eric", quote: "Alo", likes: 0});
+            expect(_scope.quotesKeeper[0]).toEqual({author: "Eric", quote: "Alo", likes: 0});
         }))
     })
 
@@ -189,6 +193,93 @@ describe('QuotesController', function()
             _httpMock.flush();
 
             expect(_scope.quotes[2].likes).toEqual(100);
+        }))
+    })
+
+    describe('setSingle', function()
+    {
+        it('should throw error - wrong quotes param', inject(function($controller)
+        {
+            $controller('QuotesController', {$scope: _scope});
+
+            var _wrongParams = [null, undefined, function(){}, true, false, 1, 0, '  ', {}, []];
+
+            for (var i = 0; i < _wrongParams.length; i++)
+            {
+                expect(function()
+                {
+                    _scope.setSingle(_wrongParams[i]);
+                }).toThrow(new Error('Houve um erro ao randomizar as mensagens. O objeto passado não é um objeto ou array válido.'));
+            }
+        }))
+
+        it('should set the full quotes to single quotes correctly', inject(function($controller)
+        {
+            $controller('QuotesController', {$scope: _scope});
+
+            var _quotes = [];
+
+            for (var i = 0; i < 1000; i++)
+            {
+                _quotes.push({author: 'Eric'+i,
+                              quote: 'Alguma Coisa'+i,
+                              likes: i});
+            }
+
+            _scope.setSingle(_quotes);
+
+            expect(_scope.quotes).toBeDefined();
+            expect(_scope.quotes.length).toBe(1);
+            expect(_scope.quotes[0].author).toBeDefined();
+            expect(_scope.quotes[0].quote).toBeDefined();
+            expect(_scope.quotes[0].likes).toBeDefined();
+        }))
+    })
+
+    describe('multiple-view', function()
+    {
+        it('should set the quotes back to normal', inject(function($controller)
+        {
+            $controller('QuotesController', {$scope: _scope});
+
+            _scope.quotes = [];
+
+            for (var i = 0; i < 1000; i++)
+            {
+                _scope.quotes.push({author: 'Eric'+i,
+                                    quote: 'Alguma Coisa'+i,
+                                    likes: i});
+            }
+
+            _scope.quotesKeeper = _scope.quotes;
+            _scope.setSingle(_scope.quotes);
+            _scope.setMultiple();
+
+            expect(_scope.quotes.length).toBe(1000);
+        }))
+    })
+
+    describe('randomize', function()
+    {
+        it('should set a different quote from what\'s showing', inject(function($controller)
+        {
+            $controller('QuotesController', {$scope: _scope});
+
+            _scope.quotes = [{author: 'Eric', quote: 'Mensagem0', likes: 0}];
+            var quotesBeforeRandom = _scope.quotes;
+
+            _scope.quotesKeeper = [];
+
+            for (var i = 0; i < 1000; i++)
+            {
+                _scope.quotesKeeper.push({author: 'Eric'+i,
+                                    quote: 'Mensagem'+i,
+                                    likes: i});
+            };
+
+            _scope.randomize();
+
+            expect(_scope.quotes).not.toBe(quotesBeforeRandom);
         }))
     })
 })

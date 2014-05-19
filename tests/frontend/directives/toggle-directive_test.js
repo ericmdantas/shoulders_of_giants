@@ -1,6 +1,6 @@
 "use strict";
 
-describe('like-directive', function()
+describe('toggle-directive', function()
 {
     var _scope, _element, _compile;
 
@@ -11,19 +11,28 @@ describe('like-directive', function()
         _scope = $injector.get('$rootScope').$new();
         _compile = $injector.get('$compile');
 
-        var _html = '<like></like>';
+        var _html = '<div toggle=".title"><div class="title">oi</div></div>';
 
         _element = angular.element(_html);
 
         _compile(_element)(_scope);
+
         _scope.$digest();
     }))
 
-    describe('checks elements creation', function()
+    describe('check elements creation', function()
     {
-        it('should check if element was created', function()
+        it('should have element created', function()
         {
             expect(_element).toBeDefined();
+        })
+    })
+
+    describe('clicking should be working', function()
+    {
+        it('should click correctly', function()
+        {
+            _element.click();
         })
     })
 })

@@ -11,7 +11,7 @@ describe('toTheTop', function()
         _compile = $injector.get('$compile');
         _windowMock = $injector.get('$window');
 
-        var _html = '<to-the-top><div id="to-the-top">top</div></to-the-top>';
+        var _html = '<to-the-top></to-the-top>';
 
         _element = angular.element(_html);
         _compile(_element)(_scope);
@@ -40,7 +40,7 @@ describe('toTheTop', function()
     {
         it('should display a message', function()
         {
-            _element.find('div').click();
+            _element.click();
         })
     })
 })

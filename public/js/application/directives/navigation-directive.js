@@ -4,14 +4,11 @@ quotesApp.directive('navigation', ['$window', function($window)
 {
     var _template = '<nav id="navigation" class="transition text-centered">'+
                         '<div>'+
-                            '<h3 class="title">Navigation</h3>'+
+                            '<h3 class="title" toggle="ul">Order By</h3>'+
                             '<ul>'+
                                   '<li class="transition active" ng-click="setOrder(\'author\')">author</li>'+
                                   '<li class="transition" ng-click="setOrder(\'quote\')">quote</li>'+
                                   '<li class="transition" ng-click="setOrder(\'-likes\')">best of</li>'+
-                                  '<li class="transition">' +
-                                    '<input type="text" ng-model="search.quote" class="filter" placeholder="I wanna read about.." maxlength="100"/>' +
-                                  '</li>'+
                             '</ul>'+
                         '</div>'+
                      '</nav>';
@@ -23,6 +20,8 @@ quotesApp.directive('navigation', ['$window', function($window)
             element.find('#navigation li').removeClass('active');
             element.find(this).addClass('active');
             $window.scrollTo(0, 0);
+
+            scope.quotes = (scope.quotes.length === 1) ? scope.quotesKeeper : scope.quotes;
         })
     }
 
