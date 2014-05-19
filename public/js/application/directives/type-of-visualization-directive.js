@@ -4,7 +4,7 @@ quotesApp.directive('typeOfVisualization', function()
 {
     var _template = '<div id="type-of-visualization" class="text-centered transition">' +
                         '<div>'+
-                            '<h3 class="title" toggle="ul">Visualization</h3>'+
+                            '<h3 class="title" toggle="ul">View</h3>'+
                             '<ul>'+
                                 '<li class="transition active" id="multiple-view" ng-click="setMultiple()">multiple</li>'+
                                 '<li class="transition" id="single-view" ng-click="setSingle(quotes)">single</li>'+
