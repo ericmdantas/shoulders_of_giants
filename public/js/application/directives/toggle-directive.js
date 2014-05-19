@@ -8,7 +8,8 @@ quotesApp.directive('toggle', [function()
 
         element.on('click', function()
         {
-            element.siblings(attrs.toggle).toggle();
+            $('#options ul').fadeOut();
+            element.siblings(attrs.toggle).slideToggle();
         })
     }
 
