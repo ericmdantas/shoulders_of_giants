@@ -21,16 +21,6 @@ describe('QuotesService', function()
         })
     })
 
-    describe('getBestQuotes', function()
-    {
-        it('should fetch request correctly', function()
-        {
-            httpMock.expectGET('/api/quotes/most_liked').respond();
-            QuotesService.getBestQuotes();
-            httpMock.flush();
-        })
-    })
-
     describe('favQuote', function()
     {
         it('should throw and error - wrong id param', function()

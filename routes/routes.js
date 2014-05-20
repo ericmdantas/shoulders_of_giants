@@ -6,7 +6,6 @@
     {
         app.get('/', content.index);
         app.get('/api/quotes', quotes.getAllQuotes);
-        app.get('/api/quotes/most_liked', quotes.getBestQuotes);
         app.put('/api/quotes/:id', quotes.favSpecificQuote);
 
         app.get('/*', content.redirect);

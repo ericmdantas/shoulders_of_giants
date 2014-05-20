@@ -1,5 +1,8 @@
 "use strict";
 
+var assert = require('assert');
+var lib = require('../../../lib/lib');
+
 describe('lib', function()
 {
     describe('isStringInvalid', function()
@@ -10,7 +13,7 @@ describe('lib', function()
 
             for (var i = 0; i < _wrongParams.length; i++)
             {
-                expect(lib.isStringInvalid(_wrongParams[i])).toBeTruthy();
+                assert.strictEqual(lib.isStringInvalid(_wrongParams[i]), true);
             }
         })
 
@@ -20,7 +23,7 @@ describe('lib', function()
 
             for (var i = 0; i < _correctParams.length; i++)
             {
-                expect(lib.isStringInvalid(_correctParams[i])).toBeFalsy();
+                assert.strictEqual(lib.isStringInvalid(_correctParams[i]), false);
             }
         })
     })
@@ -33,7 +36,7 @@ describe('lib', function()
 
             for (var i = 0; i < _wrongParams.length; i++)
             {
-                expect(lib.isObjectInvalid(_wrongParams[i])).toBeTruthy();
+                assert.strictEqual(lib.isObjectInvalid(_wrongParams[i]), true);
             }
         })
 
@@ -43,7 +46,7 @@ describe('lib', function()
 
             for (var i = 0; i < _correctParams.length; i++)
             {
-                expect(lib.isObjectInvalid(_correctParams[i])).toBeFalsy();
+                assert.strictEqual(lib.isObjectInvalid(_correctParams[i]), false);
             }
         })
     })
@@ -56,7 +59,7 @@ describe('lib', function()
 
             for (var i = 0; i < _wrongParams.length; i++)
             {
-                expect(lib.isFunctionInvalid(_wrongParams[i])).toBeTruthy();
+                assert.strictEqual(lib.isFunctionInvalid(_wrongParams[i]), true);
             }
         })
 
@@ -66,7 +69,7 @@ describe('lib', function()
 
             for (var i = 0; i < _correctParams.length; i++)
             {
-                expect(lib.isFunctionInvalid(_correctParams[i])).toBeFalsy();
+                assert.strictEqual(lib.isFunctionInvalid(_correctParams[i]), false);
             }
         })
     })

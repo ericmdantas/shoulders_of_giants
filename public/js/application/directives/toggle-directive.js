@@ -8,7 +8,7 @@ quotesApp.directive('toggle', [function()
 
         element.on('click', function()
         {
-            $('#options ul').fadeOut();
+            $('#options ul').fadeOut('slow');
             element.siblings(attrs.toggle).slideToggle();
         })
     }

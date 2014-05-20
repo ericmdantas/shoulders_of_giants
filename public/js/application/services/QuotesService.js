@@ -9,11 +9,6 @@ quotesApp.factory('QuotesService', ['$http', function($http)
         return $http.get(_url);
     }
 
-    function _getBestQuotes()
-    {
-        return $http.get(_url + '/most_liked');
-    }
-
     function _favQuote(id)
     {
         if (lib.isStringInvalid(id))
@@ -24,7 +19,6 @@ quotesApp.factory('QuotesService', ['$http', function($http)
 
     return {
                 getQuotes: _getQuotes,
-                getBestQuotes: _getBestQuotes,
                 favQuote: _favQuote
            }
 }])

@@ -1,6 +1,6 @@
 "use strict";
 
-(function(mongoose)
+(function(mongoose, lib)
 {
     var quoteSchema = mongoose.Schema
         ({
@@ -15,6 +15,7 @@
         var _projection = {};
 
         Quote.find(_query, _projection)
+             .sort('quote')
              .exec(function(err, quotes)
                    {
                       if (err)
@@ -24,26 +25,13 @@
                    })
     }
 
-    quoteSchema.methods.getBestQuotes = function(done)
-    {
-        var _query = {};
-        var _projection = {};
-
-        Quote.find(_query, _projection)
-             .sort('-likes')
-             .exec(function(err, quotes)
-                   {
-                        if (err)
-                            return done(err, null);
-
-                        return done(null, quotes);
-                   })
-    }
-
     quoteSchema.methods.favSpecificQuote = function(id, done)
     {
-        if (!id || "string" !== typeof id || id.length === 0 || id.trim().length === 0)
+        if (lib.isStringInvalid(id))
             return done(new Error('Impossível favoritar mensagem. Id deve ser uma string.'), null);
+
+        if (lib.isFunctionInvalid(done))
+            return done(new Error('Impossível favoritar mensagem. Callback não é uma função válida.', null));
 
         var _query = {_id: id};
         var _updt = {$inc: {likes: 1}};
@@ -61,4 +49,5 @@
     var Quote = mongoose.model('Quote', quoteSchema);
     module.exports = Quote;
 
-}(require('mongoose')))
+}(require('mongoose'),
+  require('../lib/lib')))
