@@ -6,9 +6,9 @@ quotesApp.directive('navigation', ['$window', function($window)
                         '<div>'+
                             '<h3 class="title" toggle="ul">Order By</h3>'+
                             '<ul>'+
-                                  '<li class="transition active" ng-click="setOrder(\'author\')">author</li>'+
-                                  '<li class="transition" ng-click="setOrder(\'quote\')">quote</li>'+
-                                  '<li class="transition" ng-click="setOrder(\'-likes\')">best of</li>'+
+                                  '<li class="transition active" ng-click="setOrder(\'author\')" activable deactive="#navigation li">author</li>'+
+                                  '<li class="transition" ng-click="setOrder(\'quote\')" activable deactive="#navigation li">quote</li>'+
+                                  '<li class="transition" ng-click="setOrder(\'-likes\')" activable deactive="#navigation li">best of</li>'+
                             '</ul>'+
                         '</div>'+
                      '</nav>';
@@ -17,11 +17,7 @@ quotesApp.directive('navigation', ['$window', function($window)
     {
         element.find('#navigation li').on('click', function()
         {
-            element.find('#navigation li').removeClass('active');
-            element.find(this).addClass('active');
             $window.scrollTo(0, 0);
-
-            scope.quotes = (scope.quotes.length === 1) ? scope.quotesKeeper : scope.quotes;
         })
     }
 
