@@ -1,7 +1,5 @@
 "use strict";
 
-require('newrelic');
-
 var express         = require('express'),
     configurator    = require('./config/configurator'),
     db              = require('./config/dbase'),
@@ -16,4 +14,4 @@ routes.init(app);
 app.listen(port);
 
 console.log('up and running @: %s on port: %s', os.hostname(), port);
-console.log('env: %s', process.env.NODE_ENV);
+console.log('enviroment: %s', process.env.NODE_ENV);
