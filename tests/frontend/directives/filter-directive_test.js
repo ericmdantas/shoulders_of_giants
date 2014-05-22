@@ -32,7 +32,7 @@ describe('filter-directive', function()
     {
         it('should have focus working', function()
         {
-            _element.find('#filter .filter').eq(0).focus();
+            _element.find('#filter .filter').eq(0).triggerHandler('focus');
         })
     })
 })

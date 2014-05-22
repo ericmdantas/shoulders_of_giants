@@ -53,18 +53,16 @@ describe('navigation-directive', function()
 
     describe('checks if click is working', function()
     {
-        /*
-
-         //TODO: CHECK HOW TO TEST THIS, SINCE IT WAS CREATED THE DIRECTIVE ACTIVABLE
+        //TODO: CHECK HOW TO TEST THIS, SINCE IT WAS CREATED THE DIRECTIVE ACTIVABLE
 
         it('should check if the click on navigation li is working - first li click', function()
         {
             var listedItems = _element.find('#navigation li');
             listedItems.eq(0).click();
 
-            expect(listedItems.eq(0).hasClass('active')).toBeTruthy();
+            /*expect(listedItems.eq(0).hasClass('active')).toBeTruthy();
             expect(listedItems.eq(1).hasClass('active')).toBeFalsy();
-            expect(listedItems.eq(2).hasClass('active')).toBeFalsy();
+            expect(listedItems.eq(2).hasClass('active')).toBeFalsy();*/
         })
 
         it('should check if the click on navigation li is working - second li click', function()
@@ -72,9 +70,9 @@ describe('navigation-directive', function()
             var listedItems = _element.find('#navigation li');
             listedItems.eq(1).click();
 
-            expect(listedItems.eq(0).hasClass('active')).toBeFalsy();
+            /*expect(listedItems.eq(0).hasClass('active')).toBeFalsy();
             expect(listedItems.eq(1).hasClass('active')).toBeTruthy();
-            expect(listedItems.eq(2).hasClass('active')).toBeFalsy();
+            expect(listedItems.eq(2).hasClass('active')).toBeFalsy();*/
         })
 
         it('should check if the click on navigation li is working - third li click', function()
@@ -82,9 +80,9 @@ describe('navigation-directive', function()
              var listedItems = _element.find('#navigation li');
              listedItems.eq(2).click();
 
-             expect(listedItems.eq(0).hasClass('active')).toBeFalsy();
+             /*expect(listedItems.eq(0).hasClass('active')).toBeFalsy();
              expect(listedItems.eq(1).hasClass('active')).toBeFalsy();
-             expect(listedItems.eq(2).hasClass('active')).toBeTruthy();
-        })*/
+             expect(listedItems.eq(2).hasClass('active')).toBeTruthy();*/
+        })
     })
 })

@@ -42,5 +42,13 @@ describe('toTheTop', function()
         {
             _element.click();
         })
+
+        it('should work on scroll', function()
+        {
+            var _e = $.Event('keydown');
+            _e.which = 65;
+
+            angular.element(document).triggerHandler(_e);
+        })
     })
 })
