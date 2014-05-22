@@ -1,5 +1,8 @@
 "use strict";
 
+process.env.NEW_RELIC_HOME = __dirname;
+require('newrelic');
+
 var express         = require('express'),
     configurator    = require('./config/configurator'),
     db              = require('./config/dbase'),
