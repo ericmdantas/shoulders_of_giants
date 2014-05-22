@@ -1,6 +1,5 @@
 "use strict";
 
-process.env.NEW_RELIC_HOME = __dirname;
 require('newrelic');
 
 var express         = require('express'),
