@@ -8,11 +8,11 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name : ['710b18c79a3a42183f0f247222133c19f8827d99'],//[process.env.NEW_RELIC_APP_NAME],
+  app_name : ['shoulders-of-giants'],//[process.env.NEW_RELIC_APP_NAME],
   /**
    * Your New Relic license key.
    */
-  license_key : process.env.NEW_RELIC_LICENSE_KEY,
+  license_key : '710b18c79a3a42183f0f247222133c19f8827d99',
   logging : {
     /**
      * Level at which to log. 'trace' is most useful to New Relic when diagnosing
