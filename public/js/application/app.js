@@ -1,0 +1,1 @@
+var quotesApp = angular.module('quotes', []);

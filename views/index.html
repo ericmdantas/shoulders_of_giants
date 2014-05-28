@@ -1,0 +1,67 @@
+<!doctype html>
+<html ng-app="quotes">
+    <head>
+        <title>shoulders of giants</title>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="css/position.css">
+        <link rel="stylesheet" type="text/css" href="css/media_queries.css">
+        <link rel="shortcut icon" type="image/ico" href="/img/favicon.ico"/>
+    </head>
+    <body ng-controller="QuotesController">
+        <div id="options">
+            <type-of-visualization class="not-selectable"></type-of-visualization>
+            <navigation ng-hide="singleView" class="not-selectable"></navigation>
+            <filter ng-hide="singleView" class="not-selectable"></filter>
+        </div>
+
+        <div class="quotes-container">
+            <div class="transition">
+                <div ng-if="!quotes.length" class="cards transition espaco-bottom">
+                    <p class="quote"><span class="quotation-mark">"</span>Loading... =]<span class="quotation-mark">"</span></p>
+                </div>
+
+                <div id="randomize-container" ng-show="singleView">
+                    <div class="text-centered">
+                        <h1 id="randomize" ng-click="randomize()" class="transition not-selectable">more..</h1>
+                    </div>
+                </div>
+
+                <div ng-repeat="q in quotes | orderBy: getOrder | filter: search track by $index" class="cards transition espaco-bottom">
+                    <like liked="favQuote(q._id)" numberlikes="{{q.likes}}"></like>
+                    <p class="quote"><span class="quotation-mark">"</span>{{q.quote}}<span class="quotation-mark">"</span></p>
+                    <span class="author transition">{{q.author}}</span>
+                </div>
+            </div>
+        </div>
+
+        <br/><br/><br/><br/>
+        <to-the-top></to-the-top>
+        <div id="selected-order" class="visible-phone transition" ng-hide="singleView">ordered by: <strong>{{getOrder}}</strong></div>
+
+        <!-- frameworks -->
+        <script type="text/javascript" src="js/frameworks/jquery-2.1.0.min.js"></script>
+        <script type="text/javascript" src="js/frameworks/angular.min.js"></script>
+        <script type="text/javascript" src="js/frameworks/angular-route.min.js"></script>
+
+        <!-- lib -->
+        <script type="text/javascript" src="js/application/lib/lib.js"></script>
+
+        <!-- application -->
+        <script type="text/javascript" src="js/application/app.js"></script>
+
+        <!-- services -->
+        <script type="text/javascript" src="js/application/services/QuotesService.js"></script>
+
+        <!-- controllers -->
+        <script type="text/javascript" src="js/application/controllers/QuotesController.js"></script>
+
+        <!-- directives -->
+        <script type="text/javascript" src="js/application/directives/activable-directive.js"></script>
+        <script type="text/javascript" src="js/application/directives/navigation-directive.js"></script>
+        <script type="text/javascript" src="js/application/directives/filter-directive.js"></script>
+        <script type="text/javascript" src="js/application/directives/type-of-visualization-directive.js"></script>
+        <script type="text/javascript" src="js/application/directives/toggle-directive.js"></script>
+        <script type="text/javascript" src="js/application/directives/to-the-top-directive.js"></script>
+        <script type="text/javascript" src="js/application/directives/like-directive.js"></script>
+    </body>
+</html>

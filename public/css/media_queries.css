@@ -1,0 +1,21 @@
+@media (min-width: 40em)
+{
+    .quotes-container {width: 90%;}
+    .cards.espaco-bottom {margin-bottom: 1em;}
+}
+
+@media (min-width: 60em)
+{
+    #options {top: 0; position: fixed; float: left; margin: 2em 0 0 1em; width: 20%; display: block;}
+    #options li {border-radius: 3px; margin: .2em 0; padding: .8em; display: block;}
+    #options ul {background-color: transparent; border-bottom: none; padding: 0;}
+    #options li:last-child {margin-bottom: 1em;}
+    #filter ul {margin: 0;}
+    #navigation, #filter, #type-of-visualization {opacity: .5;}
+    #to-the-top {left: 1em;}
+
+    .quotes-container {margin: 2em 1em 2em 0; width: 75%; float: right;}
+    .espaco-top {margin-top: 1em;}
+    .title {margin: 0;}
+    .visible-phone {display: none;}
+}
