@@ -18,7 +18,8 @@
     "karma-safari-launcher": "~0.1.5",
 	"karma-opera-launcher": "~0.1.5",
 	"karma-ie-launcher": "~0.1.5",
-	"karma-coverage": "~0.2.4"
+	"karma-coverage": "~0.2.4",
+	"newrelic": "~1.7.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
