@@ -1,6 +1,6 @@
 "use strict";
 
-quotesApp.controller('QuotesController', ['$scope', '$http', 'QuotesService', function($scope, $http, QuotesService)
+quotesApp.controller('QuotesController', ['$rootScope', '$scope', '$http', 'QuotesService', function($rootScope, $scope, $http, QuotesService)
 {
     $scope.quotes = [];
     $scope.quotesKeeper = [];
@@ -20,6 +20,8 @@ quotesApp.controller('QuotesController', ['$scope', '$http', 'QuotesService', fu
                      {
                         $scope.quotes = (data && data.quotes) ? data.quotes : [];
                         $scope.quotesKeeper = $scope.quotes;
+
+                        $scope.$broadcast('QuotesReady');
                      })
     }
 
@@ -58,6 +60,7 @@ quotesApp.controller('QuotesController', ['$scope', '$http', 'QuotesService', fu
         var _random = Math.floor(Math.random() * _quotesLength);
 
         $scope.quotes = [quotes[_random]];
+        $scope.singleView = true;
     }
 
     $scope.setMultiple = function()

@@ -8,11 +8,15 @@ quotesApp.directive('typeOfVisualization', function()
                             '<ul>'+
                                 '<li class="transition active" ' +
                                     'id="multiple-view" ' +
-                                    'ng-click="setMultiple()" activable deactive="#type-of-visualization li">multiple' +
+                                    'ng-click="setMultiple()" ' +
+                                    'activable deactive="#type-of-visualization li" ' +
+                                    'session-manager="multiple" '+
+                                    '>multiple' +
                                 '</li>'+
 
                                 '<li class="transition" ' +
                                      'id="single-view" ' +
+                                     'session-manager="single" '+
                                      'ng-click="setSingle(quotes)" activable deactive="#type-of-visualization li">single' +
                                 '</li>'+
                             '</ul>'+
