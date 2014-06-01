@@ -1,6 +1,6 @@
 "use strict";
 
-quotesApp.controller('QuotesController', ['$rootScope', '$scope', '$http', 'QuotesService', function($rootScope, $scope, $http, QuotesService)
+quotesApp.controller('QuotesController', ['$scope', '$http', 'QuotesService', function($scope, $http, QuotesService)
 {
     $scope.quotes = [];
     $scope.quotesKeeper = [];
