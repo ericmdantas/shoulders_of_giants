@@ -38,7 +38,12 @@
 
 /* ELEMENTS */
 
-body {font-family: Segoe UI, Verdana, Arial; background: url(../img/bg.jpg) fixed; background-size: 100% auto;}
+body {font-family: Segoe UI, Verdana, Arial; background: url(../img/bg.jpg) fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;}
+
 h1, h2, h3, h4 {font-weight: normal;}
 ul li {list-style: none;}
 
