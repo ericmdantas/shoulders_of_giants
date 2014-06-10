@@ -1,6 +1,7 @@
-"use strict";
+'use strict';
 
-require('newrelic');
+if ('production' === process.env.NODE_ENV)
+    require('newrelic');
 
 var express         = require('express'),
     configurator    = require('./config/configurator'),
