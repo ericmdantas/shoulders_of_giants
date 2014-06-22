@@ -1,7 +1,7 @@
 "use strict";
 
 var QuotesModel = require('../models/Quotes');
-var lib = require('../lib/lib');
+var lib = require('../public/js/application/lib/lib');
 
 function QuotesController()
 {

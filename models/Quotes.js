@@ -50,4 +50,4 @@
     module.exports = Quote;
 
 }(require('mongoose'),
-  require('../lib/lib')))
+  require('../public/js/application/lib/lib')))

@@ -1,7 +1,7 @@
 "use strict";
 
-var assert = require('assert');
-var mongoose = require('mongoose');
+var expect = require('chai').expect;
+    var mongoose = require('mongoose');
 var Quotes = require('../../../models/Quotes');
 var db = require('../config/db.json');
 var helper = require('../helper');
@@ -31,8 +31,8 @@ describe('quotes', function()
             var _quotes = new Quotes();
             _quotes.getQuotes(function(err, quotes)
                              {
-                                 assert.strictEqual(err, null);
-                                 assert.strictEqual(quotes.length, 11);
+                                 expect(err).to.not.be.defined;
+                                 expect(quotes).to.have.length(11);
                                  done();
                              })
         })
@@ -42,10 +42,10 @@ describe('quotes', function()
             var _quotes = new Quotes();
             _quotes.getQuotes(function(err, quotes)
                               {
-                                    assert.strictEqual(err, null);
-                                    assert.strictEqual(quotes[0].author, "eric0");
-                                    assert.strictEqual(quotes[0].quote, "mensagem0");
-                                    assert.strictEqual(quotes[0].likes, 10);
+                                    expect(err).to.not.be.defined;
+                                    expect(quotes[0]).to.have.property('author').and.to.equal("eric0");
+                                    expect(quotes[0]).to.have.property('quote').and.to.equal("mensagem0");
+                                    expect(quotes[0]).to.have.property('likes').and.to.equal(10);
                                     done();
                               });
         })
@@ -63,9 +63,9 @@ describe('quotes', function()
             {
                 _quote.favSpecificQuote(_wrongParams[i], function(err, updated)
                 {
-                    assert.notStrictEqual(err, null);
-                    assert.strictEqual(err instanceof Error, true);
-                    assert.strictEqual(updated, null);
+                    expect(err).to.be.defined;
+                    expect(err instanceof Error).to.be.true;
+                    expect(updated).to.not.be.defined;
                 })
             }
 
@@ -79,8 +79,9 @@ describe('quotes', function()
 
             _quote.favSpecificQuote(_id, function(err, updated)
             {
-                assert.strictEqual(err, null);
-                assert.strictEqual(updated.likes, 11);
+                expect(err).to.not.be.defined;
+                expect(updated).to.be.defined;
+                expect(updated).to.have.property('likes').and.to.equal(11);
                 done();
             })
         })
@@ -92,8 +93,8 @@ describe('quotes', function()
 
             _quote.favSpecificQuote(_id, function(err, updated)
             {
-                assert.strictEqual(err, null);
-                assert.strictEqual(updated.likes, 100001);
+                expect(err).to.not.be.defined;
+                expect(updated).to.have.property('likes').and.to.equal(100001);
                 done();
             })
         })

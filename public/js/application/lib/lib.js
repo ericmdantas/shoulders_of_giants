@@ -1,6 +1,8 @@
 "use strict";
 
-var lib = (function()
+var lib = {};
+
+(function(exports)
 {
     var _isStringInvalid = function(str)
     {
@@ -17,9 +19,8 @@ var lib = (function()
         return (!fn) || ("function" !== typeof fn);
     }
 
-    return {
-                isStringInvalid: _isStringInvalid,
-                isObjectInvalid: _isObjectInvalid,
-                isFunctionInvalid: _isFunctionInvalid
-           }
-}())
+    exports.isStringInvalid = _isStringInvalid;
+    exports.isObjectInvalid = _isObjectInvalid;
+    exports.isFunctionInvalid = _isFunctionInvalid;
+
+}('undefined' === typeof exports ? lib : exports))
