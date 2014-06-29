@@ -6,9 +6,10 @@
     {
         app.get('/', content.index);
         app.get('/api/quotes', quotes.getAllQuotes);
+        app.get('/api/quotes/ordered', quotes.getQuotesOrdered);
         app.put('/api/quotes/:id', quotes.favSpecificQuote);
 
-        app.get('/*', content.redirect);
+        app.get('/*', content.index);
     }
 
     exports.init = _init;

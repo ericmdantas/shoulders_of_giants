@@ -1,0 +1,14 @@
+#navigation:hover, #filter:hover, #type-of-visualization:hover {opacity: 1;}
+#navigation li:hover, #type-of-visualization li:hover {cursor: pointer;}
+#to-the-top:hover, #selected-order:hover {cursor: pointer; opacity: .7;}
+#randomize:hover {cursor: pointer;}
+#randomize:active {background-color: gold; color: snow;}
+
+.cards:hover {border-color: lightgray; background-color: #fafbfc;}
+.cards:hover .author {color: #777;}
+.cards:hover .like {opacity: 1;}
+.cards:hover .number-likes {opacity: 1;}
+.like:hover, .title:hover {cursor: pointer;}
+.like:active {box-shadow: 1px 1px 33px gold; background-color: lemonchiffon;}
+
+::selection {background-color: yellow;}

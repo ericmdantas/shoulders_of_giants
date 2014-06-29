@@ -3,42 +3,64 @@
 var QuotesModel = require('../models/Quotes');
 var lib = require('../public/js/application/lib/lib');
 
-function QuotesController()
+function QuotesController(){}
+
+QuotesController.prototype =
 {
-    var _getAllQuotes = function(req, res)
-    {
-        function callback(err, quotes)
-        {
-            err ? res.json({error: err}) : res.json({quotes: quotes});
-        }
+    getAllQuotes : function(req, res)
+                   {
+                       function _callback(err, quotes)
+                       {
+                           err ? res.json({error: err}) : res.json({quotes: quotes});
+                       }
 
-        var _quote = new QuotesModel();
-        _quote.getQuotes(callback);
-    }
+                       var _quote = new QuotesModel();
+                       _quote.getQuotes(_callback);
+                   },
 
-    var _favSpecificQuote = function(req, res)
-    {
-        var quoteId = req.params.id;
+    favSpecificQuote : function(req, res)
+                       {
+                           var quoteId = req.params.id;
 
-        if (lib.isStringInvalid(quoteId))
-        {
-            res.json({error: 'Id não é um parâmetro no formato esperado. O mesmo deve ser uma string.'});
-            return;
-        }
+                           if (lib.isStringInvalid(quoteId))
+                           {
+                               res.json({error: 'Id não é um parâmetro no formato esperado. O mesmo deve ser uma string.'});
+                               return;
+                           }
 
-        var callback = function(err, updated)
-        {
-            err ? res.json({error: err}) : res.json({updated: updated});
-        }
+                           var _callback = function(err, updated)
+                           {
+                               err ? res.json({error: err}) : res.json({updated: updated});
+                           }
 
-        var _quote = new QuotesModel();
-        _quote.favSpecificQuote(quoteId, callback);
-    }
+                           var _quote = new QuotesModel();
+                           _quote.favSpecificQuote(quoteId, _callback);
+                       },
 
-    return {
-                getAllQuotes: _getAllQuotes,
-                favSpecificQuote: _favSpecificQuote
-           }
+    getQuotesOrdered : function(req, res)
+                       {
+                            var _order = req.query.sort;
+
+                            if (lib.isStringInvalid(_order))
+                            {
+                                res.json({error: 'O método de ordenação não é válido.'});
+                                return;
+                            }
+
+                           var _callback = function(err, quotes)
+                           {
+                                if (err)
+                                {
+                                    res.json({error: 'Houve um erro no momento da ordenação das frases.'});
+                                    return;
+                                }
+
+                                res.json({quotes: quotes});
+                           }
+
+                           var _quote = new QuotesModel();
+                           _quote.getQuotesOrderedBy(_order, _callback);
+                       }
 }
 
 module.exports = new QuotesController();

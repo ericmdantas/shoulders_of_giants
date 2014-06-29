@@ -7,9 +7,14 @@
         <link rel="stylesheet" type="text/css" href="css/style.css">
         <link rel="stylesheet" type="text/css" href="css/position.css">
         <link rel="stylesheet" type="text/css" href="css/media_queries.css">
+        <link rel="stylesheet" type="text/css" href="css/events.css">
         <link rel="shortcut icon" type="image/ico" href="/img/favicon.ico"/>
     </head>
     <body ng-controller="QuotesController">
+        <div id="main-header">
+            <h1 id="main-title">shoulders of giants</h1>
+        </div>
+
         <div id="options">
             <type-of-visualization class="not-selectable"></type-of-visualization>
             <navigation ng-hide="singleView" class="not-selectable"></navigation>
@@ -24,11 +29,11 @@
 
                 <div id="randomize-container" ng-show="singleView">
                     <div class="text-centered">
-                        <h1 id="randomize" ng-click="randomize()" class="transition not-selectable">more..</h1>
+                        <h1 id="randomize" ng-click="randomize()" class="transition not-selectable">next</h1>
                     </div>
                 </div>
 
-                <div ng-repeat="q in quotes | orderBy: getOrder | filter: search track by $index" class="cards transition espaco-bottom">
+                <div ng-repeat="q in quotes | filter: search track by $index" class="cards transition espaco-bottom">
                     <like liked="favQuote(q._id)" numberlikes="{{q.likes}}"></like>
                     <p class="quote"><span class="quotation-mark">"</span>{{q.quote}}<span class="quotation-mark">"</span></p>
                     <span class="author transition">{{q.author}}</span>

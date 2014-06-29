@@ -9,6 +9,14 @@ quotesApp.factory('QuotesService', ['$http', function($http)
         return $http.get(_url);
     }
 
+    function _getQuotesOrdered(order)
+    {
+        if (lib.isStringInvalid(order))
+            throw new Error('A ordem passada não é válida. Não será possível fazer a ordenação.');
+
+        return $http.get(_url + '/ordered/?sort=' + order.toLowerCase());
+    }
+
     function _favQuote(id)
     {
         if (lib.isStringInvalid(id))
@@ -19,6 +27,7 @@ quotesApp.factory('QuotesService', ['$http', function($http)
 
     return {
                 getQuotes: _getQuotes,
-                favQuote: _favQuote
+                favQuote: _favQuote,
+                getQuotesOrdered: _getQuotesOrdered
            }
 }])

@@ -2,12 +2,12 @@
 
 describe('QuotesService', function()
 {
-    var httpMock, QuotesService;
+    var _httpMock, QuotesService;
 
     beforeEach(module('quotes'));
     beforeEach(inject(function($injector)
     {
-        httpMock = $injector.get('$httpBackend');
+        _httpMock = $injector.get('$httpBackend');
         QuotesService = $injector.get('QuotesService');
     }))
 
@@ -15,9 +15,9 @@ describe('QuotesService', function()
     {
         it('should fetch request correctly', function()
         {
-            httpMock.expectGET('/api/quotes').respond();
+            _httpMock.expectGET('/api/quotes').respond();
             QuotesService.getQuotes();
-            httpMock.flush();
+            _httpMock.flush();
         })
     })
 
@@ -38,11 +38,36 @@ describe('QuotesService', function()
 
         it('should fetch like correctly', function()
         {
-            httpMock.expectPUT('/api/quotes/a123').respond();
+            _httpMock.expectPUT('/api/quotes/a123').respond();
             var _id = 'a123';
 
             QuotesService.favQuote(_id);
-            httpMock.flush();
+            _httpMock.flush();
+        })
+    })
+
+    describe('getQuotesOrdered', function()
+    {
+        it('should throw an error - wrong sort param', function()
+        {
+            var _wrongParams = [null, undefined, 1, 0, function(){}, [], {}, true, false];
+
+            for (var i = 0; i < _wrongParams.length; i++)
+            {
+                expect(function()
+                {
+                    QuotesService.getQuotesOrdered(_wrongParams[i])
+                }).toThrow(new Error('A ordem passada não é válida. Não será possível fazer a ordenação.'));
+            }
+        })
+
+        it('should make the request correctly', function()
+        {
+            _httpMock.expectGET('/api/quotes/ordered/?sort=author').respond();
+            var _order = 'author';
+
+            QuotesService.getQuotesOrdered(_order);
+            _httpMock.flush();
         })
     })
 })

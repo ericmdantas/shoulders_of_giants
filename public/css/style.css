@@ -1,5 +1,3 @@
-/* IDs */
-
 #navigation {opacity: 1;}
 #navigation ul, #type-of-visualization ul {padding: 1em; background-color: rgba(128, 117, 10, .3); border-bottom: 3px solid gold;}
 #navigation li, #filter li, #type-of-visualization li {font-size: 1.2em; background-color: white; border-radius: 3px;}
@@ -7,9 +5,7 @@
 #selected-order {border-radius: 4px;}
 #to-the-top, #selected-order {background-color: black; color: white; opacity: .4;}
 #randomize {background-color: #fafbfc; color: gold; text-shadow: 1px 1px gray; border-radius: 4px;}
-
-
-/* CLASSES */
+#main-header {background-color: gold; color: #444; font-family: "CalligraPhillip"; border-radius: 3px;}
 
 .filter {color: #555; border: 1px solid lightgray; border-radius: 4px;}
 .number-likes {opacity: .2; color: #aaa;}
@@ -36,8 +32,6 @@
     -o-user-select: none;
 }
 
-/* ELEMENTS */
-
 body {font-family: Segoe UI, Verdana, Arial; background: url(../img/bg.jpg) fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -47,19 +41,9 @@ body {font-family: Segoe UI, Verdana, Arial; background: url(../img/bg.jpg) fixe
 h1, h2, h3, h4 {font-weight: normal;}
 ul li {list-style: none;}
 
-/* EVENTS */
-
-#navigation:hover, #filter:hover, #type-of-visualization:hover {opacity: 1;}
-#navigation li:hover, #type-of-visualization li:hover {cursor: pointer;}
-#to-the-top:hover, #selected-order:hover {cursor: pointer; opacity: .7;}
-#randomize:hover {cursor: pointer;}
-#randomize:active {background-color: gold; color: snow;}
-
-.cards:hover {border-color: lightgray; background-color: #fafbfc;}
-.cards:hover .author {color: #777;}
-.cards:hover .like {opacity: 1;}
-.cards:hover .number-likes {opacity: 1;}
-.like:hover, .title:hover {cursor: pointer;}
-.like:active {box-shadow: 1px 1px 33px gold; background-color: lemonchiffon;}
-
-::selection {background-color: yellow;}
+@font-face
+{
+    font-family: "CalligraPhillip";
+    src: url("../font/calligraphillip/CALPHI_T.ttf");
+    font-weight: bold;
+}
