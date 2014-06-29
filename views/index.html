@@ -33,7 +33,7 @@
                     </div>
                 </div>
 
-                <div ng-repeat="q in quotes | filter: search track by $index" class="cards transition espaco-bottom">
+                <div ng-repeat="q in quotes | orderBy: getOrder | filter: search track by $index" class="cards transition espaco-bottom">
                     <like liked="favQuote(q._id)" numberlikes="{{q.likes}}"></like>
                     <p class="quote"><span class="quotation-mark">"</span>{{q.quote}}<span class="quotation-mark">"</span></p>
                     <span class="author transition">{{q.author}}</span>
