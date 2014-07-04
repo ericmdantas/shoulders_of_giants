@@ -11,7 +11,7 @@ QuotesController.prototype =
                    {
                        function _callback(err, quotes)
                        {
-                           err ? res.json({error: err}) : res.json({quotes: quotes});
+                           err ? res.json({error: err}) : res.json(quotes);
                        }
 
                        var _quote = new QuotesModel();
@@ -30,7 +30,7 @@ QuotesController.prototype =
 
                            var _callback = function(err, updated)
                            {
-                               err ? res.json({error: err}) : res.json({updated: updated});
+                               err ? res.json({error: err}) : res.json(updated);
                            }
 
                            var _quote = new QuotesModel();
@@ -55,7 +55,7 @@ QuotesController.prototype =
                                     return;
                                 }
 
-                                res.json({quotes: quotes});
+                                res.json(quotes);
                            }
 
                            var _quote = new QuotesModel();

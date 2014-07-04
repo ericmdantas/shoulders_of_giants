@@ -1,6 +1,6 @@
 "use strict";
 
-quotesApp.controller('QuotesController', ['$scope', '$http', 'QuotesService', function($scope, $http, QuotesService)
+quotesApp.controller('QuotesController', ['$scope', 'QuotesService', function($scope, QuotesService)
 {
     $scope.quotes = [];
     $scope.quotesKeeper = [];
@@ -13,16 +13,19 @@ quotesApp.controller('QuotesController', ['$scope', '$http', 'QuotesService', fu
         $scope.getOrder = order;
     }
 
-    $scope.getQuotes = function()
+    var _getQuotes = function()
     {
-        QuotesService.getQuotes()
-             .success(function(data)
-                     {
-                        $scope.quotes = (data && data.quotes) ? data.quotes : [];
-                        $scope.quotesKeeper = $scope.quotes;
+        var _onSuccess = function(data)
+        {
+            $scope.quotes = (data) ? data : [];
+            $scope.quotesKeeper = angular.copy($scope.quotes);
 
-                        $scope.$broadcast('QuotesReady');
-                     })
+            $scope.$broadcast('QuotesReady');
+        }
+
+        QuotesService
+            .getQuotes()
+            .then(_onSuccess);
     }
 
     $scope.favQuote = function(id)
@@ -30,25 +33,28 @@ quotesApp.controller('QuotesController', ['$scope', '$http', 'QuotesService', fu
         if (lib.isStringInvalid(id))
             throw new Error('O id passado não é uma string válida. Não será possível favoritar a mensagem [controller].');
 
-        QuotesService.favQuote(id)
-            .success(function(data)
+        var _onSuccess = function(data)
+        {
+            var _updatedQuote;
+
+            if (data)
             {
-                var _updatedQuote;
+                _updatedQuote = data;
 
-                if (data && data.updated)
+                for (var i = 0; i < $scope.quotes.length; i++)
                 {
-                    _updatedQuote = data.updated;
-
-                    for (var i = 0; i < $scope.quotes.length; i++)
+                    if (_updatedQuote._id === $scope.quotes[i]._id)
                     {
-                        if (_updatedQuote._id === $scope.quotes[i]._id)
-                        {
-                            $scope.quotes[i] = _updatedQuote;
-                            break;
-                        }
+                        $scope.quotes[i] = _updatedQuote;
+                        break;
                     }
                 }
-            })
+            }
+        };
+
+        QuotesService
+            .favQuote(id)
+            .then(_onSuccess);
     }
 
     $scope.setSingle = function(quotes)
@@ -76,6 +82,6 @@ quotesApp.controller('QuotesController', ['$scope', '$http', 'QuotesService', fu
         $scope.quotes = [$scope.quotesKeeper[_random]];
     }
 
-    $scope.getQuotes();
+    _getQuotes();
     $scope.setOrder('author');
 }])

@@ -1,1 +1,1 @@
-var quotesApp = angular.module('quotes', []);
+var quotesApp = angular.module('quotes', ['ngResource']);

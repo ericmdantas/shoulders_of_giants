@@ -18,9 +18,12 @@ module.exports = function(config) {
 	  'public/js/frameworks/jquery-2.1.0.min.js',
 	  'public/js/frameworks/angular.min.js',
 	  'public/js/frameworks/angular-route.min.js',
+      'public/js/frameworks/angular-resource.min.js',
+
 	  'public/js/application/services/lib.js',
 	  'public/js/application/app.js',
 	  'public/js/application/**/*.js',
+
 	  'tests/frontend/mocks/angular-mocks.js',
       'tests/frontend/**/*_test.js'
     ],

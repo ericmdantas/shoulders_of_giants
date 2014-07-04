@@ -63,7 +63,7 @@ describe('QuotesService', function()
 
         it('should make the request correctly', function()
         {
-            _httpMock.expectGET('/api/quotes/ordered/?sort=author').respond();
+            _httpMock.expectGET('/api/quotes/ordered?sort=author').respond();
             var _order = 'author';
 
             QuotesService.getQuotesOrdered(_order);

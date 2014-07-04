@@ -25,28 +25,34 @@ describe('QuotesController', function()
             _httpMock.expectGET('/api/quotes').respond()
             $controller('QuotesController', {$scope: _scope});
             _httpMock.flush();
-            expect(_scope.quotes).toEqual([]);
-            expect(_scope.quotesKeeper).toEqual([]);
+            expect(_scope.quotes.length).toEqual(0);
+            expect(_scope.quotesKeeper.length).toEqual(0);
         }))
 
         it('should save the response from the server - no quotes', inject(function($controller)
         {
-            _httpMock.expectGET('/api/quotes').respond({quotes: []})
+            _httpMock.expectGET('/api/quotes').respond([])
             $controller('QuotesController', {$scope: _scope});
             _httpMock.flush();
-            expect(_scope.quotes).toEqual([]);
-            expect(_scope.quotesKeeper).toEqual([]);
+            expect(_scope.quotes.length).toEqual(0);
+            expect(_scope.quotesKeeper.length).toEqual(0);
         }))
 
-        it('should save the response from the server - no quotes', inject(function($controller)
+        it('should save the response from the server', inject(function($controller)
         {
-            _httpMock.expectGET('/api/quotes').respond({quotes: [{author: "Eric", quote: "Alo", likes: 0}]})
+            _httpMock.expectGET('/api/quotes').respond([{author: "Eric", quote: "Alo", likes: 0}]);
             $controller('QuotesController', {$scope: _scope});
             _httpMock.flush();
+
             expect(_scope.quotes.length).toEqual(1);
             expect(_scope.quotesKeeper.length).toEqual(1);
-            expect(_scope.quotes[0]).toEqual({author: "Eric", quote: "Alo", likes: 0});
-            expect(_scope.quotesKeeper[0]).toEqual({author: "Eric", quote: "Alo", likes: 0});
+            expect(_scope.quotes[0].author).toEqual("Eric");
+            expect(_scope.quotes[0].quote).toEqual("Alo");
+            expect(_scope.quotes[0].likes).toEqual(0);
+
+            expect(_scope.quotesKeeper[0].author).toEqual("Eric");
+            expect(_scope.quotesKeeper[0].quote).toEqual("Alo");
+            expect(_scope.quotesKeeper[0].likes).toEqual(0);
         }))
     })
 
@@ -113,9 +119,9 @@ describe('QuotesController', function()
 
         it('should NOT substitute the existing object with the retrieved object from the server - empty response from the server', inject(function($controller)
         {
-            var _allQuotesFromServer = {quotes: [{_id: '0123', author: 'algumaPessoa', quote: 'abc', likes: 0},
-                {_id: '1123', author: 'outraPessoa', quote: 'abc', likes: 0},
-                {_id: 'a123', author: 'eu', quote: 'blablabla', likes: 99}]};
+            var _allQuotesFromServer = [{_id: '0123', author: 'algumaPessoa', quote: 'abc', likes: 0},
+                                        {_id: '1123', author: 'outraPessoa', quote: 'abc', likes: 0},
+                                        {_id: 'a123', author: 'eu', quote: 'blablabla', likes: 99}];
 
             var _specificQuoteFromServer = {};
 
@@ -134,9 +140,9 @@ describe('QuotesController', function()
 
         it('should NOT substitute the existing object with the retrieved object from the server - no updated object retrieved', inject(function($controller)
         {
-            var _allQuotesFromServer = {quotes: [{_id: '0123', author: 'algumaPessoa', quote: 'abc', likes: 0},
-                {_id: '1123', author: 'outraPessoa', quote: 'abc', likes: 0},
-                {_id: 'a123', author: 'eu', quote: 'blablabla', likes: 99}]};
+            var _allQuotesFromServer = [{_id: '0123', author: 'algumaPessoa', quote: 'abc', likes: 0},
+                                        {_id: '1123', author: 'outraPessoa', quote: 'abc', likes: 0},
+                                        {_id: 'a123', author: 'eu', quote: 'blablabla', likes: 99}];
 
             var _specificQuoteFromServer = {updated: {}};
 
@@ -155,9 +161,9 @@ describe('QuotesController', function()
 
         it('should NOT substitute the existing object with the retrieved object from the server - no id retrieved', inject(function($controller)
         {
-            var _allQuotesFromServer = {quotes: [{_id: '0123', author: 'algumaPessoa', quote: 'abc', likes: 0},
-                                                 {_id: '1123', author: 'outraPessoa', quote: 'abc', likes: 0},
-                                                 {_id: 'a123', author: 'eu', quote: 'blablabla', likes: 99}]};
+            var _allQuotesFromServer = [{_id: '0123', author: 'algumaPessoa', quote: 'abc', likes: 0},
+                                        {_id: '1123', author: 'outraPessoa', quote: 'abc', likes: 0},
+                                        {_id: 'a123', author: 'eu', quote: 'blablabla', likes: 99}];
 
             var _specificQuoteFromServer = {updated: {author: 'eu', quote: 'blablabla', likes: 100}};
 
@@ -176,11 +182,11 @@ describe('QuotesController', function()
 
         it('should substitute the existing object with the retrieved object from the server', inject(function($controller)
         {
-            var _allQuotesFromServer = {quotes: [{_id: '0123', author: 'algumaPessoa', quote: 'abc', likes: 0},
-                                                 {_id: '1123', author: 'outraPessoa', quote: 'abc', likes: 0},
-                                                 {_id: 'a123', author: 'eu', quote: 'blablabla', likes: 99}]};
+            var _allQuotesFromServer = [{_id: '0123', author: 'algumaPessoa', quote: 'abc', likes: 0},
+                                        {_id: '1123', author: 'outraPessoa', quote: 'abc', likes: 0},
+                                        {_id: 'a123', author: 'eu', quote: 'blablabla', likes: 99}];
 
-            var _specificQuoteFromServer = {updated: {_id: 'a123', author: 'eu', quote: 'blablabla', likes: 100}};
+            var _specificQuoteFromServer = {_id: 'a123', author: 'eu', quote: 'blablabla', likes: 100};
 
             _httpMock.expectGET('/api/quotes').respond(_allQuotesFromServer);
             _httpMock.expectPUT('/api/quotes/a123').respond(_specificQuoteFromServer);
