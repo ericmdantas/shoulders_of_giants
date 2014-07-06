@@ -9,7 +9,8 @@
   "dependencies": {
     "express": "~3.4.7",
     "mongoose": "~3.8.3",
-    "newrelic": "~1.7.0"
+    "newrelic": "~1.7.0",
+    "q": "^1.0.1"
   },
   "devDependencies": {
     "chai": "^1.9.1",

@@ -9,13 +9,27 @@ QuotesController.prototype =
 {
     getAllQuotes : function(req, res)
                    {
-                       function _callback(err, quotes)
+                       function _successCallback(quotes)
                        {
-                           err ? res.json({error: err}) : res.json(quotes);
+                           res.json(quotes);
+                       }
+
+                       function _errorCallback(erro)
+                       {
+                           res.json({error: err});
+                       }
+
+                       function _exceptionCallback(ex)
+                       {
+                           res.json({error: ex});
                        }
 
                        var _quote = new QuotesModel();
-                       _quote.getQuotes(_callback);
+
+                       _quote
+                           .getQuotes()
+                           .then(_successCallback, _errorCallback)
+                           .fail(_exceptionCallback);
                    },
 
     favSpecificQuote : function(req, res)
@@ -28,13 +42,27 @@ QuotesController.prototype =
                                return;
                            }
 
-                           var _callback = function(err, updated)
+                           var _successCallback = function(updated)
                            {
-                               err ? res.json({error: err}) : res.json(updated);
+                               res.json(updated);
+                           }
+
+                           var _errorCallback = function(err)
+                           {
+                               res.json({error: err});
+                           }
+
+                           var _exceptionCallback = function(ex)
+                           {
+                               res.json({error: ex});
                            }
 
                            var _quote = new QuotesModel();
-                           _quote.favSpecificQuote(quoteId, _callback);
+
+                           _quote
+                               .favSpecificQuote(quoteId)
+                               .then(_successCallback, _errorCallback)
+                               .fail(_exceptionCallback);
                        },
 
     getQuotesOrdered : function(req, res)
@@ -47,19 +75,27 @@ QuotesController.prototype =
                                 return;
                             }
 
-                           var _callback = function(err, quotes)
+                           var _successCallback = function(quotes)
                            {
-                                if (err)
-                                {
-                                    res.json({error: 'Houve um erro no momento da ordenação das frases.'});
-                                    return;
-                                }
-
                                 res.json(quotes);
                            }
 
+                           var _errorCallback = function(err)
+                           {
+                               res.json({error: 'Houve um erro no momento da ordenação das frases.'});
+                           }
+
+                           var _exceptionCallback = function(err)
+                           {
+                               res.json(err)
+                           }
+
                            var _quote = new QuotesModel();
-                           _quote.getQuotesOrderedBy(_order, _callback);
+
+                           _quote
+                               .getQuotesOrderedBy(_order)
+                               .then(_successCallback, _errorCallback)
+                               .fail(_exceptionCallback);
                        }
 }
 

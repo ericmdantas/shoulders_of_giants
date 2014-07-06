@@ -31,24 +31,26 @@ describe('quotes', function()
     {
         it('should be no errors', function(done)
         {
-            _quote.getQuotes(function(err, quotes)
-                             {
-                                 expect(err).to.not.be.defined;
-                                 expect(quotes).to.have.length(11);
-                                 done();
-                             })
+            _quote
+                .getQuotes()
+                .then(function(quotes)
+                     {
+                         expect(quotes).to.have.length(11);
+                         done();
+                     })
         })
 
         it('should return the object correctly', function(done)
         {
-            _quote.getQuotes(function(err, quotes)
-                              {
-                                    expect(err).to.not.be.defined;
-                                    expect(quotes[0]).to.have.property('author').and.to.equal("eric0");
-                                    expect(quotes[0]).to.have.property('quote').and.to.equal("mensagem0");
-                                    expect(quotes[0]).to.have.property('likes').and.to.equal(0);
-                                    done();
-                              });
+            _quote
+                .getQuotes()
+                .then(function(quotes)
+                      {
+                            expect(quotes[0]).to.have.property('author').and.to.equal("eric0");
+                            expect(quotes[0]).to.have.property('quote').and.to.equal("mensagem0");
+                            expect(quotes[0]).to.have.property('likes').and.to.equal(0);
+                            done();
+                      });
         })
     })
 
@@ -58,14 +60,17 @@ describe('quotes', function()
         {
             var _wrongParams = [null, undefined, function(){}, true, false, 1, 0, {}, []];
 
+            var _errorCallback = function(err)
+            {
+                expect(err).to.be.defined;
+                expect(err instanceof Error).to.be.true;
+            }
+
             for (var i = 0; i < _wrongParams.length; i++)
             {
-                _quote.favSpecificQuote(_wrongParams[i], function(err, updated)
-                {
-                    expect(err).to.be.defined;
-                    expect(err instanceof Error).to.be.true;
-                    expect(updated).to.not.be.defined;
-                })
+                _quote
+                    .favSpecificQuote(_wrongParams[i])
+                    .then(undefined, _errorCallback);
             }
 
             done();
@@ -75,25 +80,32 @@ describe('quotes', function()
         {
             var _id = '535d85946ab81777bf583d26';
 
-            _quote.favSpecificQuote(_id, function(err, updated)
+            var _resolvedCallback = function(updated)
             {
-                expect(err).to.not.be.defined;
                 expect(updated).to.be.defined;
                 expect(updated).to.have.property('likes').and.to.equal(1);
+
                 done();
-            })
+            }
+
+            _quote
+                .favSpecificQuote(_id)
+                .then(_resolvedCallback);
         })
 
         it('should increment by one the third quote correctly', function(done)
         {
             var _id = '535d85946ab81777bf583d28';
 
-            _quote.favSpecificQuote(_id, function(err, updated)
+            var _successCallback = function(updated)
             {
-                expect(err).to.not.be.defined;
                 expect(updated).to.have.property('likes').and.to.equal(4);
                 done();
-            })
+            }
+
+            _quote
+                .favSpecificQuote(_id)
+                .then(_successCallback);
         })
     })
 
@@ -101,18 +113,20 @@ describe('quotes', function()
     {
         it('should throw an error, no order specified', function(done)
         {
-            var _wrongParams = [null, undefined, 1, 0, '', '   ', {}, [], function(){}];
-
-            var _callback = function(err, quotes)
+            var _rejectCallback = function(err)
             {
                 expect(err).to.be.defined;
                 expect(err).to.be.an.instanceof(Error);
                 expect(err).to.match(/Não é possível ordenar .+ Parâmetro order errado./);
             }
 
+            var _wrongParams = [null, undefined, 1, 0, '', '   ', {}, [], function(){}];
+
             for (var i = 0; i < _wrongParams.length; i++)
             {
-                _quote.getQuotesOrderedBy(_wrongParams[i], _callback);
+                _quote
+                    .getQuotesOrderedBy(_wrongParams[i])
+                    .then(undefined, _rejectCallback)
             }
 
             done();
@@ -122,9 +136,8 @@ describe('quotes', function()
         {
             var _order = 'author';
 
-            var _callback = function(err, quotes)
+            var _successCallback = function(quotes)
             {
-                expect(err).to.not.be.defined;
                 expect(quotes).to.be.defined;
                 expect(quotes).to.have.length(11);
                 expect(quotes[0].author).to.equal('eric0');
@@ -133,16 +146,17 @@ describe('quotes', function()
                 done();
             }
 
-            _quote.getQuotesOrderedBy(_order, _callback);
+            _quote
+                .getQuotesOrderedBy(_order)
+                .then(_successCallback);
         })
 
         it('should return ordered by author desc', function(done)
         {
             var _order = '-author';
 
-            var _callback = function(err, quotes)
+            var _successCallback = function(quotes)
             {
-                expect(err).to.not.be.defined;
                 expect(quotes).to.be.defined;
                 expect(quotes).to.have.length(11);
                 expect(quotes[0].author).to.equal('eric9');
@@ -151,16 +165,17 @@ describe('quotes', function()
                 done();
             }
 
-            _quote.getQuotesOrderedBy(_order, _callback);
+            _quote
+                .getQuotesOrderedBy(_order)
+                .then(_successCallback);
         })
 
         it('should return ordered by quote asc', function(done)
         {
             var _order = 'quote';
 
-            var _callback = function(err, quotes)
+            var _successCallback = function(quotes)
             {
-                expect(err).to.not.be.defined;
                 expect(quotes).to.be.defined;
                 expect(quotes).to.have.length(11);
                 expect(quotes[0].author).to.equal('eric0');
@@ -169,16 +184,17 @@ describe('quotes', function()
                 done();
             }
 
-            _quote.getQuotesOrderedBy(_order, _callback);
+            _quote
+                .getQuotesOrderedBy(_order)
+                .then(_successCallback);
         })
 
         it('should return ordered by quote desc', function(done)
         {
             var _order = '-quote';
 
-            var _callback = function(err, quotes)
+            var _successCallback = function(quotes)
             {
-                expect(err).to.not.be.defined;
                 expect(quotes).to.be.defined;
                 expect(quotes).to.have.length(11);
                 expect(quotes[0].author).to.equal('eric9');
@@ -187,16 +203,17 @@ describe('quotes', function()
                 done();
             }
 
-            _quote.getQuotesOrderedBy(_order, _callback);
+            _quote
+                .getQuotesOrderedBy(_order)
+                .then(_successCallback);
         })
 
         it('should return ordered by likes asc', function(done)
         {
             var _order = 'likes';
 
-            var _callback = function(err, quotes)
+            var _successCallback = function(quotes)
             {
-                expect(err).to.not.be.defined;
                 expect(quotes).to.be.defined;
                 expect(quotes).to.have.length(11);
                 expect(quotes[0].author).to.equal('eric0');
@@ -205,16 +222,17 @@ describe('quotes', function()
                 done();
             }
 
-            _quote.getQuotesOrderedBy(_order, _callback);
+            _quote
+                .getQuotesOrderedBy(_order)
+                .then(_successCallback);
         })
 
         it('should return ordered by likes desc', function(done)
         {
             var _order = '-likes';
 
-            var _callback = function(err, quotes)
+            var _successCallback = function(quotes)
             {
-                expect(err).to.not.be.defined;
                 expect(quotes).to.be.defined;
                 expect(quotes).to.have.length(11);
                 expect(quotes[0].author).to.equal('eric9');
@@ -223,16 +241,17 @@ describe('quotes', function()
                 done();
             }
 
-            _quote.getQuotesOrderedBy(_order, _callback);
+            _quote
+                .getQuotesOrderedBy(_order)
+                .then(_successCallback);
         })
 
         it('should return ordered by likes desc - ALL ON CAPS', function(done)
         {
             var _order = '-LIKES';
 
-            var _callback = function(err, quotes)
+            var _successCallback = function(quotes)
             {
-                expect(err).to.not.be.defined;
                 expect(quotes).to.be.defined;
                 expect(quotes).to.have.length(11);
                 expect(quotes[0].author).to.equal('eric9');
@@ -241,7 +260,9 @@ describe('quotes', function()
                 done();
             }
 
-            _quote.getQuotesOrderedBy(_order, _callback);
+            _quote
+                .getQuotesOrderedBy(_order)
+                .then(_successCallback);
         })
     })
 })

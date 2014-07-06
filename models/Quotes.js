@@ -1,6 +1,6 @@
 "use strict";
 
-(function(mongoose, lib)
+(function(mongoose, Q, lib)
 {
     var quoteSchema = mongoose.Schema
         ({
@@ -11,65 +11,75 @@
 
     quoteSchema.methods =
     {
-        getQuotes : function(done)
+        getQuotes : function()
                     {
+                        var deferred = Q.defer();
+
                         var _query = {};
                         var _projection = {};
 
-                        Quote.find(_query, _projection)
+                        Quote
+                            .find(_query, _projection)
                             .sort('quote')
                             .exec(function(err, quotes)
                             {
-                                if (err)
-                                    return done(err, null);
-
-                                return done(null, quotes);
+                                err ? deferred.reject(err)
+                                    : deferred.resolve(quotes);
                             })
+
+                        return deferred.promise;
                     },
 
-        favSpecificQuote : function(id, done)
+        favSpecificQuote : function(id)
                            {
-                               if (lib.isStringInvalid(id))
-                                   return done(new Error('Impossível favoritar mensagem. Id deve ser uma string.'), null);
+                               var deferred = Q.defer();
 
-                               if (lib.isFunctionInvalid(done))
-                                   return done(new Error('Impossível favoritar mensagem. Callback não é uma função válida.', null));
+                               if (lib.isStringInvalid(id))
+                               {
+                                   deferred.reject(new Error('Impossível favoritar mensagem. Id deve ser uma string.'));
+                                   return deferred.promise;
+                               }
+
 
                                var _query = {_id: id};
                                var _updt = {$inc: {likes: 1}};
 
-                               Quote.findOneAndUpdate(_query, _updt)
+                               Quote
+                                   .findOneAndUpdate(_query, _updt)
                                    .exec(function(err, updated)
                                    {
-                                       if (err)
-                                           return done(err, null);
-
-                                       return done(null, updated);
+                                       err ? deferred.reject(err)
+                                           : deferred.resolve(updated);
                                    })
+
+                               return deferred.promise;
                            },
 
-        getQuotesOrderedBy : function(order, done)
+        getQuotesOrderedBy : function(order)
                              {
-                                    if (lib.isStringInvalid(order))
-                                        return done(new Error('Não é possível ordenar as frases com o parâmetro passado. Parâmetro order errado.'), null);
+                                    var deferred = Q.defer();
 
-                                    if (lib.isFunctionInvalid(done))
-                                        return done(new Error('Não é possível ordenar as frases com a callback passada.', null));
+                                    if (lib.isStringInvalid(order))
+                                    {
+                                        deferred.reject(new Error('Não é possível ordenar as frases com o parâmetro passado. Parâmetro order errado.'));
+                                        return deferred.promise;
+                                    }
 
                                     var _order = order.toLowerCase();
 
                                     var _query = {};
                                     var _projection = {};
 
-                                    Quote.find(_query, _projection)
+                                    Quote
+                                        .find(_query, _projection)
                                         .sort(_order)
                                         .exec(function(err, quotes)
                                         {
-                                            if (err)
-                                                return done(err, null);
-
-                                            return done(null, quotes);
+                                            err ? deferred.reject(err)
+                                                : deferred.resolve(quotes);
                                         })
+
+                                    return deferred.promise;
                              }
     }
 
@@ -77,4 +87,5 @@
     module.exports = Quote;
 
 }(require('mongoose'),
+  require('q'),
   require('../public/js/application/lib/lib')))
