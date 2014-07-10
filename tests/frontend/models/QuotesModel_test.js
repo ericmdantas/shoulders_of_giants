@@ -1,22 +1,22 @@
 "use strict";
 
-describe('QuotesService', function()
+describe('QuotesModel', function()
 {
-    var _httpMock, QuotesService;
+    var _httpMock, _quote;
 
     beforeEach(module('quotes'));
     beforeEach(inject(function($injector)
     {
         _httpMock = $injector.get('$httpBackend');
-        QuotesService = $injector.get('QuotesService');
+        _quote = new ($injector.get('QuotesModel'))();
     }))
 
-    describe('getQuotes', function()
+    describe('getAll', function()
     {
         it('should fetch request correctly', function()
         {
             _httpMock.expectGET('/api/quotes').respond();
-            QuotesService.getQuotes();
+            _quote.getAll();
             _httpMock.flush();
         })
     })
@@ -31,7 +31,7 @@ describe('QuotesService', function()
             {
                 expect(function()
                 {
-                    QuotesService.favQuote(_wrongParam[i]);
+                    _quote.favQuote(_wrongParam[i]);
                 }).toThrow(new Error('O id passado não é uma string válida. Não será possível favoritar a mensagem [service].'));
             }
         })
@@ -41,12 +41,12 @@ describe('QuotesService', function()
             _httpMock.expectPUT('/api/quotes/a123').respond();
             var _id = 'a123';
 
-            QuotesService.favQuote(_id);
+            _quote.favQuote(_id);
             _httpMock.flush();
         })
     })
 
-    describe('getQuotesOrdered', function()
+    describe('getAllOrdered', function()
     {
         it('should throw an error - wrong sort param', function()
         {
@@ -56,7 +56,7 @@ describe('QuotesService', function()
             {
                 expect(function()
                 {
-                    QuotesService.getQuotesOrdered(_wrongParams[i])
+                    _quote.getOrdered(_wrongParams[i])
                 }).toThrow(new Error('A ordem passada não é válida. Não será possível fazer a ordenação.'));
             }
         })
@@ -66,7 +66,7 @@ describe('QuotesService', function()
             _httpMock.expectGET('/api/quotes/ordered?sort=author').respond();
             var _order = 'author';
 
-            QuotesService.getQuotesOrdered(_order);
+            _quote.getOrdered(_order);
             _httpMock.flush();
         })
     })

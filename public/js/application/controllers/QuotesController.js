@@ -1,9 +1,10 @@
 "use strict";
 
-quotesApp.controller('QuotesController', ['$scope', 'QuotesService', function($scope, QuotesService)
+quotesApp.controller('QuotesController', ['$scope', 'QuotesModel', function($scope, QuotesModel)
 {
     $scope.quotes = [];
     $scope.quotesKeeper = [];
+    var _quote = new QuotesModel();
 
     $scope.setOrder = function(order)
     {
@@ -23,8 +24,8 @@ quotesApp.controller('QuotesController', ['$scope', 'QuotesService', function($s
             $scope.$broadcast('QuotesReady');
         }
 
-        QuotesService
-            .getQuotes()
+        _quote
+            .getAll()
             .then(_onSuccess);
     }
 
@@ -52,7 +53,7 @@ quotesApp.controller('QuotesController', ['$scope', 'QuotesService', function($s
             }
         };
 
-        QuotesService
+        _quote
             .favQuote(id)
             .then(_onSuccess);
     }
@@ -82,6 +83,6 @@ quotesApp.controller('QuotesController', ['$scope', 'QuotesService', function($s
         $scope.quotes = [$scope.quotesKeeper[_random]];
     }
 
-    _getQuotes();
     $scope.setOrder('author');
+    _getQuotes();
 }])
