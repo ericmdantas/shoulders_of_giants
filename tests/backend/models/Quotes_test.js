@@ -12,6 +12,7 @@ describe('quotes', function()
 
     before(function()
     {
+        mongoose.models = {};
         mongoose.connect(db.db.test.url);
         mongoose.connection.on('error', function() {});
     })
