@@ -2,10 +2,22 @@
 
 quotesApp.factory('QuotesModel', ['QuotesResource', function(QuotesResource)
 {
-    function Quotes(){}
+    var _defaultObject = {author: null,
+                          quote: null,
+                          likes: 0};
+
+    function Quotes(info)
+    {
+        info ? this.setInfo(info) : this.setInfo(_defaultObject);
+    }
 
     Quotes.prototype =
     {
+        setInfo: function(info)
+        {
+            angular.extend(info);
+        },
+
         getAll : function ()
                 {
                     return QuotesResource
@@ -31,7 +43,6 @@ quotesApp.factory('QuotesModel', ['QuotesResource', function(QuotesResource)
             return QuotesResource
                 .update({id: id})
                 .$promise;
-
         }
     }
 

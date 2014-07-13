@@ -29,7 +29,8 @@ QuotesController.prototype =
                        _quote
                            .getQuotes()
                            .then(_successCallback, _errorCallback)
-                           .fail(_exceptionCallback);
+                           .fail(_exceptionCallback)
+                           .done();
                    },
 
     favSpecificQuote : function(req, res)
@@ -62,7 +63,8 @@ QuotesController.prototype =
                            _quote
                                .favSpecificQuote(quoteId)
                                .then(_successCallback, _errorCallback)
-                               .fail(_exceptionCallback);
+                               .fail(_exceptionCallback)
+                               .done();
                        },
 
     getQuotesOrdered : function(req, res)
@@ -95,7 +97,8 @@ QuotesController.prototype =
                            _quote
                                .getQuotesOrderedBy(_order)
                                .then(_successCallback, _errorCallback)
-                               .fail(_exceptionCallback);
+                               .fail(_exceptionCallback)
+                               .done();
                        }
 }
 
