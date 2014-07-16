@@ -1,7 +1,5 @@
 "use strict";
 
-var fs = require('fs');
-
 function ContentController(){}
 
 ContentController.prototype =
