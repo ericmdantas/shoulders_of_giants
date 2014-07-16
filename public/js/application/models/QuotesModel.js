@@ -21,8 +21,8 @@ quotesApp.factory('QuotesModel', ['QuotesResource', function(QuotesResource)
         getAll : function ()
                 {
                     return QuotesResource
-                        .query()
-                        .$promise;
+                            .query()
+                            .$promise;
                 },
 
         getOrdered : function (order)
@@ -41,8 +41,8 @@ quotesApp.factory('QuotesModel', ['QuotesResource', function(QuotesResource)
                 throw new Error('O id passado não é uma string válida. Não será possível favoritar a mensagem [service].');
 
             return QuotesResource
-                .update({id: id})
-                .$promise;
+                    .update({id: id})
+                    .$promise;
         }
     }
 

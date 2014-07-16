@@ -1,4 +1,6 @@
-var configurator = (function(morgan)
+"use strict";
+
+(function(morgan)
 {
     function configuracaoInicial(application, exp, dir)
     {
@@ -6,8 +8,6 @@ var configurator = (function(morgan)
         application.use(morgan('dev'));
     }
 
-    return {me: configuracaoInicial}
+    exports.me = configuracaoInicial;
 
 }(require('morgan')))
-
-exports.me = configurator.me;

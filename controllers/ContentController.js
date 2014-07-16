@@ -9,12 +9,10 @@ ContentController.prototype =
     index: function(req, res)
            {
                res.setHeader('Content-Type', 'text/html');
-               fs.readFile('views/index.html', function(err, obj)
+               res.sendfile('views/index.html', function(err)
                {
                    if (err)
                        throw err;
-
-                   res.send(obj);
                })
            }
 }
