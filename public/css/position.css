@@ -5,7 +5,7 @@
 #to-the-top {left: 1em;}
 #selected-order {right: 1em;}
 #to-the-top, #selected-order {position: fixed; bottom: 1em; padding: 1em;}
-#randomize {padding: .5em; margin-top: 0;}
+#randomize {padding: .3em 1em .8em; margin: 0 0 .2em 0; font-size: 5em; line-height: 0;}
 #main-header {text-align: center; padding-top: .2em; margin-top: 0;}
 #main-title {margin: .3em 0 0; font-size: 5em;}
 
