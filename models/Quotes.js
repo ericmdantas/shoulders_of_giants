@@ -1,15 +1,8 @@
 "use strict";
 
-(function(mongoose, Q, lib)
+(function(mongoose, Q, lib, quotesSchema)
 {
-    var quoteSchema = mongoose.Schema
-        ({
-            quote: {type: String, trim: true, required: true, index: true},
-            author: {type: String, trim: true, required: true, index: true},
-            likes: {type: Number, trim: true, required: true, index: true}
-        });
-
-    quoteSchema.methods =
+    quotesSchema.methods =
     {
         getQuotes : function()
                     {
@@ -83,9 +76,10 @@
                              }
     }
 
-    var Quote = mongoose.model('Quote', quoteSchema);
+    var Quote = mongoose.model('Quote', quotesSchema);
     module.exports = Quote;
 
 }(require('mongoose'),
   require('q'),
-  require('../public/js/application/lib/lib')))
+  require('../public/js/application/lib/lib'),
+  require('../schemas/quotesSchema').quotesSchema))

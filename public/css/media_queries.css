@@ -11,7 +11,7 @@
     #options ul {background-color: transparent; border-bottom: none; padding: 0;}
     #options li:last-child {margin-bottom: 1em;}
     #filter ul {margin: 0;}
-    #navigation, #filter, #type-of-visualization {opacity: .5;}
+    #navigation, #filter, #type-of-visualization, #contact {opacity: .5;}
     #to-the-top {left: 1em;}
     #main-header {padding: 0;}
     #main-header, .quotes-container {width: 75%; position: absolute; right: 0; margin: 1em 1em 0 0;}

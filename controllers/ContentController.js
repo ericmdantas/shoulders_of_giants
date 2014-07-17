@@ -15,5 +15,4 @@ ContentController.prototype =
            }
 }
 
-
 module.exports = new ContentController();
