@@ -2,14 +2,18 @@
 
 describe('contact-directive', function()
 {
-    var _scope, _element, _compile;
+    var _scope, _element, _compile, _windowMock;
 
-    beforeEach(module('quotes'));
+    beforeEach(module('quotes', function($provide)
+    {
+        $provide.constant('$window', {location: {href: null}});
+    }));
 
     beforeEach(inject(function($injector)
     {
         _scope = $injector.get('$rootScope').$new();
         _compile = $injector.get('$compile');
+        _windowMock = $injector.get('$window');
 
         var _html = '<contact></contact>';
 
@@ -32,6 +36,8 @@ describe('contact-directive', function()
         it('should activate the feedback/contact on click', function()
         {
             _element.click();
+
+            expect(_windowMock.location.href).toEqual('https://github.com/ericmdantas');
         })
     })
 })

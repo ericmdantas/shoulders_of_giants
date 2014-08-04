@@ -1,6 +1,6 @@
 "use strict";
 
-quotesApp.directive('contact', ['$window', function($window)
+quotesApp.directive('contact', ['$window', 'author', function($window, author)
 {
     var _template = '<div id="contact" class="text-centered transition">' +
                           '<div>'+
@@ -12,7 +12,7 @@ quotesApp.directive('contact', ['$window', function($window)
     {
         element.on('click', function()
         {
-            console.log('sending feedback!');
+            $window.location.href = author.github;
         })
     }
 
