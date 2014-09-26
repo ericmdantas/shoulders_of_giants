@@ -3,7 +3,10 @@
 #to-the-top:hover, #selected-order:hover {cursor: pointer; opacity: .7;}
 #randomize:hover {cursor: pointer;}
 #randomize:active {background-color: gold; color: snow;}
+#emd-options .btn-options:active {color: gold; outline: none;}
+#emd-options .btn-options:focus {outline: none;}
 
+.hand:hover {cursor: pointer;}
 .cards:hover {border-color: lightgray; background-color: #fafbfc;}
 .cards:hover .author {color: #777;}
 .cards:hover .like {opacity: 1;}

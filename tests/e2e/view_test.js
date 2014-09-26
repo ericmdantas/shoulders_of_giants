@@ -13,7 +13,7 @@ describe('view', function()
 
         it('should have the right header title', function()
         {
-            expect(element(by.id('main-title')).getText()).toEqual('shoulders of giants')
+            expect($('#logo').isPresent()).toBeTruthy();
         })
 
         it('the options should exist', function()
@@ -24,11 +24,6 @@ describe('view', function()
         it('the options should exist', function()
         {
             expect($('navigation').isDisplayed()).toBeTruthy();
-        })
-
-        it('the options should exist', function()
-        {
-            expect($('filter').isDisplayed()).toBeTruthy();
         })
 
         it('the options should exist', function()
@@ -45,12 +40,10 @@ describe('view', function()
                 .click()
                 .then(function()
                 {
-                    expect($('type-of-visualization ul').getAttribute('style')).toContain('block');
+                    browser.sleep(1000); // because of fade effect
 
-                    browser.sleep(2000); // because of fade effect
-
-                    expect($('navigation ul').getAttribute('style')).toContain('none');
-                    expect($('filter ul').getAttribute('style')).toContain('none');
+                    expect($('#emd-blanket').getAttribute('style')).not.toContain('none');
+                    expect($('#emd-options').getAttribute('style')).not.toContain('none');
                 })
         })
     })
@@ -59,65 +52,46 @@ describe('view', function()
     {
         it('should click on the view tab and it should open', function()
         {
-            element(by.tagName('navigation'))
+            $('#emd-blanket')
                 .click()
                 .then(function()
                 {
-                    expect($('navigation ul').getAttribute('style')).toContain('block');
+                    browser.sleep(1000);
 
-                    browser.sleep(2000); // because of fade effect
+                    element(by.tagName('navigation'))
+                        .click()
+                        .then(function()
+                        {
+                            browser.sleep(1000); // because of fade effect
 
-                    expect($('type-of-visualization ul').getAttribute('style')).toContain('none');
-                    expect($('filter ul').getAttribute('style')).toContain('none');
+                            expect($('#emd-blanket').getAttribute('style')).not.toContain('none');
+                            expect($('#emd-options').getAttribute('style')).not.toContain('none');
+
+                            $('#emd-blanket').click();
+                        })
                 })
         })
     })
 
     describe('filter', function()
     {
-        it('should click on the view tab and it should open', function()
+        afterEach(function()
         {
-            element(by.tagName('filter'))
-                .click()
-                .then(function()
-                {
-                    browser.sleep(2000); // because of fade effect
-
-                    expect($('filter ul').getAttribute('style')).toContain('block');
-
-                    expect($('type-of-visualization ul').getAttribute('style')).toContain('none');
-                    expect($('navigation ul').getAttribute('style')).toContain('none');
-                })
+            $('.filter').clear();
         })
 
         it('start to filter something - zero results', function()
         {
-            element(by.tagName('filter'))
-                .click()
-                .then(function()
-                {
-                    browser.sleep(2000);
+            $('.filter').sendKeys('abcdef');
 
-                    $('filter .filter').sendKeys('abcdef');
-
-                    expect(element(by.className('cards')).isPresent()).toBeFalsy();
-
-                    $('filter .filter').clear();
-                })
+            expect(element(by.className('cards')).isPresent()).toBeFalsy();
         })
 
         it('start to filter something', function()
         {
-            element(by.tagName('filter'))
-                .click()
-                .then(function()
-                {
-                    browser.sleep(2000);
+            $('.filter').sendKeys('courage');
 
-                    $('filter .filter').sendKeys('courage');
-
-                    expect(element(by.className('cards')).isPresent()).toBeTruthy();
-                })
+            expect(element(by.className('cards')).isPresent()).toBeTruthy();
         })
     })
 })

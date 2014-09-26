@@ -1,3 +1,4 @@
+#logo {border: 5px solid goldenrod; background-color: #eee;}
 #navigation {opacity: 1;}
 #navigation ul, #type-of-visualization ul {padding: 1em; background-color: rgba(128, 117, 10, .3); border-bottom: 3px solid gold;}
 #navigation li, #filter li, #type-of-visualization li {font-size: 1.2em; background-color: white; border-radius: 3px;}
@@ -6,7 +7,12 @@
 #to-the-top, #selected-order {background-color: black; color: white; opacity: .4;}
 #randomize {background-color: #fafbfc; color: gold; text-shadow: 1px 1px gray; border-radius: 4px; font-family: "entypo";}
 #main-header {background-color: gold; color: #444; font-family: "CalligraPhillip"; border-radius: 3px;}
+#emd-blanket {background-color: black; opacity: .8;}
+#emd-options {background-color: aliceblue; font-size: 2em; color: rgb(202, 152, 26);}
+#emd-options .title-options {border-bottom: 2px solid goldenrod; background-color: rgba(255, 215, 0, 0.54);}
+#emd-options .btn-options {color: #777; background-color: transparent; border: none; outline: 0; }
 
+.search {font-family: "entypo"; font-size: 2.3em;}
 .filter {color: #555; border: 1px solid lightgray; border-radius: 4px;}
 .number-likes {opacity: .2; color: #aaa;}
 .like {border-radius: 100%; opacity: .2;}

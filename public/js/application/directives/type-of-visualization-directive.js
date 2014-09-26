@@ -1,25 +1,10 @@
 "use strict";
 
-quotesApp.directive('typeOfVisualization', function()
+quotesApp.directive('typeOfVisualization', ['$rootScope', function($rootScope)
 {
     var _template = '<div id="type-of-visualization" class="text-centered transition">' +
                         '<div>'+
-                            '<h3 class="title" toggle="ul">View</h3>'+
-                            '<ul>'+
-                                '<li class="transition active" ' +
-                                    'id="multiple-view" ' +
-                                    'ng-click="setMultiple()" ' +
-                                    'activable deactive="#type-of-visualization li" ' +
-                                    'session-manager="multiple" '+
-                                    '>multiple' +
-                                '</li>'+
-
-                                '<li class="transition" ' +
-                                     'id="single-view" ' +
-                                     'session-manager="single" '+
-                                     'ng-click="setSingle(quotes)" activable deactive="#type-of-visualization li">single' +
-                                '</li>'+
-                            '</ul>'+
+                            '<h3 class="title">View</h3>'+
                         '</div>'+
                     '</div>';
 
@@ -27,20 +12,27 @@ quotesApp.directive('typeOfVisualization', function()
     {
         scope.singleView = false;
 
-        element.find('#multiple-view').on('click', function()
+        element.on('click', function()
         {
-            scope.$apply(function()
-            {
-                scope.singleView = false;
-            })
-        })
-
-        element.find('#single-view').on('click', function()
-        {
-            scope.$apply(function()
+            var _setSingle = function()
             {
                 scope.singleView = true;
-            })
+                scope.setSingle(scope.quotes);
+            }
+
+            var _setMultiple = function()
+            {
+                scope.singleView = false;
+                scope.setMultiple();
+            }
+
+            var _obj = {title: 'TYPE OF VISUALIZATION',
+                        content: [{name: 'single',
+                                   action: _setSingle},
+                                  {name: 'multiple',
+                                   action: _setMultiple}]};
+
+            $rootScope.$broadcast('emd:build-options', _obj);
         })
     }
 
@@ -49,4 +41,4 @@ quotesApp.directive('typeOfVisualization', function()
                 template: _template,
                 link: _link
            }
-})
+}])

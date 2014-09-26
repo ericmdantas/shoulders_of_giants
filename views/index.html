@@ -12,13 +12,16 @@
     </head>
     <body ng-controller="QuotesController">
         <div id="main-header">
-            <h1 id="main-title">shoulders of giants</h1>
+            <h1 id="main-title" class="invisible-mobile">shoulders of giants</h1>
+            <div id="logo" class="visible-mobile">
+                <img src="img/talk_idea.svg" title="shoulders of giants"/>
+            </div>
         </div>
 
-        <div id="options">
+        <div id="options" align="center">
             <type-of-visualization class="not-selectable"></type-of-visualization>
             <navigation ng-hide="singleView" class="not-selectable"></navigation>
-            <filter ng-hide="singleView" class="not-selectable"></filter>
+            <filter ng-hide="singleView" class="not-selectable invisible-mobile"></filter>
             <contact></contact>
         </div>
 
@@ -34,6 +37,11 @@
                     </div>
                 </div>
 
+                <div id="filter-container" ng-hide="singleView">
+                    <input type="text" ng-model="search.quote" class="filter" placeholder="I wanna read about.." maxlength="22"/>
+                    <span class="search">ô</span>
+                </div>
+
                 <div ng-repeat="q in quotes | orderBy: getOrder | filter: search track by $index" class="cards transition espaco-bottom">
                     <like liked="favQuote(q._id)" numberlikes="{{q.likes}}"></like>
                     <p class="quote"><span class="quotation-mark">"</span>{{q.quote}}<span class="quotation-mark">"</span></p>
@@ -43,7 +51,9 @@
         </div>
 
         <to-the-top></to-the-top>
+        <emd-options class="hidden"></emd-options>
         <div id="selected-order" class="visible-phone transition" ng-hide="singleView">ordered by: <strong>{{getOrder}}</strong></div>
+        <div id="emd-blanket" class="hidden" emd-blanket></div>
 
         <!-- frameworks -->
         <script type="text/javascript" src="js/frameworks/jquery-2.1.0.min.js"></script>
@@ -76,10 +86,10 @@
         <script type="text/javascript" src="js/application/directives/session-manager-directive.js"></script>
         <script type="text/javascript" src="js/application/directives/activable-directive.js"></script>
         <script type="text/javascript" src="js/application/directives/navigation-directive.js"></script>
-        <script type="text/javascript" src="js/application/directives/filter-directive.js"></script>
         <script type="text/javascript" src="js/application/directives/type-of-visualization-directive.js"></script>
-        <script type="text/javascript" src="js/application/directives/toggle-directive.js"></script>
         <script type="text/javascript" src="js/application/directives/to-the-top-directive.js"></script>
         <script type="text/javascript" src="js/application/directives/like-directive.js"></script>
+        <script type="text/javascript" src="js/application/directives/emd-blanket-directive.js"></script>
+        <script type="text/javascript" src="js/application/directives/emd-options-directive.js"></script>
     </body>
 </html>

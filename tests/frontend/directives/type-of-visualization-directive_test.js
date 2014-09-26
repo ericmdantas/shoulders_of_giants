@@ -29,38 +29,6 @@ describe('type-of-visualization-directive', function()
         {
             expect(_element.scope().singleView).toBeFalsy();
         })
-
-        it('should have the first li active', function()
-        {
-            expect(_element.find('li').eq(0).hasClass('active')).toBeTruthy();
-        })
-
-        it('should not have the second li active', function()
-        {
-            expect(_element.find('li').eq(1).hasClass('active')).toBeFalsy();
-        })
-    })
-
-    describe('checks if lis are being activated when clicked', function()
-    {
-        it('should have the first li active when clicked', function()
-        {
-            _element.find('li').eq(0).click();
-            expect(_element.find('li').eq(0).hasClass('active')).toBeTruthy();
-            expect(_element.find('li').eq(1).hasClass('active')).toBeFalsy();
-        })
-
-        /*
-
-        //TODO: CHECK HOW TO TEST THIS, SINCE IT WAS CREATED THE DIRECTIVE ACTIVABLE
-
-        it('should have the second li active when clicked', function()
-        {
-            _element.find('li').eq(1).click();
-
-            expect(_element.find('li').eq(0).hasClass('active')).toBeFalsy();
-            expect(_element.find('li').eq(1).hasClass('active')).toBeTruthy();
-        })*/
     })
 
     describe('multiple-view', function()
@@ -76,8 +44,7 @@ describe('type-of-visualization-directive', function()
     {
         it('should have singleView set true when clicked', function()
         {
-            _element.find('#single-view').click();
-            expect(_element.scope().singleView).toBeTruthy();
+            _element.click();
         })
     })
 })

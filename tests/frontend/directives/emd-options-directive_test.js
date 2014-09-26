@@ -1,6 +1,6 @@
 "use strict";
 
-describe('toggle-directive', function()
+describe('emd-options-directive', function()
 {
     var _scope, _element, _compile;
 
@@ -11,16 +11,15 @@ describe('toggle-directive', function()
         _scope = $injector.get('$rootScope').$new();
         _compile = $injector.get('$compile');
 
-        var _html = '<div toggle=".title"><div class="title">oi</div></div>';
+        var _html = '<emd-options></emd-options>';
 
         _element = angular.element(_html);
-
         _compile(_element)(_scope);
 
         _scope.$digest();
     }))
 
-    describe('check elements creation', function()
+    describe('creation', function()
     {
         it('should have element created', function()
         {
@@ -28,11 +27,15 @@ describe('toggle-directive', function()
         })
     })
 
-    describe('clicking should be working', function()
+    describe('click event', function()
     {
-        it('should click correctly', function()
+        it('should call the right event', function()
         {
-            _element.click();
+            spyOn(_scope, '$broadcast').andCallThrough();
+            spyOn(_scope, '$on').andCallThrough();
+
+            _scope.$broadcast('emd:build-options', {title: 'A', content: [{name: 'A', action: function(){}}]});
+            _element.find('button').click();
         })
     })
 })
