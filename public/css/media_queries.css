@@ -8,7 +8,7 @@
 
 @media (min-width: 70em)
 {
-    #options {top: 0; position: fixed; margin: 1em 0 0 1em; width: 20%; display: block;}
+    #options {top: 0; position: fixed; margin: .5em 0 0 1em; width: 20%; display: block;}
     #options li {border-radius: 3px; margin: .2em 0; padding: .8em; display: block;}
     #options ul {background-color: transparent; border-bottom: none; padding: 0;}
     #options li:last-child {margin-bottom: 1em;}
@@ -16,7 +16,7 @@
     #navigation, #filter, #type-of-visualization, #contact {opacity: .5;}
     #to-the-top {left: 1em;}
     #main-title {font-size: 5em;}
-    #main-header {padding: 0;}
+    #main-header {padding: 0; background-color: gold;}
     #main-header, .quotes-container {width: 75%; position: absolute; right: 0; margin: 1em 1em 0 0;}
     #options div, #options h3, #options nav {display: block;}
     #emd-options {top: 30%;}

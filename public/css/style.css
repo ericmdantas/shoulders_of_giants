@@ -1,4 +1,4 @@
-#logo {border: 5px solid goldenrod; background-color: #eee;}
+#logo-container {border: 10px solid gold; background-color: #eee;}
 #navigation {opacity: 1;}
 #navigation ul, #type-of-visualization ul {padding: 1em; background-color: rgba(128, 117, 10, .3); border-bottom: 3px solid gold;}
 #navigation li, #filter li, #type-of-visualization li {font-size: 1.2em; background-color: white; border-radius: 3px;}
@@ -6,7 +6,7 @@
 #selected-order {border-radius: 4px;}
 #to-the-top, #selected-order {background-color: black; color: white; opacity: .4;}
 #randomize {background-color: #fafbfc; color: gold; text-shadow: 1px 1px gray; border-radius: 4px; font-family: "entypo";}
-#main-header {background-color: gold; color: #444; font-family: "CalligraPhillip"; border-radius: 3px;}
+#main-header {background-color: transparent; color: #444; font-family: "CalligraPhillip"; border-radius: 3px;}
 #emd-blanket {background-color: black; opacity: .8;}
 #emd-options {background-color: aliceblue; font-size: 2em; color: rgb(202, 152, 26);}
 #emd-options .title-options {border-bottom: 2px solid goldenrod; background-color: rgba(255, 215, 0, 0.54);}
@@ -18,7 +18,6 @@
 .like {border-radius: 100%; opacity: .2;}
 .title {font-weight: bold; color: #fff; border-bottom: 3px solid gold; background-color: rgba(39, 83, 109, .7); margin: 0; font-size: 1.4em;}
 .active {background-color: orange !important; color: #fff; font-weight: bold;}
-.quotation-mark {font-size: 2em; color: #ddd;}
 .quote {color: #555; font-size: 1.25em;}
 .cards {border-radius: 3px; background-color: #f1f2f3;}
 .author {color: #ccc;}
