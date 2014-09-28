@@ -8,24 +8,35 @@
 
 @media (min-width: 70em)
 {
-    #options {top: 0; position: fixed; margin: .5em 0 0 1em; width: 20%; display: block;}
+    #options {position: fixed; top: -15em; left: 0; width: 10em; display: block; padding: 0;}
     #options li {border-radius: 3px; margin: .2em 0; padding: .8em; display: block;}
-    #options ul {background-color: transparent; border-bottom: none; padding: 0;}
+    #options ul {border-bottom: none; padding: 0;}
     #options li:last-child {margin-bottom: 1em;}
     #filter ul {margin: 0;}
-    #navigation, #filter, #type-of-visualization, #contact {opacity: .5;}
     #to-the-top {left: 1em;}
     #main-title {font-size: 5em;}
-    #main-header {padding: 0; background-color: gold;}
-    #main-header, .quotes-container {width: 75%; position: absolute; right: 0; margin: 1em 1em 0 0;}
+    #main-header {padding: 0;}
+    #main-header, .quotes-container {width: 66%; margin: 0 auto 1em auto;}
     #options div, #options h3, #options nav {display: block;}
+    #options .invisible-mobile {display: block;}
     #emd-options {top: 30%;}
-    #filter-container .filter {width: 50%;}
+    #logo {width: 6em;}
+    #logo-container {margin: 0; padding: .6em 2em .3em 1.1em;}
 
+    .filter-container .filter, .filter {width: 75%; margin: 2.2em 0 2.2em 1em;}
+    .search {margin-top: 1.3em;}
+    .filter {float: right;}
     .visible-mobile {display: none;}
     .invisible-mobile {display: block;}
-    .quotes-container {margin: 1em 1em 2em 0; top: 9.5em;}
     .espaco-top {margin-top: 1em;}
-    .title {margin: 0; padding: 1em;}
+    .title {margin: 0; padding: 1em; opacity: .5;}
     .visible-phone {display: none;}
+
+    body {
+            background: url(../img/bg.jpg) fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+    }
 }

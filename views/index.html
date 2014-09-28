@@ -12,8 +12,12 @@
     </head>
     <body ng-controller="QuotesController">
         <div id="main-header">
-            <h1 id="main-title" class="invisible-mobile">shoulders of giants</h1>
-            <div id="logo-container" class="visible-mobile">
+            <div class="filter-container invisible-mobile" ng-hide="singleView">
+                <input type="text" ng-model="search.quote" class="filter invisible-mobile" placeholder="I wanna read about.." maxlength="22" class="right"/>
+                <span class="search">ô</span>
+            </div>
+
+            <div id="logo-container" ng-class="{'center': singleView}">
                 <img src="img/quotes.svg" id="logo" title="shoulders of giants"/>
             </div>
         </div>
@@ -21,8 +25,8 @@
         <div id="options" align="center">
             <type-of-visualization class="not-selectable"></type-of-visualization>
             <navigation ng-hide="singleView" class="not-selectable"></navigation>
-            <filter ng-hide="singleView" class="not-selectable invisible-mobile"></filter>
             <contact></contact>
+            <div id="configuration" class="title invisible-mobile">Options</div>
         </div>
 
         <div class="quotes-container">
@@ -37,7 +41,7 @@
                     </div>
                 </div>
 
-                <div id="filter-container" ng-hide="singleView">
+                <div class="filter-container visible-mobile" ng-hide="singleView">
                     <input type="text" ng-model="search.quote" class="filter" placeholder="I wanna read about.." maxlength="22"/>
                     <span class="search">ô</span>
                 </div>

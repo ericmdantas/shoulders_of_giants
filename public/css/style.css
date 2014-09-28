@@ -1,5 +1,5 @@
+#configuration {background-color: rgba(39, 83, 109, .7);}
 #logo-container {border: 10px solid gold; background-color: #eee;}
-#navigation {opacity: 1;}
 #navigation ul, #type-of-visualization ul {padding: 1em; background-color: rgba(128, 117, 10, .3); border-bottom: 3px solid gold;}
 #navigation li, #filter li, #type-of-visualization li {font-size: 1.2em; background-color: white; border-radius: 3px;}
 #to-the-top {border-radius: 100%;}
@@ -37,11 +37,7 @@
     -o-user-select: none;
 }
 
-body {font-family: Segoe UI, Verdana, Arial; background: url(../img/bg.jpg) fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;}
+body {font-family: Segoe UI, Verdana, Arial; background-color: rgba(89, 153, 61, .7);}
 
 h1, h2, h3, h4 {font-weight: normal;}
 ul li {list-style: none;}
