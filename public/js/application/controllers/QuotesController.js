@@ -72,6 +72,7 @@ quotesApp.controller('QuotesController', ['$scope', 'QuotesModel', function($sco
 
     $scope.setMultiple = function()
     {
+        $scope.singleView = false;
         $scope.quotes = $scope.quotesKeeper;
     }
 

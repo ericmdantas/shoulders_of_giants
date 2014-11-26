@@ -19,6 +19,7 @@ module.exports = function(config) {
 	  'public/js/frameworks/angular.min.js',
 	  'public/js/frameworks/angular-route.min.js',
       'public/js/frameworks/angular-resource.min.js',
+      'public/js/frameworks/*.js',
 
 	  'public/js/application/services/lib.js',
 	  'public/js/application/app.js',

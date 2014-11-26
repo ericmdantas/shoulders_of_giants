@@ -262,6 +262,7 @@ describe('QuotesController', function()
             _scope.setMultiple();
 
             expect(_scope.quotes.length).toBe(1000);
+            expect(_scope.singleView).toBeFalsy();
         }))
     })
 

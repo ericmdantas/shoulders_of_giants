@@ -7,13 +7,12 @@
 #options:hover {top: 0;}
 #options:hover #configuration {opacity: 0;}
 
+.filter:focus {border: 1px solid gold; border-right: none;}
 .hand:hover {cursor: pointer;}
 .cards:hover {border-color: lightgray; background-color: #fafbfc;}
 .cards:hover .author {color: #777;}
 .cards:hover .like {opacity: 1;}
-.cards:hover .number-likes {opacity: 1;}
-.like:hover, .title:hover {cursor: pointer;}
-.like:active {box-shadow: 1px 1px 33px gold; background-color: lemonchiffon;}
+.cards:hover .number-likes, .cards:hover .icone-star {opacity: 1;}
 .title:hover {opacity: 1; background-color: rgba(39, 83, 109, 1);}
 
 ::selection {background-color: yellow;}
