@@ -1,6 +1,7 @@
 "use strict";
 
-quotesApp.service('Randomizer', [function()
+quotesApp
+    .service('Randomizer', [function()
 {
     var _shuffle = function(array)
     {

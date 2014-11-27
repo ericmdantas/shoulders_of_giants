@@ -2,13 +2,14 @@
 
 describe('QuotesController', function()
 {
-    var _scope, _httpMock;
+    var _scope, _httpMock, _SocketService;
 
     beforeEach(module('quotes'));
     beforeEach(inject(function($injector)
     {
         _scope = $injector.get('$rootScope').$new();
         _httpMock = $injector.get('$httpBackend');
+        _SocketService = $injector.get('SocketService');
     }))
 
     describe('getQuotes', function()
@@ -109,37 +110,45 @@ describe('QuotesController', function()
         it('should fetch like correctly', inject(function($controller)
         {
             _httpMock.expectGET('/api/quotes').respond();
-            _httpMock.expectPUT('/api/quotes/a123').respond();
+
+            spyOn(_SocketService, 'emit').andCallFake(angular.noop);
+
             $controller('QuotesController', {$scope: _scope});
+
             var _id = 'a123';
 
             _scope.favQuote(_id);
-            _httpMock.flush();
+
+            expect(_SocketService.emit).toHaveBeenCalledWith('fav:quote', _id);
         }))
 
         it('should NOT substitute the existing object with the retrieved object from the server - empty response from the server', inject(function($controller)
         {
+            spyOn(_SocketService, 'emit').andCallFake(angular.noop);
+            spyOn(_SocketService, 'on').andCallThrough();
+
             var _allQuotesFromServer = [{_id: '0123', author: 'algumaPessoa', quote: 'abc', likes: 0},
                                         {_id: '1123', author: 'outraPessoa', quote: 'abc', likes: 0},
                                         {_id: 'a123', author: 'eu', quote: 'blablabla', likes: 99}];
 
-            var _specificQuoteFromServer = {};
 
             _httpMock.expectGET('/api/quotes').respond(_allQuotesFromServer);
-            _httpMock.expectPUT('/api/quotes/a123').respond(_specificQuoteFromServer);
 
             $controller('QuotesController', {$scope: _scope});
 
             var _id = 'a123';
 
             _scope.favQuote(_id);
-            _httpMock.flush();
+
+            expect(_SocketService.emit).toHaveBeenCalledWith('fav:quote', _id);
 
             expect(_scope.quotes[2].likes).toEqual(99);
         }))
 
         it('should NOT substitute the existing object with the retrieved object from the server - no updated object retrieved', inject(function($controller)
         {
+            spyOn(_SocketService, 'emit').andCallFake(angular.noop);
+
             var _allQuotesFromServer = [{_id: '0123', author: 'algumaPessoa', quote: 'abc', likes: 0},
                                         {_id: '1123', author: 'outraPessoa', quote: 'abc', likes: 0},
                                         {_id: 'a123', author: 'eu', quote: 'blablabla', likes: 99}];
@@ -147,20 +156,22 @@ describe('QuotesController', function()
             var _specificQuoteFromServer = {updated: {}};
 
             _httpMock.expectGET('/api/quotes').respond(_allQuotesFromServer);
-            _httpMock.expectPUT('/api/quotes/a123').respond(_specificQuoteFromServer);
 
             $controller('QuotesController', {$scope: _scope});
 
             var _id = 'a123';
 
             _scope.favQuote(_id);
-            _httpMock.flush();
+
+            expect(_SocketService.emit).toHaveBeenCalledWith('fav:quote', _id);
 
             expect(_scope.quotes[2].likes).toEqual(99);
         }))
 
         it('should NOT substitute the existing object with the retrieved object from the server - no id retrieved', inject(function($controller)
         {
+            spyOn(_SocketService, 'emit').andCallFake(angular.noop);
+
             var _allQuotesFromServer = [{_id: '0123', author: 'algumaPessoa', quote: 'abc', likes: 0},
                                         {_id: '1123', author: 'outraPessoa', quote: 'abc', likes: 0},
                                         {_id: 'a123', author: 'eu', quote: 'blablabla', likes: 99}];
@@ -168,20 +179,22 @@ describe('QuotesController', function()
             var _specificQuoteFromServer = {updated: {author: 'eu', quote: 'blablabla', likes: 100}};
 
             _httpMock.expectGET('/api/quotes').respond(_allQuotesFromServer);
-            _httpMock.expectPUT('/api/quotes/a123').respond(_specificQuoteFromServer);
 
             $controller('QuotesController', {$scope: _scope});
 
             var _id = 'a123';
 
             _scope.favQuote(_id);
-            _httpMock.flush();
+
+            expect(_SocketService.emit).toHaveBeenCalledWith('fav:quote', _id);
 
             expect(_scope.quotes[2].likes).toEqual(99);
         }))
 
         it('should substitute the existing object with the retrieved object from the server', inject(function($controller)
         {
+            spyOn(_SocketService, 'emit').andCallFake(angular.noop);
+
             var _allQuotesFromServer = [{_id: '0123', author: 'algumaPessoa', quote: 'abc', likes: 0},
                                         {_id: '1123', author: 'outraPessoa', quote: 'abc', likes: 0},
                                         {_id: 'a123', author: 'eu', quote: 'blablabla', likes: 99}];
@@ -189,14 +202,14 @@ describe('QuotesController', function()
             var _specificQuoteFromServer = {_id: 'a123', author: 'eu', quote: 'blablabla', likes: 100};
 
             _httpMock.expectGET('/api/quotes').respond(_allQuotesFromServer);
-            _httpMock.expectPUT('/api/quotes/a123').respond(_specificQuoteFromServer);
 
             $controller('QuotesController', {$scope: _scope});
 
             var _id = 'a123';
 
             _scope.favQuote(_id);
-            _httpMock.flush();
+
+            expect(_SocketService.emit).toHaveBeenCalledWith('fav:quote', _id);
 
             expect(_scope.quotes[2].likes).toEqual(100);
         }))

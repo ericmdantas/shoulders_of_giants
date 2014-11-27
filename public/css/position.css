@@ -23,6 +23,8 @@
 .text-centered {text-align: center;}
 .title {padding: .3em; margin: 0 .3em;}
 .filter-container {text-align: right; padding-bottom: .5em; position: relative;}
+.modal-body button.col-sm-6 {width: 50%;}
+.modal-body button.col-sm-4 {width: 33%;}
 
 body {margin: 0;}
 ul {margin: 0; padding: 0;}

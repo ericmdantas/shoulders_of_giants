@@ -1,10 +1,22 @@
 "use strict";
 
-quotesApp.controller('QuotesController', ['$scope', 'QuotesModel', function($scope, QuotesModel)
+quotesApp.controller('QuotesController', ['$scope', 'QuotesModel', 'ClientStorageService', 'SocketService', function($scope, QuotesModel, ClientStorageService, SocketService)
 {
     $scope.quotes = [];
     $scope.quotesKeeper = [];
     var _quote = new QuotesModel();
+
+    SocketService.on('quote:faved', function(id)
+    {
+        for (var i = 0; i < $scope.quotes.length; i++)
+        {
+            if (id === $scope.quotes[i]._id)
+            {
+                $scope.quotes[i].likes += 1;
+                break;
+            }
+        }
+    });
 
     $scope.setOrder = function(order)
     {
@@ -21,7 +33,7 @@ quotesApp.controller('QuotesController', ['$scope', 'QuotesModel', function($sco
             $scope.quotes = (data) ? data : [];
             $scope.quotesKeeper = angular.copy($scope.quotes);
 
-            $scope.$broadcast('QuotesReady');
+            ClientStorageService.save('quotes', data);
         }
 
         _quote
@@ -34,28 +46,7 @@ quotesApp.controller('QuotesController', ['$scope', 'QuotesModel', function($sco
         if (lib.isStringInvalid(id))
             throw new Error('O id passado não é uma string válida. Não será possível favoritar a mensagem [controller].');
 
-        var _onSuccess = function(data)
-        {
-            var _updatedQuote;
-
-            if (data)
-            {
-                _updatedQuote = data;
-
-                for (var i = 0; i < $scope.quotes.length; i++)
-                {
-                    if (_updatedQuote._id === $scope.quotes[i]._id)
-                    {
-                        $scope.quotes[i] = _updatedQuote;
-                        break;
-                    }
-                }
-            }
-        };
-
-        _quote
-            .favQuote(id)
-            .then(_onSuccess);
+        _quote.favQuote(id);
     }
 
     $scope.setSingle = function(quotes)

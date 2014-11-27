@@ -13,11 +13,11 @@
                 return angular.fromJson(_item);
             }
 
-            var _save = function(key, obj)
+            var _save = function(key, info)
             {
-                var _obj = angular.toJson(obj);
+                var _info = angular.isObject(info) ? angular.toJson(info) : info;
 
-                $window.localStorage.setItem(key, _obj);
+                $window.localStorage.setItem(key, _info);
             }
 
             var _remove = function(key)

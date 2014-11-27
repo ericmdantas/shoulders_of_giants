@@ -54,13 +54,13 @@ quotesApp.directive('emdOptionsNavigation', [function()
         {
             if (scope.modalOptions.conteudo.length === 2)
             {
-                $('.modal-body button').addClass('col-sm-6');
+                $('.modal-body button').addClass('col-sm-6 col-md-6 col-lg-6');
             }
 
             if (scope.modalOptions.conteudo.length === 3)
             {
 
-                $('.modal-body button').addClass('col-sm-4');
+                $('.modal-body button').addClass('col-sm-4 col-md-4 col-lg-4');
             }
         });
     }

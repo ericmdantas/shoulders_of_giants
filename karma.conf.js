@@ -21,6 +21,9 @@ module.exports = function(config) {
       'public/js/frameworks/angular-resource.min.js',
       'public/js/frameworks/*.js',
 
+      'public/js/modules/client-storage-module.js',
+      'public/js/modules/client-socket-module.js',
+
 	  'public/js/application/services/lib.js',
 	  'public/js/application/app.js',
 	  'public/js/application/**/*.js',

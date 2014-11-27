@@ -1,6 +1,6 @@
 "use strict";
 
-quotesApp.factory('QuotesModel', ['QuotesResource', function(QuotesResource)
+quotesApp.factory('QuotesModel', ['QuotesResource', 'SocketService', function(QuotesResource, SocketService)
 {
     var _defaultObject = {author: null,
                           quote: null,
@@ -40,9 +40,7 @@ quotesApp.factory('QuotesModel', ['QuotesResource', function(QuotesResource)
             if (lib.isStringInvalid(id))
                 throw new Error('O id passado não é uma string válida. Não será possível favoritar a mensagem [service].');
 
-            return QuotesResource
-                    .update({id: id})
-                    .$promise;
+            SocketService.emit('fav:quote', id);
         }
     }
 

@@ -33,29 +33,29 @@ QuotesController.prototype =
                            .done();
                    },
 
-    favSpecificQuote : function(req, res)
+    favSpecificQuote : function(io, id)
                        {
-                           var quoteId = req.params.id;
+                           var quoteId = id;
 
                            if (lib.isStringInvalid(quoteId))
                            {
-                               res.json({error: 'Id não é um parâmetro no formato esperado. O mesmo deve ser uma string.'});
+                               io.emit('fav:error', {error: 'Id não é um parâmetro no formato esperado. O mesmo deve ser uma string.'});
                                return;
                            }
 
                            var _successCallback = function(updated)
                            {
-                               res.json(updated);
+                               io.emit('quote:faved', updated._id);
                            }
 
                            var _errorCallback = function(err)
                            {
-                               res.json({error: err});
+                               io.emit('fav:error', err);
                            }
 
                            var _exceptionCallback = function(ex)
                            {
-                               res.json({error: ex});
+                               io.emit('fav:exception', ex);
                            }
 
                            var _quote = new QuotesModel();
