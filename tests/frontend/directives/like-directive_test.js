@@ -25,5 +25,20 @@ describe('like-directive', function()
         {
             expect(_element).toBeDefined();
         })
+
+        it('should have the right class for the icon', function()
+        {
+            expect(_element.isolateScope().star).toEqual('fa-star-o');
+        })
+    })
+
+    describe('onClick', function()
+    {
+        it('should change the class to fa-star', function()
+        {
+            _element.click();
+
+            expect(_element.isolateScope().star).toEqual('fa-star');
+        })
     })
 })

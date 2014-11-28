@@ -1,10 +1,10 @@
 "use strict";
 
-quotesApp.controller('QuotesController', ['$scope', 'QuotesModel', 'ClientStorageService', 'SocketService', function($scope, QuotesModel, ClientStorageService, SocketService)
+quotesApp.controller('QuotesController', ['$scope', 'QuotesModel', 'QuotesDAO', 'SocketService', 'Randomizer', function($scope, QuotesModel, QuotesDAO, SocketService, Randomizer)
 {
     $scope.quotes = [];
     $scope.quotesKeeper = [];
-    var _quote = new QuotesModel();
+    $scope.favQuote = QuotesDAO.favQuote;
 
     SocketService.on('quote:faved', function(id)
     {
@@ -28,25 +28,15 @@ quotesApp.controller('QuotesController', ['$scope', 'QuotesModel', 'ClientStorag
 
     var _getQuotes = function()
     {
-        var _onSuccess = function(data)
+        var _onSuccess = function(quotes)
         {
-            $scope.quotes = (data) ? data : [];
+            $scope.quotes = quotes;
             $scope.quotesKeeper = angular.copy($scope.quotes);
-
-            ClientStorageService.save('quotes', data);
         }
 
-        _quote
+        QuotesDAO
             .getAll()
             .then(_onSuccess);
-    }
-
-    $scope.favQuote = function(id)
-    {
-        if (lib.isStringInvalid(id))
-            throw new Error('O id passado não é uma string válida. Não será possível favoritar a mensagem [controller].');
-
-        _quote.favQuote(id);
     }
 
     $scope.setSingle = function(quotes)
@@ -55,6 +45,7 @@ quotesApp.controller('QuotesController', ['$scope', 'QuotesModel', 'ClientStorag
             throw new Error('Houve um erro ao randomizar as mensagens. O objeto passado não é um objeto ou array válido.');
 
         var _quotesLength = quotes.length;
+        var _random = Math.floor(Math.random() * _quotesLength);
         var _random = Math.floor(Math.random() * _quotesLength);
 
         $scope.quotes = [quotes[_random]];
@@ -69,12 +60,10 @@ quotesApp.controller('QuotesController', ['$scope', 'QuotesModel', 'ClientStorag
 
     $scope.randomize = function()
     {
-        var _quotesLength = $scope.quotesKeeper.length;
-        var _random = Math.floor(Math.random() * _quotesLength);
-
-        $scope.quotes = [$scope.quotesKeeper[_random]];
+        $scope.quotes = Randomizer.shuffleSingle($scope.quotesKeeper);
     }
 
     $scope.setOrder('author');
+
     _getQuotes();
 }])

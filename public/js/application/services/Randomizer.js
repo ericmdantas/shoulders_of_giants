@@ -19,5 +19,14 @@ quotesApp
         return array;
     }
 
+    var _shuffleSingle = function(array)
+    {
+        var _quotesLength = array.length;
+        var _random = Math.floor(Math.random() * _quotesLength);
+
+        return [array[_random]];
+    }
+
     this.shuffle = _shuffle;
+    this.shuffleSingle = _shuffleSingle;
 }])

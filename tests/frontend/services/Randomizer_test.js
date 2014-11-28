@@ -30,4 +30,25 @@ describe('Randomizer', function()
             }
         })
     })
+
+    describe('shuffleSingle', function()
+    {
+        it('should set a different quote from what\'s showing', function()
+        {
+            var _array = [{author: 'Eric', quote: 'Mensagem0', likes: 0}];
+
+            var quotesBeforeRandom = _array;
+
+            var _keeper = [];
+
+            for (var i = 0; i < 1000; i++)
+            {
+                _keeper.push({author: 'Eric'+i, quote: 'Mensagem'+i, likes: i});
+            };
+
+            _Randomizer.shuffleSingle(_keeper);
+
+            expect(_keeper).not.toBe(quotesBeforeRandom);
+        })
+    })
 })

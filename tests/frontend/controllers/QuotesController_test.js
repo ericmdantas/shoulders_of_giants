@@ -43,6 +43,7 @@ describe('QuotesController', function()
         {
             _httpMock.expectGET('/api/quotes').respond([{author: "Eric", quote: "Alo", likes: 0}]);
             $controller('QuotesController', {$scope: _scope});
+
             _httpMock.flush();
 
             expect(_scope.quotes.length).toEqual(1);
@@ -276,30 +277,6 @@ describe('QuotesController', function()
 
             expect(_scope.quotes.length).toBe(1000);
             expect(_scope.singleView).toBeFalsy();
-        }))
-    })
-
-    describe('randomize', function()
-    {
-        it('should set a different quote from what\'s showing', inject(function($controller)
-        {
-            $controller('QuotesController', {$scope: _scope});
-
-            _scope.quotes = [{author: 'Eric', quote: 'Mensagem0', likes: 0}];
-            var quotesBeforeRandom = _scope.quotes;
-
-            _scope.quotesKeeper = [];
-
-            for (var i = 0; i < 1000; i++)
-            {
-                _scope.quotesKeeper.push({author: 'Eric'+i,
-                                    quote: 'Mensagem'+i,
-                                    likes: i});
-            };
-
-            _scope.randomize();
-
-            expect(_scope.quotes).not.toBe(quotesBeforeRandom);
         }))
     })
 })

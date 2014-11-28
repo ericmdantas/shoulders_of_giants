@@ -15,8 +15,6 @@ quotesApp.directive('like', ['ClientStorageService', function(ClientStorageServi
             .on('click', function()
             {
                 scope.star = 'fa-star';
-
-                ClientStorageService.save('likes', 'a');
             });
     }
 

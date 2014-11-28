@@ -77,6 +77,19 @@ describe('emd-options-navigation-directive', function()
 
             expect(_element.scope().modalOptions.titulo).toEqual('View');
         })
+
+        it('should call the right method', function()
+        {
+            spyOn(_element.scope(), 'setSingle').andCallThrough();
+
+            _scope.quotes = [{a: 1}];
+
+            _element.scope().onViewClick();
+
+            _element.scope().modalOptions.conteudo[0].onClick();
+
+            expect(_element.scope().setSingle).toHaveBeenCalledWith(_scope.quotes);
+        })
     })
 
     describe('onOrderBy', function()
@@ -101,6 +114,23 @@ describe('emd-options-navigation-directive', function()
             expect(_scope.getOrder).toBeNull();
 
             expect(_Randomizer.shuffle).toHaveBeenCalledWith(_scope.quotes);
+        })
+    })
+
+    describe('onWatch', function()
+    {
+        it('should activate the watch - 2 buttons', function()
+        {
+            _scope.modalOptions = {conteudo: [1, 2]};
+
+            _scope.$digest();
+        })
+
+        it('should activate the watch - 3 buttons', function()
+        {
+            _scope.modalOptions = {conteudo: [1, 2, 3]};
+
+            _scope.$digest();
         })
     })
 })
