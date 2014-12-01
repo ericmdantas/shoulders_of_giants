@@ -2,21 +2,7 @@
 
 quotesApp.directive('emdOptionsNavigation', [function()
 {
-    var _template = '<div id="options" aling="center" class="transition">'+
-                        '<div class="opt not-selectable" data-toggle="modal" data-target="#myModal">' +
-                            '<h3 class="title hand" ng-click="onViewClick()">View</h3>'+
-                        '</div>'+
-
-                        '<div class="opt not-selectable" data-toggle="modal" data-target="#myModal">' +
-                            '<h3 class="title hand" ng-click="onOrderByClick()">Order By</h3>'+
-                        '</div>'+
-
-                        '<div class="opt not-selectable">' +
-                            '<h3 class="title hand" ng-click="onShuffleClick()">Shuffle</h3>'+
-                        '</div>'+
-
-                        '<div id="configuration" class="title visible-lg">Options</div>'+
-                    '</div>';
+    var _templateUrl = 'partials/includes/options-navigation.html';
 
     var _controller = ['$scope', 'Randomizer', function($scope, Randomizer)
     {
@@ -67,7 +53,7 @@ quotesApp.directive('emdOptionsNavigation', [function()
 
     return {
                 restrict: 'E',
-                template: _template,
+                templateUrl: _templateUrl,
                 controller: _controller,
                 link: _link
            }

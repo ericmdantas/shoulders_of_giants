@@ -10,9 +10,9 @@
 .number-likes {opacity: .2; color: #aaa;}
 .like {border-radius: 100%; opacity: .2;}
 .title {font-weight: bold; color: #fff; border-bottom: 3px solid gold; background-color: rgba(39, 83, 109, .7); margin: 0; font-size: 1.4em;}
-.quote {color: #555; font-size: 1.25em;}
+.quote {color: #555; font-size: 18px; font-weight: 300; font-family: "Open Sans Light";}
 .cards {border-radius: 3px; background-color: #f1f2f3;}
-.author {color: #ccc;}
+.author {color: #ccc; font-size: 16px;}
 .transition
 {
     -webkit-transition: all 666ms;
@@ -29,7 +29,16 @@
     -o-user-select: none;
 }
 
-body {font-family: Segoe UI, Verdana, Arial; background-color: rgba(89, 153, 61, .7);}
+body {font-family: "Open Sans Regular", Segoe UI, Verdana, Arial; background-color: rgba(89, 153, 61, .7);}
 
 h1, h2, h3, h4 {font-weight: normal;}
 ul li {list-style: none;}
+
+@font-face
+{
+    font-family: "Open Sans Regular";
+    src: url(../fonts/OpenSans-Regular.ttf);
+
+    font-family: "Open Sans Light";
+    src: url(../fonts/OpenSans-Light.ttf);
+}

@@ -18,58 +18,17 @@ describe('view', function()
 
         it('the options should exist', function()
         {
-            expect($('type-of-visualization').isDisplayed()).toBeTruthy();
+            expect($('#type-of-visualization').isDisplayed()).toBeTruthy();
         })
 
         it('the options should exist', function()
         {
-            expect($('navigation').isDisplayed()).toBeTruthy();
+            expect($('#order-by').isDisplayed()).toBeTruthy();
         })
 
         it('the options should exist', function()
         {
-            expect($('contact').isDisplayed()).toBeTruthy();
-        })
-    })
-
-    describe('visualization', function()
-    {
-        it('should click on the view tab and it should open', function()
-        {
-            element(by.tagName('type-of-visualization'))
-                .click()
-                .then(function()
-                {
-                    browser.sleep(1000); // because of fade effect
-
-                    expect($('#emd-blanket').getAttribute('style')).not.toContain('none');
-                    expect($('#emd-options').getAttribute('style')).not.toContain('none');
-                })
-        })
-    })
-
-    describe('navigation', function()
-    {
-        it('should click on the view tab and it should open', function()
-        {
-            $('#emd-blanket')
-                .click()
-                .then(function()
-                {
-                    browser.sleep(1000);
-
-                    element(by.tagName('navigation'))
-                        .click()
-                        .then(function()
-                        {
-                            browser.sleep(1000); // because of fade effect
-
-                            expect($('#emd-blanket').getAttribute('style')).not.toContain('none');
-                            expect($('#emd-options').getAttribute('style')).not.toContain('none');
-
-                            $('#emd-blanket').click();
-                        })
-                })
+            expect($('#shuffle').isDisplayed()).toBeTruthy();
         })
     })
 

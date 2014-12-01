@@ -5,6 +5,7 @@ describe('emd-options-navigation-directive', function()
     var _scope, _element, _compile, _timeoutMock, _Randomizer;
 
     beforeEach(module('quotes'));
+    beforeEach(module('my.includes'));
 
     beforeEach(inject(function($injector)
     {
@@ -80,15 +81,19 @@ describe('emd-options-navigation-directive', function()
 
         it('should call the right method', function()
         {
-            spyOn(_element.scope(), 'setSingle').andCallThrough();
-
             _scope.quotes = [{a: 1}];
 
             _element.scope().onViewClick();
 
-            _element.scope().modalOptions.conteudo[0].onClick();
+            var _modOpt = {titulo: 'View',
+                                conteudo: [{nome: 'Single', onClick: function()
+                                                                    {
+                                                                        _scope.setSingle(_scope.quotes);
+                                                                    }},
 
-            expect(_element.scope().setSingle).toHaveBeenCalledWith(_scope.quotes);
+                                           {nome: 'Multiple', onClick: _scope.setMultiple}]};
+
+            expect(angular.equals(_element.scope().modalOptions, _modOpt)).toBeTruthy();
         })
     })
 
@@ -98,6 +103,20 @@ describe('emd-options-navigation-directive', function()
         {
             _element.scope().onOrderByClick();
             expect(_element.scope().modalOptions.titulo).toEqual('Order By');
+        })
+
+        it('should have the right object', function()
+        {
+            _scope.quotes = [{a: 1}];
+
+            _element.scope().onOrderByClick();
+
+            var _modOpt = {titulo: 'Order By',
+                            conteudo: [{nome: 'Quote', onClick: function(){_scope.getOrder = 'quotes';}},
+                                {nome: 'Author', onClick: function(){_scope.getOrder = 'author';}},
+                                {nome: 'Most liked', onClick: function(){_scope.getOrder = '-likes';}}]};
+
+            expect(angular.equals(_element.scope().modalOptions, _modOpt)).toBeTruthy();
         })
     })
 

@@ -24,14 +24,15 @@ module.exports = function(config) {
       'public/js/modules/client-storage-module.js',
       'public/js/modules/client-socket-module.js',
 
-	  'public/js/application/services/lib.js',
+ 	  'public/js/application/services/lib.js',
 	  'public/js/application/app.js',
 	  'public/js/application/**/*.js',
 
 	  'tests/frontend/mocks/angular-mocks.js',
-      'tests/frontend/**/*_test.js'
-    ],
+      'tests/frontend/**/*_test.js',
 
+      'public/partials/includes/*.html' // for templateUrl testing
+    ],
 
     // list of files to exclude
     exclude: [],
@@ -44,8 +45,16 @@ module.exports = function(config) {
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-    preprocessors: {
-		'public/js/application/**/*.js': ['coverage']
+    preprocessors:
+    {
+		'public/js/application/**/*.js': ['coverage'],
+        'public/partials/includes/*.html': ['ng-html2js']
+    },
+
+    ngHtml2JsPreprocessor:
+    {
+      stripPrefix: 'public/',
+      moduleName: 'my.includes'
     },
 
     coverageReporter:
@@ -53,8 +62,6 @@ module.exports = function(config) {
       type : 'html',
       dir : 'coverage/'
     },
-
-
 
     // web server port
     port: 9876,
@@ -70,7 +77,7 @@ module.exports = function(config) {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch: true,
 
 
     // start these browsers

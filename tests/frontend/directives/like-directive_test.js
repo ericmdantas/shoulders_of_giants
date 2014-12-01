@@ -5,6 +5,7 @@ describe('like-directive', function()
     var _scope, _element, _compile;
 
     beforeEach(module('quotes'));
+    beforeEach(module('my.includes'));
 
     beforeEach(inject(function($injector)
     {

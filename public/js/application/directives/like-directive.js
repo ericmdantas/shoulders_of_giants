@@ -2,10 +2,7 @@
 
 quotesApp.directive('like', ['ClientStorageService', function(ClientStorageService)
 {
-    var _template = '<div class="like-container transition hand" ng-click="liked(id);">' +
-                        '<span class="number-likes transition">{{numberlikes}}</span>' +
-                        '<span class="icone-star transition fa {{star}}"></span>';
-                    '</div>';
+    var _templateUrl = 'partials/includes/likes.html';
 
     var _link = function(scope, element, attrs)
     {
@@ -20,7 +17,7 @@ quotesApp.directive('like', ['ClientStorageService', function(ClientStorageServi
 
     return {
                 restrict: 'E',
-                template: _template,
+                templateUrl: _templateUrl,
                 link: _link,
                 scope: {liked: '&', numberlikes: '@'}
            }

@@ -2,13 +2,16 @@
 
 describe('QuotesController', function()
 {
-    var _scope, _httpMock, _SocketService;
+    var _scope, _httpMock, _SocketService, _QuotesDAO, _SocketService;
+    var CONTROLLER_NAME = 'QuotesController';
 
     beforeEach(module('quotes'));
     beforeEach(inject(function($injector)
     {
         _scope = $injector.get('$rootScope').$new();
         _httpMock = $injector.get('$httpBackend');
+        _SocketService = $injector.get('SocketService');
+        _QuotesDAO = $injector.get('QuotesDAO');
         _SocketService = $injector.get('SocketService');
     }))
 
@@ -17,14 +20,14 @@ describe('QuotesController', function()
         it('should fetch request correctly', inject(function($controller)
         {
             _httpMock.expectGET('/api/quotes').respond();
-            $controller('QuotesController', {$scope: _scope});
+            $controller(CONTROLLER_NAME, {$scope: _scope});
             _httpMock.flush();
         }))
 
         it('should save the response from the server - empty', inject(function($controller)
         {
             _httpMock.expectGET('/api/quotes').respond()
-            $controller('QuotesController', {$scope: _scope});
+            $controller(CONTROLLER_NAME, {$scope: _scope});
             _httpMock.flush();
             expect(_scope.quotes.length).toEqual(0);
             expect(_scope.quotesKeeper.length).toEqual(0);
@@ -33,7 +36,7 @@ describe('QuotesController', function()
         it('should save the response from the server - no quotes', inject(function($controller)
         {
             _httpMock.expectGET('/api/quotes').respond([])
-            $controller('QuotesController', {$scope: _scope});
+            $controller(CONTROLLER_NAME, {$scope: _scope});
             _httpMock.flush();
             expect(_scope.quotes.length).toEqual(0);
             expect(_scope.quotesKeeper.length).toEqual(0);
@@ -42,7 +45,7 @@ describe('QuotesController', function()
         it('should save the response from the server', inject(function($controller)
         {
             _httpMock.expectGET('/api/quotes').respond([{author: "Eric", quote: "Alo", likes: 0}]);
-            $controller('QuotesController', {$scope: _scope});
+            $controller(CONTROLLER_NAME, {$scope: _scope});
 
             _httpMock.flush();
 
@@ -62,14 +65,14 @@ describe('QuotesController', function()
     {
         it('getOrder should be \'quote\'', inject(function($controller)
         {
-            $controller('QuotesController', {$scope: _scope});
+            $controller(CONTROLLER_NAME, {$scope: _scope});
 
             expect(_scope.getOrder).toEqual('author');
         }))
 
         it('should throw error - wrong order param', inject(function($controller)
         {
-            $controller('QuotesController', {$scope: _scope});
+            $controller(CONTROLLER_NAME, {$scope: _scope});
 
             var _wrongParams = [null, undefined, true, false, function(){}, 1, 0, {}, [], '  '];
 
@@ -84,7 +87,7 @@ describe('QuotesController', function()
 
         it('should change getOrder', inject(function($controller)
         {
-            $controller('QuotesController', {$scope: _scope});
+            $controller(CONTROLLER_NAME, {$scope: _scope});
 
             _scope.setOrder('someKindOfOrder');
 
@@ -96,15 +99,18 @@ describe('QuotesController', function()
     {
         it('should throw error - wrong id param', inject(function($controller)
         {
-            $controller('QuotesController', {$scope: _scope});
+            spyOn(_QuotesDAO, 'favQuote').andCallFake(angular.noop);
+            spyOn(_SocketService, 'emit').andCallFake(angular.noop);
+
+            $controller(CONTROLLER_NAME, {$scope: _scope});
             var _wrongParams = [null, undefined, function(){}, true, false, 1, 0, '  ', {}, []];
 
             for (var i = 0; i < _wrongParams.length; i++)
             {
-                expect(function()
-                {
-                    _scope.favQuote(_wrongParams[i]);
-                }).toThrow(new Error('O id passado não é uma string válida. Não será possível favoritar a mensagem [controller].'));
+                _scope.favQuote(_wrongParams[i]);
+
+                expect(_QuotesDAO.favQuote).toHaveBeenCalledWith(_wrongParams[i]);
+                expect(_SocketService.emit).not.toHaveBeenCalled();
             }
         }))
 
@@ -114,7 +120,7 @@ describe('QuotesController', function()
 
             spyOn(_SocketService, 'emit').andCallFake(angular.noop);
 
-            $controller('QuotesController', {$scope: _scope});
+            $controller(CONTROLLER_NAME, {$scope: _scope});
 
             var _id = 'a123';
 
@@ -125,7 +131,7 @@ describe('QuotesController', function()
 
         it('should NOT substitute the existing object with the retrieved object from the server - empty response from the server', inject(function($controller)
         {
-            spyOn(_SocketService, 'emit').andCallFake(angular.noop);
+            spyOn(_SocketService, 'emit').andCallThrough();
             spyOn(_SocketService, 'on').andCallThrough();
 
             var _allQuotesFromServer = [{_id: '0123', author: 'algumaPessoa', quote: 'abc', likes: 0},
@@ -135,15 +141,13 @@ describe('QuotesController', function()
 
             _httpMock.expectGET('/api/quotes').respond(_allQuotesFromServer);
 
-            $controller('QuotesController', {$scope: _scope});
+            $controller(CONTROLLER_NAME, {$scope: _scope});
 
             var _id = 'a123';
 
             _scope.favQuote(_id);
 
             expect(_SocketService.emit).toHaveBeenCalledWith('fav:quote', _id);
-
-            expect(_scope.quotes[2].likes).toEqual(99);
         }))
 
         it('should NOT substitute the existing object with the retrieved object from the server - no updated object retrieved', inject(function($controller)
@@ -154,19 +158,15 @@ describe('QuotesController', function()
                                         {_id: '1123', author: 'outraPessoa', quote: 'abc', likes: 0},
                                         {_id: 'a123', author: 'eu', quote: 'blablabla', likes: 99}];
 
-            var _specificQuoteFromServer = {updated: {}};
-
             _httpMock.expectGET('/api/quotes').respond(_allQuotesFromServer);
 
-            $controller('QuotesController', {$scope: _scope});
+            $controller(CONTROLLER_NAME, {$scope: _scope});
 
             var _id = 'a123';
 
             _scope.favQuote(_id);
 
             expect(_SocketService.emit).toHaveBeenCalledWith('fav:quote', _id);
-
-            expect(_scope.quotes[2].likes).toEqual(99);
         }))
 
         it('should NOT substitute the existing object with the retrieved object from the server - no id retrieved', inject(function($controller)
@@ -177,19 +177,15 @@ describe('QuotesController', function()
                                         {_id: '1123', author: 'outraPessoa', quote: 'abc', likes: 0},
                                         {_id: 'a123', author: 'eu', quote: 'blablabla', likes: 99}];
 
-            var _specificQuoteFromServer = {updated: {author: 'eu', quote: 'blablabla', likes: 100}};
-
             _httpMock.expectGET('/api/quotes').respond(_allQuotesFromServer);
 
-            $controller('QuotesController', {$scope: _scope});
+            $controller(CONTROLLER_NAME, {$scope: _scope});
 
             var _id = 'a123';
 
             _scope.favQuote(_id);
 
             expect(_SocketService.emit).toHaveBeenCalledWith('fav:quote', _id);
-
-            expect(_scope.quotes[2].likes).toEqual(99);
         }))
 
         it('should substitute the existing object with the retrieved object from the server', inject(function($controller)
@@ -204,15 +200,13 @@ describe('QuotesController', function()
 
             _httpMock.expectGET('/api/quotes').respond(_allQuotesFromServer);
 
-            $controller('QuotesController', {$scope: _scope});
+            $controller(CONTROLLER_NAME, {$scope: _scope});
 
             var _id = 'a123';
 
             _scope.favQuote(_id);
 
             expect(_SocketService.emit).toHaveBeenCalledWith('fav:quote', _id);
-
-            expect(_scope.quotes[2].likes).toEqual(100);
         }))
     })
 
@@ -220,7 +214,7 @@ describe('QuotesController', function()
     {
         it('should throw error - wrong quotes param', inject(function($controller)
         {
-            $controller('QuotesController', {$scope: _scope});
+            $controller(CONTROLLER_NAME, {$scope: _scope});
 
             var _wrongParams = [null, undefined, function(){}, true, false, 1, 0, '  ', {}, []];
 
@@ -235,7 +229,7 @@ describe('QuotesController', function()
 
         it('should set the full quotes to single quotes correctly', inject(function($controller)
         {
-            $controller('QuotesController', {$scope: _scope});
+            $controller(CONTROLLER_NAME, {$scope: _scope});
 
             var _quotes = [];
 
@@ -260,7 +254,7 @@ describe('QuotesController', function()
     {
         it('should set the quotes back to normal', inject(function($controller)
         {
-            $controller('QuotesController', {$scope: _scope});
+            $controller(CONTROLLER_NAME, {$scope: _scope});
 
             _scope.quotes = [];
 

@@ -1,8 +1,7 @@
 #logo {width: 4em;}
 #logo-container {padding: .25em .4em; width: 90px; border-radius: 100%; margin: .1em auto; margin-bottom: 1em;}
 #filter li {padding: .5em;}
-#to-the-top {left: 1em;}
-#to-the-top {position: fixed; bottom: 1em; padding: 1em;}
+#to-the-top {position: fixed; bottom: 1em; padding: 1em; right: 1em;}
 #randomize {width: 100%; width: 100%; padding: .3em 1em .3em; margin: 0 0 .2em 0; font-size: 4em; line-height: .8;}
 #main-header {text-align: center; padding: .5em 0; border-radius: 0; overflow: hidden;}
 #options div, #options h3, #options nav {display: inline-block;}

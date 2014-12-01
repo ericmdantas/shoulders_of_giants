@@ -66,11 +66,10 @@
         <emd-options-navigation></emd-options-navigation>
 
         <div class="container">
-            <div class="transition">
-                <div ng-if="!quotes.length" class="cards transition espaco-bottom">
-                    <p class="quote">Loading... =]</p>
-                </div>
 
+            <show-modal-when-no-quotes></show-modal-when-no-quotes>
+
+            <div class="transition">
                 <div id="randomize-container" ng-show="singleView">
                     <div class="text-centered">
                         <h1 id="randomize" ng-click="randomize()" class="transition not-selectable fa fa-random"></h1>
@@ -122,6 +121,7 @@
 
         <!-- directives -->
         <script type="text/javascript" src="js/application/directives/emd-options-navigation-directive.js"></script>
+        <script type="text/javascript" src="js/application/directives/emd-show-modal-when-no-quotes-directive.js"></script>
         <script type="text/javascript" src="js/application/directives/activable-directive.js"></script>
         <script type="text/javascript" src="js/application/directives/to-the-top-directive.js"></script>
         <script type="text/javascript" src="js/application/directives/like-directive.js"></script>

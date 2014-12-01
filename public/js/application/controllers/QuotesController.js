@@ -32,6 +32,8 @@ quotesApp.controller('QuotesController', ['$scope', 'QuotesModel', 'QuotesDAO', 
         {
             $scope.quotes = quotes;
             $scope.quotesKeeper = angular.copy($scope.quotes);
+
+            $scope.$broadcast('quotes-ready');
         }
 
         QuotesDAO
