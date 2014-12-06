@@ -4,7 +4,7 @@
 {
     function configuracaoInicial(application, exp, dir)
     {
-        application.use(exp.static(dir + '/public'));
+        application.use(exp.static(dir + '/dist'));
         application.use(morgan('dev'));
     }
 

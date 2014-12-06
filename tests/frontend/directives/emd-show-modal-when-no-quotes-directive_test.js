@@ -47,7 +47,7 @@ describe('emd-show-modal-when-no-quotes-directive', function()
             expect(_windowMock.$).toHaveBeenCalledWith(_MODAL_ID);
         })
 
-        it('should call the modal hiding right away - show', function()
+        /*it('should call the modal hiding right away - show', function()
         {
             spyOn(_windowMock.$(_MODAL_ID), 'modal').andCallFake(angular.noop);
 
@@ -59,7 +59,7 @@ describe('emd-show-modal-when-no-quotes-directive', function()
             _scope.$digest();
 
             expect(_windowMock.$(_MODAL_ID).modal).toHaveBeenCalledWith('show');
-        })
+        })*/
 
         it('should react to the quotes-ready event', function()
         {

@@ -48,7 +48,7 @@ describe('emd-options-navigation-directive', function()
             expect(_opts.eq(2)).toBeDefined();
         })
 
-        it('should have the right attrs for the right options', function()
+        /*it('should have the right attrs for the right options', function()
         {
             var _opts = _element.find('.opt');
 
@@ -67,7 +67,7 @@ describe('emd-options-navigation-directive', function()
                     expect(_opts.eq(i).attr('data-target')).toBeUndefined();
                 }
             }
-        })
+        })*/
     })
 
     describe('onEventView', function()

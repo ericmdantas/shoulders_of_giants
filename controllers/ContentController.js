@@ -7,7 +7,7 @@ ContentController.prototype =
     index: function(req, res)
            {
                res.setHeader('Content-Type', 'text/html');
-               res.sendfile('views/index.html', function(err)
+               res.sendfile('dist/index.html', function(err)
                {
                    if (err)
                        throw err;
