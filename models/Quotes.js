@@ -1,12 +1,12 @@
 "use strict";
 
-(function(mongoose, Q, lib, quotesSchema)
+(function(mongoose, Promise, lib, quotesSchema)
 {
     quotesSchema.methods =
     {
         getQuotes : function()
                     {
-                        var deferred = Q.defer();
+                        var deferred = Promise.pending();
 
                         var _query = {};
                         var _projection = {};
@@ -25,7 +25,7 @@
 
         favSpecificQuote : function(id)
                            {
-                               var deferred = Q.defer();
+                               var deferred = Promise.pending();
 
                                if (lib.isStringInvalid(id))
                                {
@@ -50,7 +50,7 @@
 
         getQuotesOrderedBy : function(order)
                              {
-                                    var deferred = Q.defer();
+                                    var deferred = Promise.pending();
 
                                     if (lib.isStringInvalid(order))
                                     {
@@ -80,6 +80,6 @@
     module.exports = Quote;
 
 }(require('mongoose'),
-  require('q'),
+  require('bluebird'),
   require('../public/js/application/lib/lib'),
   require('../schemas/quotesSchema').quotesSchema))

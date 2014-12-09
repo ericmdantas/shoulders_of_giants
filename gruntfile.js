@@ -13,7 +13,15 @@ module.exports = function(grunt)
 
         clean:
         {
-            build: {src: ['temp/', 'dist/']}
+            temp:
+            {
+                src: ['temp/']
+            },
+
+            dist:
+            {
+                src: ['dist/']
+            }
         },
 
         copy:
@@ -103,5 +111,5 @@ module.exports = function(grunt)
     grunt.loadNpmTasks('grunt-replace');
 
 
-    grunt.registerTask('build', ['karma:unit', 'clean', 'copy:temp', 'uglify', 'cssmin', 'copy:dist', 'replace', 'usemin']);
+    grunt.registerTask('build', ['karma:unit', 'clean:temp', 'clean:dist', 'copy:temp', 'uglify', 'cssmin', 'copy:dist', 'replace', 'usemin', 'clean:temp']);
 };

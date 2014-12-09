@@ -29,7 +29,7 @@ QuotesController.prototype =
                        _quote
                            .getQuotes()
                            .then(_successCallback, _errorCallback)
-                           .fail(_exceptionCallback)
+                           .catch(_exceptionCallback)
                            .done();
                    },
 
@@ -63,7 +63,7 @@ QuotesController.prototype =
                            _quote
                                .favSpecificQuote(quoteId)
                                .then(_successCallback, _errorCallback)
-                               .fail(_exceptionCallback)
+                               .catch(_exceptionCallback)
                                .done();
                        },
 
@@ -97,7 +97,7 @@ QuotesController.prototype =
                            _quote
                                .getQuotesOrderedBy(_order)
                                .then(_successCallback, _errorCallback)
-                               .fail(_exceptionCallback)
+                               .catch(_exceptionCallback)
                                .done();
                        }
 }

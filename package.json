@@ -7,11 +7,11 @@
     "test": "tests"
   },
   "dependencies": {
+    "bluebird": "^2.3.11",
     "express": "~4.5.1",
     "mongoose": "~3.8.12",
     "morgan": "^1.1.1",
     "newrelic": "^1.8.0",
-    "q": "^1.0.1",
     "socket.io": "^1.2.1"
   },
   "devDependencies": {
@@ -38,8 +38,7 @@
     "karma-opera-launcher": "~0.1.0",
     "karma-safari-launcher": "~0.1.1",
     "morgan": "^1.5.0",
-    "newrelic": "^1.14.0",
-    "q": "^1.1.2"
+    "newrelic": "^1.14.0"
   },
   "scripts": {
     "test": "mocha tests/backend --watch --recursive --check-leaks --reporter min",
