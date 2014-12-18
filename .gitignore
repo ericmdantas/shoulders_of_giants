@@ -1,6 +1,5 @@
 .idea/
 node_modules/
-newrelic_agent.log
-npm-debug.log
+*.log
 coverage/
-temp/
+client/temp/

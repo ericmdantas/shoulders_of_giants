@@ -1,0 +1,39 @@
+@import "variables.less";
+
+#configuration {background-color: rgba(39, 83, 109, .7);}
+#logo-container {border: 10px solid @call-attention-color; background-color: #eee;}
+#to-the-top {border-radius: 100%;}
+#to-the-top {background-color: black; color: white; opacity: .4;}
+#randomize {background-color: #fafbfc; color: @call-attention-color; text-shadow: 1px 1px gray; border-radius: @default-border-radius;}
+#main-header {background-color: transparent; color: #444; border-radius: @default-border-radius;}
+
+.icone-star, .number-likes {opacity: @likes-not-calling-attention; color: @call-attention-color;}
+.number-likes {text-shadow: 1px 1px gray;}
+.filter {color: #555; padding: .6em;}
+.like {border-radius: 100%; opacity: .2;}
+.title {font-weight: bold; color: #fff; border-bottom: 3px solid @call-attention-color; background-color: @dont-call-attention-options; margin: 0; font-size: 1.4em;}
+.quote {color: #555; font-size: 18px; font-weight: 300; font-family: "Open Sans Light";}
+.cards {border-radius: 3px; background-color: @card-background;}
+.author {color: #ccc; font-size: 16px;}
+
+.transition
+{
+    -webkit-transition: @default-transition;
+    -moz-transition: @default-transition;
+    -ms-transition: @default-transition;
+    -o-transition: @default-transition;
+    transition: @default-transition;
+}
+
+.not-selectable
+{
+    -moz-user-select: @not-selectable;
+    -khtml-user-select: @not-selectable;
+    -webkit-user-select: @not-selectable;
+    -o-user-select: @not-selectable;
+}
+
+body {font-family: "Open Sans Regular", Segoe UI, Verdana, Arial; background-color: @body-background-mobile;}
+
+h1, h2, h3, h4 {font-weight: normal;}
+ul li {list-style: none;}

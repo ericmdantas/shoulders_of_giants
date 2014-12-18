@@ -2,7 +2,7 @@
 
 var expect = require('chai').expect;
 var mongoose = require('mongoose');
-var Quotes = require('../../../models/Quotes');
+var Quotes = require('../../../server/models/Quotes');
 var db = require('../config/db.json');
 var helper = require('../helper');
 
@@ -121,7 +121,7 @@ describe('quotes', function()
                 expect(err).to.match(/Não é possível ordenar .+ Parâmetro order errado./);
             }
 
-            var _wrongParams = [null, undefined, 1, 0, '', '   ', {}, [], function(){}];
+            var _wrongParams = [null, undefined, 1, 0, {}, [], function(){}];
 
             for (var i = 0; i < _wrongParams.length; i++)
             {

@@ -1,6 +1,6 @@
 "use strict";
 
-var Quotes = require('../../models/Quotes');
+var Quotes = require('../../server/models/Quotes');
 
 (function()
 {

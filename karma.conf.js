@@ -1,7 +1,8 @@
 // Karma configuration
 // Generated on Sun Apr 27 2014 18:49:56 GMT-0300 (Hora oficial do Brasil)
 
-module.exports = function(config) {
+module.exports = function(config)
+{
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -15,23 +16,24 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-	  'public/js/frameworks/jquery-2.1.1.min.js',
-	  'public/js/frameworks/angular.min.js',
-	  'public/js/frameworks/angular-route.min.js',
-      'public/js/frameworks/angular-resource.min.js',
-      'public/js/frameworks/*.js',
+	  'client/dev/bower_components/jquery/dist/jquery.min.js',
+	  'client/dev/bower_components/angular/angular.min.js',
+	  'client/dev/bower_components/angular-socket-io/socket.min.js',
+      'client/dev/bower_components/angular-resource/angular-resource.min.js',
+      'client/dev/bower_components/bootstrap/dist/js/bootstrap.min.js',
 
-      'public/js/modules/client-storage-module.js',
-      'public/js/modules/client-socket-module.js',
+      'client/dev/js/modules/client-storage-module.js',
+      'client/dev/js/modules/client-socket-module.js',
 
- 	  'public/js/application/services/lib.js',
-	  'public/js/application/app.js',
-	  'public/js/application/**/*.js',
+ 	  'client/dev/js/application/app.js',
+	  'client/dev/js/application/**/*.js',
 
+      'client/dev/bower_components/angular-socket-io/mock/socket-io.js',
 	  'tests/frontend/mocks/angular-mocks.js',
+
       'tests/frontend/**/*_test.js',
 
-      'public/partials/includes/*.html' // for templateUrl testing
+      'client/dev/partials/includes/*.html' // for templateUrl testing
     ],
 
     // list of files to exclude
@@ -47,13 +49,13 @@ module.exports = function(config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors:
     {
-		'public/js/application/**/*.js': ['coverage'],
-        'public/partials/includes/*.html': ['ng-html2js']
+		'client/dev/js/application/**/*.js': ['coverage'],
+        'client/dev/partials/includes/*.html': ['ng-html2js']
     },
 
     ngHtml2JsPreprocessor:
     {
-      stripPrefix: 'public/',
+      stripPrefix: 'client/dev/',
       moduleName: 'my.includes'
     },
 

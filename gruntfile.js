@@ -1,7 +1,29 @@
 module.exports = function(grunt)
 {
+    var _package = grunt.file.readJSON('package.json');
+    var _developmentDir = 'client/dev/';
+    var _tempDir = 'client/temp/';
+    var _distributionDir = 'client/dist/';
+
+    var _loadTasks = function()
+    {
+        var _devDeps = _package.devDependencies;
+
+        Object.keys(_devDeps)
+            .filter(function(tasks)
+            {
+                var _isGrunt = /^grunt-/;
+
+                return _isGrunt.test(tasks);
+            })
+            .forEach(function(gruntTask)
+            {
+                grunt.loadNpmTasks(gruntTask);
+            })
+    }
+
     grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
+        pkg: _package,
 
         karma:
         {
@@ -15,12 +37,27 @@ module.exports = function(grunt)
         {
             temp:
             {
-                src: ['temp/']
+                src: [_tempDir]
             },
 
             dist:
             {
-                src: ['dist/']
+                src: [_distributionDir]
+            }
+        },
+
+        less:
+        {
+            dist:
+            {
+                files:
+                {
+                    "client/temp/css/frameworks_overrides.css": "client/temp/css/frameworks_overrides.less",
+                    "client/temp/css/style.css": "client/temp/css/style.less",
+                    "client/temp/css/position.css": "client/temp/css/position.less",
+                    "client/temp/css/media_queries.css": "client/temp/css/media_queries.less",
+                    "client/temp/css/events.css": "client/temp/css/events.less"
+                }
             }
         },
 
@@ -29,38 +66,37 @@ module.exports = function(grunt)
             temp:
             {
                 files:
-                    [{expand: true, cwd: 'public/', src: ['**'], dest: 'temp/'},
-                     {expand: true, cwd: '', src: ['index.html'], dest: 'temp/'}]
+                    [{expand: true, cwd: _developmentDir, src: ['**'], dest: _tempDir},
+                     {expand: true, cwd: '', src: ['index.html'], dest: _tempDir}]
             },
 
             dist:
             {
                 files:
-                [{expand: true, cwd: 'temp/js/', src: ['*.min.js'], dest: 'dist/js'},
-                 {expand: true, cwd: 'temp/css/', src: ['*.min.css'], dest: 'dist/css'},
-                 {expand: true, cwd: 'temp/img/', src: ['**'], dest: 'dist/img'},
-                 {expand: true, cwd: 'temp/fonts/', src: ['*'], dest: 'dist/fonts'},
-                 {expand: true, cwd: 'temp/partials/', src: ['**/*.html'], dest: 'dist/partials'},
-                 {expand: true, cwd: 'temp/', src: ['index.html'], dest: 'dist/'}]
+                [{expand: true, cwd: _tempDir + 'js/', src: ['*.min.js'], dest: _distributionDir + 'js'},
+                 {expand: true, cwd: _tempDir + 'css/', src: ['*.min.css'], dest: _distributionDir + 'css'},
+                 {expand: true, cwd: _tempDir + 'img/', src: ['**'], dest: _distributionDir + 'img'},
+                 {expand: true, cwd: _tempDir + 'fonts/', src: ['*'], dest: _distributionDir + 'fonts'},
+                 {expand: true, cwd: _tempDir + 'partials/', src: ['**/*.html'], dest: _distributionDir + 'partials'},
+                 {expand: true, cwd: _tempDir + '', src: ['index.html'], dest: _distributionDir + ''}]
             }
         },
         uglify:
         {
             build:
             {
-                options: {banner: '/* js minificado ' + new Date().toString() + ' */ '},
-
                 files:
                 {
-                    'temp/js/frameworks.min.js': ['temp/js/frameworks/jquery-2.1.1.min.js',
-                                                         'temp/js/frameworks/angular.min.js',
-                                                         'temp/js/frameworks/angular-resource.min.js',
-                                                         'temp/js/frameworks/bootstrap.min.js',
-                                                         'temp/js/frameworks/socket.io.js'],
+                    'client/temp/js/frameworks.min.js': [_tempDir + 'bower_components/jquery/dist/jquery.min.js',
+                                                         _tempDir + 'bower_components/angular/angular.min.js',
+                                                         _tempDir + 'bower_components/angular-socket-io/socket.min.js',
+                                                         _tempDir + 'bower_components/angular-resource/angular-resource.min.js',
+                                                         _tempDir + 'bower_components/bootstrap/dist/js/bootstrap.min.js',
+                                                         _tempDir + 'js/frameworks/socket.io.js'],
 
-                    'temp/js/emd-quotes.min.js': ['temp/js/application/**/*.js'],
 
-                    'temp/js/emd-modules.min.js': ['temp/js/modules/**/*.js']
+                    'client/temp/js/emd-quotes.min.js': [_tempDir + 'js/modules/**/*.js',
+                                                         _tempDir + 'js/application/**/*.js']
                 }
             }
         },
@@ -69,24 +105,23 @@ module.exports = function(grunt)
         {
             build:
             {
-                options: { banner: '/* css minificado ' + new Date().toString() + ' */ ' },
-
                 files:
                 {
-                    'temp/css/estilo.min.css': ['temp/css/font-awesome.min.css',
-                                                       'temp/css/bootstrap.min.css',
-                                                       'temp/css/frameworks_overrides.css',
-                                                       'temp/css/style.css',
-                                                       'temp/css/position.css',
-                                                       'temp/css/media_queries.css',
-                                                       'temp/css/events.css']
+                    'client/temp/css/estilo.min.css': [_tempDir + 'css/font-awesome.min.css',
+                                                       _tempDir + 'css/bootstrap.min.css',
+                                                       _tempDir + 'css/frameworks_overrides.css',
+                                                       _tempDir + 'css/fonts.css',
+                                                       _tempDir + 'css/style.css',
+                                                       _tempDir + 'css/position.css',
+                                                       _tempDir + 'css/media_queries.css',
+                                                       _tempDir + 'css/events.css']
                 }
             }
         },
 
         usemin:
         {
-            html: 'dist/index.html'
+            html: _distributionDir + 'index.html'
         },
 
         replace:
@@ -97,19 +132,16 @@ module.exports = function(grunt)
                 {
                     patterns: [{match: 'hash', replacement: '<%= new Date().getTime() %>'}]
                 },
-                files: [{src: ['dist/index.html'], dest: 'dist/index.html'}]
+                files: [{src: [_distributionDir + 'index.html'], dest: _distributionDir + 'index.html'}]
             }
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-usemin');
-    grunt.loadNpmTasks('grunt-karma');
-    grunt.loadNpmTasks('grunt-replace');
+    // load tasks
+    _loadTasks();
 
-
-    grunt.registerTask('build', ['karma:unit', 'clean:temp', 'clean:dist', 'copy:temp', 'uglify', 'cssmin', 'copy:dist', 'replace', 'usemin', 'clean:temp']);
+    // register tasks
+    grunt.registerTask('test', ['karma:unit']);
+    grunt.registerTask('build', ['clean:temp', 'clean:dist', 'copy:temp', 'uglify', 'less', 'cssmin', 'copy:dist', 'replace', 'usemin', 'clean:temp']);
+    grunt.registerTask('dist', ['karma:unit', 'clean:temp', 'clean:dist', 'copy:temp', 'uglify', 'less', 'cssmin', 'copy:dist', 'replace', 'usemin', 'clean:temp']);
 };

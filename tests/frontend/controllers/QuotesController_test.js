@@ -74,7 +74,7 @@ describe('QuotesController', function()
         {
             $controller(CONTROLLER_NAME, {$scope: _scope});
 
-            var _wrongParams = [null, undefined, true, false, function(){}, 1, 0, {}, [], '  '];
+            var _wrongParams = [null, undefined, true, false, function(){}, 1, 0, {}, []];
 
             for (var i = 0; i < _wrongParams.length; i++)
             {
@@ -216,7 +216,7 @@ describe('QuotesController', function()
         {
             $controller(CONTROLLER_NAME, {$scope: _scope});
 
-            var _wrongParams = [null, undefined, function(){}, true, false, 1, 0, '  ', {}, []];
+            var _wrongParams = [null, undefined, function(){}, true, false, 1, 0, '  '];
 
             for (var i = 0; i < _wrongParams.length; i++)
             {

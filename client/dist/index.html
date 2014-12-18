@@ -1,0 +1,93 @@
+<!doctype html>
+<html ng-app="quotes">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+        <title>shoulders of giants</title>
+        <link rel="shortcut icon" type="image/ico" href="img/favicon.ico"/>
+
+        <link rel="stylesheet" href="css/estilo.min.css?hash=1418865583374">
+        
+    </head>
+
+    <body ng-controller="QuotesController">
+
+        <header class="container">
+            <div class="col-md-4">
+                <div id="logo-container" class="transition">
+                    <div ng-class="{'center': singleView}">
+                        <img src="img/quotes.svg" id="logo" title="shoulders of giants"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-container invisible-mobile col-md-5 pull-right no-padding" ng-hide="singleView">
+
+                <div class="input-group">
+                    <input type="text"
+                           ng-model="search.quote"
+                           class="form-control filter"
+                           placeholder="I wanna read about.."
+                           maxlength="22"
+                           autofocus/>
+
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </span>
+
+                </div>
+            </div>
+        </header>
+
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="myModalLabel">{{modalOptions.titulo}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="btn-group btn-group-grande" role="group" aria-label="...">
+                            <button ng-repeat="modal in modalOptions.conteudo"
+                                    type="button"
+                                    class="btn btn-default"
+                                    activable
+                                    deactive=".modal-body .btn"
+                                    ng-click="modal.onClick()">{{modal.nome}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <emd-options-navigation></emd-options-navigation>
+
+        <div class="container">
+
+            <show-modal-when-no-quotes></show-modal-when-no-quotes>
+
+            <div class="transition">
+                <div id="randomize-container" ng-show="singleView">
+                    <div class="text-centered">
+                        <h1 id="randomize" ng-click="randomize()" class="transition not-selectable fa fa-random"></h1>
+                    </div>
+                </div>
+
+                <div ng-repeat="q in quotes | orderBy: getOrder | filter: search track by $index" class="cards transition espaco-bottom">
+                    <like liked="favQuote(q._id)" numberlikes="{{q.likes}}"></like>
+                    <p class="quote">{{q.quote}}</p>
+                    <span class="author transition">{{q.author}}</span>
+                </div>
+            </div>
+        </div>
+
+        <to-the-top></to-the-top>
+
+        <!-- frameworks -->
+        <script src="js/frameworks.min.js?hash=1418865583374"></script>
+
+        <!-- modules -->
+        <script src="js/emd-quotes.min.js?hash=1418865583374"></script>
+
+    </body>
+</html>

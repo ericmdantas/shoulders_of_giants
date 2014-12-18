@@ -1,9 +1,9 @@
 "use strict";
 
 var expect = require('chai').expect;
-var quotes = require('../../../controllers/QuotesController');
+var quotes = require('../../../server/controllers/QuotesController');
 var helper = require('../helper');
-var Quotes = require('../../../models/Quotes');
+var Quotes = require('../../../server/models/Quotes');
 
 describe('QuotesController', function()
 {
