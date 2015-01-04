@@ -32,7 +32,7 @@ describe('quotes', function()
     {
         it('should be no errors', function(done)
         {
-            _quote
+            Quotes
                 .getQuotes()
                 .then(function(quotes)
                      {
@@ -43,7 +43,7 @@ describe('quotes', function()
 
         it('should return the object correctly', function(done)
         {
-            _quote
+            Quotes
                 .getQuotes()
                 .then(function(quotes)
                       {
@@ -69,7 +69,7 @@ describe('quotes', function()
 
             for (var i = 0; i < _wrongParams.length; i++)
             {
-                _quote
+                Quotes
                     .favSpecificQuote(_wrongParams[i])
                     .then(undefined, _errorCallback);
             }
@@ -89,7 +89,7 @@ describe('quotes', function()
                 done();
             }
 
-            _quote
+            Quotes
                 .favSpecificQuote(_id)
                 .then(_resolvedCallback);
         })
@@ -104,7 +104,7 @@ describe('quotes', function()
                 done();
             }
 
-            _quote
+            Quotes
                 .favSpecificQuote(_id)
                 .then(_successCallback);
         })
@@ -125,7 +125,7 @@ describe('quotes', function()
 
             for (var i = 0; i < _wrongParams.length; i++)
             {
-                _quote
+                Quotes
                     .getQuotesOrderedBy(_wrongParams[i])
                     .then(undefined, _rejectCallback)
             }
@@ -147,7 +147,7 @@ describe('quotes', function()
                 done();
             }
 
-            _quote
+            Quotes
                 .getQuotesOrderedBy(_order)
                 .then(_successCallback);
         })
@@ -166,7 +166,7 @@ describe('quotes', function()
                 done();
             }
 
-            _quote
+            Quotes
                 .getQuotesOrderedBy(_order)
                 .then(_successCallback);
         })
@@ -185,7 +185,7 @@ describe('quotes', function()
                 done();
             }
 
-            _quote
+            Quotes
                 .getQuotesOrderedBy(_order)
                 .then(_successCallback);
         })
@@ -204,7 +204,7 @@ describe('quotes', function()
                 done();
             }
 
-            _quote
+            Quotes
                 .getQuotesOrderedBy(_order)
                 .then(_successCallback);
         })
@@ -223,7 +223,7 @@ describe('quotes', function()
                 done();
             }
 
-            _quote
+            Quotes
                 .getQuotesOrderedBy(_order)
                 .then(_successCallback);
         })
@@ -242,7 +242,7 @@ describe('quotes', function()
                 done();
             }
 
-            _quote
+            Quotes
                 .getQuotesOrderedBy(_order)
                 .then(_successCallback);
         })
@@ -261,9 +261,111 @@ describe('quotes', function()
                 done();
             }
 
-            _quote
+            Quotes
                 .getQuotesOrderedBy(_order)
                 .then(_successCallback);
+        })
+    })
+
+    describe('createQuote', function()
+    {
+        it('should not create a quote, empty object', function(done)
+        {
+            var _invalidObjects = [null, undefined, '', 1, 0, false, true, [], {}];
+
+            var _onSuccess = function()
+            {
+                expect(true).to.be.false;
+            }
+
+            var _onError = function(error)
+            {
+                expect(error).to.be.defined;
+                expect(error).to.be.an.instanceof(Error);
+            }
+
+            for (var i = 0; i < _invalidObjects.length; i++)
+            {
+                Quotes
+                    .createQuote(_invalidObjects[i])
+                    .then(_onSuccess, _onError);
+            }
+
+            done();
+        })
+
+        it('should not create a quote, no author', function(done)
+        {
+            var _quote = {author: null, quote: 'abcdef12'};
+
+            var _onSuccess = function()
+            {
+                expect(true).to.be.false;
+            }
+
+            var _onError = function(error)
+            {
+                expect(error).to.be.defined;
+                expect(error).to.be.an.instanceof(Error);
+
+                done();
+            }
+
+            Quotes
+                .createQuote(_quote)
+                .then(_onSuccess, _onError);
+        })
+
+        it('should not create a quote, no quote', function(done)
+        {
+            var _quote = {author: 'ericmdantas', quote: null};
+
+            var _onSuccess = function()
+            {
+                expect(true).to.be.false;
+            }
+
+            var _onError = function(error)
+            {
+                expect(error).to.be.defined;
+                expect(error).to.be.an.instanceof(Error);
+
+                done();
+            }
+
+            Quotes
+                .createQuote(_quote)
+                .then(_onSuccess, _onError);
+        })
+
+        it('should create a quote correctly', function(done)
+        {
+            var _quote = {author: 'ericmdantas', quote: 'wawaweewa'};
+
+            var _onSuccess = function(saved)
+            {
+                expect(saved).to.be.defined;
+                expect(saved).to.have.property('author');
+                expect(saved).to.have.property('quote');
+                expect(saved).to.have.property('likes');
+                expect(saved).to.have.property('createdAt');
+
+                expect(saved.author).to.equal(_quote.author);
+                expect(saved.quote).to.equal(_quote.quote);
+                expect(saved.likes).to.equal(0);
+                expect(saved.createdAt).to.be.below(Date.now());
+
+                done();
+            }
+
+            var _onError = function(error)
+            {
+                expect(true).to.be.false;
+            }
+
+            Quotes
+                .createQuote(_quote)
+                .then(_onSuccess, _onError);
         })
     })
 })

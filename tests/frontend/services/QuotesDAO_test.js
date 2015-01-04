@@ -2,14 +2,16 @@
 
 describe('QuotesDAO', function()
 {
-    var _QuotesDAO, _httpMock, _SocketService;
+    var _QuotesDAO, _QuoteModel, _httpMock, _SocketService;
 
     beforeEach(module('quotes'));
 
     beforeEach(inject(function($injector)
     {
         _httpMock = $injector.get('$httpBackend');
+
         _QuotesDAO = $injector.get('QuotesDAO');
+        _QuoteModel = $injector.get('QuotesModel');
         _SocketService = $injector.get('SocketService');
     }))
 
@@ -40,7 +42,7 @@ describe('QuotesDAO', function()
 
         it('should fetch like correctly', function()
         {
-            spyOn(_SocketService, 'emit').andCallFake(angular.noop);
+            spyOn(_SocketService, 'emit').and.callFake(angular.noop);
 
             _httpMock.expectPUT('/api/quotes/a123').respond();
             var _id = 'a123';
@@ -48,6 +50,133 @@ describe('QuotesDAO', function()
             _QuotesDAO.favQuote(_id);
 
             expect(_SocketService.emit).toHaveBeenCalledWith('fav:quote', _id);
+        })
+    })
+
+    describe('createQuote', function()
+    {
+        it('should not create the quote, null', function()
+        {
+            var _quote = null;
+
+            var _onSuccess = function()
+            {
+                expect(true).toBeFalsy(); // should not come here
+            }
+
+            var _onError = function(error)
+            {
+                expect(error).toBeDefined();
+            }
+
+            _QuotesDAO
+                .createQuote(_quote)
+                .then(_onSuccess, _onError);
+        })
+
+        it('should not create the quote, empty object - not an instance of Quote', function()
+        {
+            var _quote = {};
+
+            var _onSuccess = function()
+            {
+                expect(true).toBeFalsy(); // should not come here
+            }
+
+            var _onError = function(error)
+            {
+                expect(error).toBeDefined();
+            }
+
+            _QuotesDAO
+                .createQuote(_quote)
+                .then(_onSuccess, _onError);
+        })
+
+        it('should not create the quote, quote missing', function()
+        {
+            var _quote = {author: 'eric'};
+
+            var _onSuccess = function()
+            {
+                expect(true).toBeFalsy(); // should not come here
+            }
+
+            var _onError = function(error)
+            {
+                expect(error).toBeDefined();
+            }
+
+            _QuotesDAO
+                .createQuote(_quote)
+                .then(_onSuccess, _onError);
+        })
+
+        it('should not create the quote, author missing', function()
+        {
+            var _quote = {quote: 'abcdef'};
+
+            var _onSuccess = function()
+            {
+                expect(true).toBeFalsy(); // should not come here
+            }
+
+            var _onError = function(error)
+            {
+                expect(error).toBeDefined();
+            }
+
+            _QuotesDAO
+                .createQuote(_quote)
+                .then(_onSuccess, _onError);
+        })
+
+        it('should create the quote correctly - but server returns error', function()
+        {
+            var _quote = new _QuoteModel({author: 'eric', quote: 'abcdef'});
+
+            _httpMock.expectPOST('/api/quotes', _quote).respond(400, {error: 'some error'});
+
+            var _onSuccess = function()
+            {
+                expect(true).toBeFalsy(); // should not come here
+            }
+
+            var _onError = function(error)
+            {
+                expect(error).toBeDefined();
+                expect(error.status).toBe(400);
+                expect(error.msg).toBe("some error");
+            }
+
+            _QuotesDAO
+                .createQuote(_quote)
+                .then(_onSuccess, _onError);
+
+            _httpMock.flush();
+        })
+
+        it('should create the quote correctly - server ok', function()
+        {
+            var _quote = new _QuoteModel({author: 'eric', quote: 'abcdef'});
+
+            _httpMock.expectPOST('/api/quotes', _quote).respond(200);
+
+            var _onSuccess = function()
+            {
+                expect(true).toBeTruthy();
+            }
+
+            var _onError = function(error)
+            {
+                expect(false).toBeTruthy(); // should not come here
+            }
+
+            _QuotesDAO
+                .createQuote(_quote)
+                .then(_onSuccess, _onError);
+
+            _httpMock.flush();
         })
     })
 })

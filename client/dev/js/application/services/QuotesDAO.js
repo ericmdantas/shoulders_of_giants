@@ -34,6 +34,37 @@ quotesApp.service('QuotesDAO', ['$q', 'SocketService', 'QuotesModel', 'QuotesRes
         SocketService.emit('fav:quote', id);
     };
 
+    var _createQuote = function(quote)
+    {
+        var deferred = $q.defer();
+
+        var _onSuccess = function()
+        {
+            deferred.resolve();
+        }
+
+        var _onError = function(error)
+        {
+            var _error = {msg: error.data.error, status: error.status};
+
+            deferred.reject(_error);
+        }
+
+        if (!angular.isObject(quote) || !(quote instanceof QuotesModel) || !quote.isValid())
+        {
+            deferred.reject(new Error('Não é possível criar uma nova frase, pois a mesma não é válida.'));
+            return deferred.promise;
+        }
+
+        QuotesResource
+            .save(quote)
+            .$promise
+            .then(_onSuccess, _onError);
+
+        return deferred.promise;
+    }
+
     this.getAll = _getAll;
     this.favQuote = _favQuote;
+    this.createQuote = _createQuote;
 }])

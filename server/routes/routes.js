@@ -4,11 +4,14 @@
 {
     function _init(app)
     {
+        var _base = '/api/quotes';
+
         app.get('/', content.index);
 
-        app.get('/api/quotes', quotes.getAllQuotes);
-        app.get('/api/quotes/ordered', quotes.getQuotesOrdered);
-        app.put('/api/quotes/:id', quotes.favSpecificQuote);
+        app.get(_base, quotes.getAllQuotes);
+        app.get(_base + '/ordered', quotes.getQuotesOrdered);
+        app.post(_base, quotes.createQuote);
+        app.put(_base + '/:id', quotes.favSpecificQuote);
 
         app.get('/*', content.index);
     }

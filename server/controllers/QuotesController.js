@@ -1,6 +1,6 @@
 "use strict";
 
-var QuotesModel = require('../models/Quotes');
+var Quotes = require('../models/Quotes');
 var _ = require('lodash');
 
 function QuotesController(){}
@@ -11,22 +11,26 @@ QuotesController.prototype =
                    {
                        function _successCallback(quotes)
                        {
-                           res.json(quotes);
+                           res
+                               .status(200)
+                               .json(quotes);
                        }
 
-                       function _errorCallback(erro)
+                       function _errorCallback(err)
                        {
-                           res.json({error: err});
+                           res
+                               .status(400)
+                               .json({error: err});
                        }
 
                        function _exceptionCallback(ex)
                        {
-                           res.json({error: ex});
+                           res
+                               .status(500)
+                               .json({error: ex});
                        }
 
-                       var _quote = new QuotesModel();
-
-                       _quote
+                       Quotes
                            .getQuotes()
                            .then(_successCallback, _errorCallback)
                            .catch(_exceptionCallback)
@@ -36,12 +40,6 @@ QuotesController.prototype =
     favSpecificQuote : function(io, id)
                        {
                            var quoteId = id;
-
-                           if (!_.isString(quoteId))
-                           {
-                               io.emit('fav:error', {error: 'Id não é um parâmetro no formato esperado. O mesmo deve ser uma string.'});
-                               return;
-                           }
 
                            var _successCallback = function(updated)
                            {
@@ -58,9 +56,7 @@ QuotesController.prototype =
                                io.emit('fav:exception', ex);
                            }
 
-                           var _quote = new QuotesModel();
-
-                           _quote
+                           Quotes
                                .favSpecificQuote(quoteId)
                                .then(_successCallback, _errorCallback)
                                .catch(_exceptionCallback)
@@ -69,37 +65,67 @@ QuotesController.prototype =
 
     getQuotesOrdered : function(req, res)
                        {
-                            var _order = req.query.sort;
-
-                            if (_.isString(_order))
-                            {
-                                res.json({error: 'O método de ordenação não é válido.'});
-                                return;
-                            }
+                           var _order = req.query.sort;
 
                            var _successCallback = function(quotes)
                            {
-                                res.json(quotes);
+                                res
+                                    .status(200)
+                                    .json(quotes);
                            }
 
                            var _errorCallback = function(err)
                            {
-                               res.json({error: 'Houve um erro no momento da ordenação das frases.'});
+                               res
+                                   .status(400)
+                                   .json({error: 'Houve um erro no momento da ordenação das frases.'});
                            }
 
                            var _exceptionCallback = function(err)
                            {
-                               res.json(err)
+                               res
+                                   .status(500)
+                                   .json(err);
                            }
 
-                           var _quote = new QuotesModel();
-
-                           _quote
+                           Quotes
                                .getQuotesOrderedBy(_order)
                                .then(_successCallback, _errorCallback)
                                .catch(_exceptionCallback)
                                .done();
-                       }
+                       },
+
+    createQuote : function(req, res)
+    {
+        var _quote = req.body;
+
+        var _onSuccess = function()
+        {
+            res
+                .status(200)
+                .end();
+        }
+
+        var _onError = function(error)
+        {
+            res
+                .status(400)
+                .json(error);
+        }
+
+        var _onException = function(ex)
+        {
+            res
+                .status(500)
+                .json(ex);
+        }
+
+        Quotes
+            .createQuote(_quote)
+            .then(_onSuccess, _onError)
+            .catch(_onException)
+            .done();
+    }
 }
 
 module.exports = new QuotesController();

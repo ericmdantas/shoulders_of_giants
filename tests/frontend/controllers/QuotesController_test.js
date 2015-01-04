@@ -2,7 +2,7 @@
 
 describe('QuotesController', function()
 {
-    var _scope, _httpMock, _SocketService, _QuotesDAO, _SocketService;
+    var _scope, _httpMock, _SocketService, _QuotesDAO, _SocketService, _QuotesModel;
     var CONTROLLER_NAME = 'QuotesController';
 
     beforeEach(module('quotes'));
@@ -11,9 +11,23 @@ describe('QuotesController', function()
         _scope = $injector.get('$rootScope').$new();
         _httpMock = $injector.get('$httpBackend');
         _SocketService = $injector.get('SocketService');
+
         _QuotesDAO = $injector.get('QuotesDAO');
-        _SocketService = $injector.get('SocketService');
+        _QuotesModel = $injector.get('QuotesModel');
     }))
+
+    describe('creation', function()
+    {
+        it('should create the controller with the right props on scope', inject(function($controller)
+        {
+            $controller(CONTROLLER_NAME, {$scope: _scope});
+
+            expect(angular.equals(_scope.quotes, [])).toBeTruthy();
+            expect(angular.equals(_scope.quotesKeeper, [])).toBeTruthy();
+            expect(_scope.quoteInstance instanceof _QuotesModel).toBeTruthy();
+            expect(_scope.errorQuoteCreation).toBeNull();
+        }))
+    })
 
     describe('getQuotes', function()
     {
@@ -99,8 +113,8 @@ describe('QuotesController', function()
     {
         it('should throw error - wrong id param', inject(function($controller)
         {
-            spyOn(_QuotesDAO, 'favQuote').andCallFake(angular.noop);
-            spyOn(_SocketService, 'emit').andCallFake(angular.noop);
+            spyOn(_QuotesDAO, 'favQuote').and.callFake(angular.noop);
+            spyOn(_SocketService, 'emit').and.callFake(angular.noop);
 
             $controller(CONTROLLER_NAME, {$scope: _scope});
             var _wrongParams = [null, undefined, function(){}, true, false, 1, 0, '  ', {}, []];
@@ -118,7 +132,7 @@ describe('QuotesController', function()
         {
             _httpMock.expectGET('/api/quotes').respond();
 
-            spyOn(_SocketService, 'emit').andCallFake(angular.noop);
+            spyOn(_SocketService, 'emit').and.callFake(angular.noop);
 
             $controller(CONTROLLER_NAME, {$scope: _scope});
 
@@ -131,8 +145,8 @@ describe('QuotesController', function()
 
         it('should NOT substitute the existing object with the retrieved object from the server - empty response from the server', inject(function($controller)
         {
-            spyOn(_SocketService, 'emit').andCallThrough();
-            spyOn(_SocketService, 'on').andCallThrough();
+            spyOn(_SocketService, 'emit').and.callThrough();
+            spyOn(_SocketService, 'on').and.callThrough();
 
             var _allQuotesFromServer = [{_id: '0123', author: 'algumaPessoa', quote: 'abc', likes: 0},
                                         {_id: '1123', author: 'outraPessoa', quote: 'abc', likes: 0},
@@ -152,7 +166,7 @@ describe('QuotesController', function()
 
         it('should NOT substitute the existing object with the retrieved object from the server - no updated object retrieved', inject(function($controller)
         {
-            spyOn(_SocketService, 'emit').andCallFake(angular.noop);
+            spyOn(_SocketService, 'emit').and.callFake(angular.noop);
 
             var _allQuotesFromServer = [{_id: '0123', author: 'algumaPessoa', quote: 'abc', likes: 0},
                                         {_id: '1123', author: 'outraPessoa', quote: 'abc', likes: 0},
@@ -171,7 +185,7 @@ describe('QuotesController', function()
 
         it('should NOT substitute the existing object with the retrieved object from the server - no id retrieved', inject(function($controller)
         {
-            spyOn(_SocketService, 'emit').andCallFake(angular.noop);
+            spyOn(_SocketService, 'emit').and.callFake(angular.noop);
 
             var _allQuotesFromServer = [{_id: '0123', author: 'algumaPessoa', quote: 'abc', likes: 0},
                                         {_id: '1123', author: 'outraPessoa', quote: 'abc', likes: 0},
@@ -190,7 +204,7 @@ describe('QuotesController', function()
 
         it('should substitute the existing object with the retrieved object from the server', inject(function($controller)
         {
-            spyOn(_SocketService, 'emit').andCallFake(angular.noop);
+            spyOn(_SocketService, 'emit').and.callFake(angular.noop);
 
             var _allQuotesFromServer = [{_id: '0123', author: 'algumaPessoa', quote: 'abc', likes: 0},
                                         {_id: '1123', author: 'outraPessoa', quote: 'abc', likes: 0},
@@ -271,6 +285,67 @@ describe('QuotesController', function()
 
             expect(_scope.quotes.length).toBe(1000);
             expect(_scope.singleView).toBeFalsy();
+        }))
+    })
+
+    describe('createQuote', function()
+    {
+        it('should call the right method from the DAO', inject(function($controller)
+        {
+            spyOn(_QuotesDAO, 'createQuote').and.callFake(function(){return {then: angular.noop}});
+
+            var _quote = {author: 'eric', quote: 'abcdef'};
+
+            $controller(CONTROLLER_NAME, {$scope: _scope});
+
+            _scope.createQuote(_quote);
+
+            expect(_QuotesDAO.createQuote).toHaveBeenCalledWith(_quote);
+        }))
+
+        it('should call the right method, promise rejected with error', inject(function($controller)
+        {
+            var _quote = new _QuotesModel({author: 'eric', quote: 'abcdef'});
+
+            _httpMock.expectGET('/api/quotes').respond(200, []);
+            _httpMock.expectPOST('/api/quotes', _quote).respond(400, {error: 'error here'});
+
+            $controller(CONTROLLER_NAME, {$scope: _scope});
+
+            _scope.createQuote(_quote);
+
+            _httpMock.flush();
+
+            expect(_scope.errorQuoteCreation).toEqual('error here');
+        }))
+
+        it('should call the right method, promise resolved correctly', inject(function($controller)
+        {
+            var _responseGET = [{author: 'a', quote: 'b', likes: 1}];
+
+            var _quote = new _QuotesModel({author: 'eric', quote: 'abcdef'});
+
+            _httpMock.expectGET('/api/quotes').respond(200, _responseGET);
+            _httpMock.expectPOST('/api/quotes', _quote).respond(200);
+
+            $controller(CONTROLLER_NAME, {$scope: _scope});
+
+            _scope.createQuote(_quote);
+
+            _httpMock.flush();
+            _scope.$digest();
+
+            expect(_scope.errorQuoteCreation).toBeNull();
+            expect(_scope.quotes.length).toBe(2);
+
+            _quote.likes = 0;
+
+            expect(angular.equals(_scope.quotes[0], _responseGET[0])).toBeTruthy();
+            expect(angular.equals(_scope.quotes[1], _quote)).toBeTruthy();
+
+            expect(_scope.quoteInstance.author).toBeNull();
+            expect(_scope.quoteInstance.quote).toBeNull();
+            expect(_scope.quoteInstance.likes).toBe(0);
         }))
     })
 })

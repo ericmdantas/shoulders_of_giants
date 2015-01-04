@@ -1,10 +1,28 @@
 "use strict";
 
-quotesApp.controller('QuotesController', ['$scope', 'QuotesModel', 'QuotesDAO', 'SocketService', 'Randomizer', function($scope, QuotesModel, QuotesDAO, SocketService, Randomizer)
+quotesApp.controller('QuotesController', ['$scope', '$xtorage', 'QuotesModel', 'QuotesDAO', 'SocketService', 'Randomizer', function($scope, $xtorage, QuotesModel, QuotesDAO, SocketService, Randomizer)
 {
     $scope.quotes = [];
     $scope.quotesKeeper = [];
+    $scope.errorQuoteCreation = null;
     $scope.favQuote = QuotesDAO.favQuote;
+
+    $scope.quoteInstance = new QuotesModel();
+
+    var _getQuotes = function()
+    {
+        var _onSuccess = function(quotes)
+        {
+            $scope.quotes = quotes;
+            $scope.quotesKeeper = angular.copy($scope.quotes);
+
+            $scope.$broadcast('quotes-ready');
+        }
+
+        QuotesDAO
+            .getAll()
+            .then(_onSuccess);
+    }
 
     SocketService.on('quote:faved', function(id)
     {
@@ -26,19 +44,25 @@ quotesApp.controller('QuotesController', ['$scope', 'QuotesModel', 'QuotesDAO', 
         $scope.getOrder = order;
     }
 
-    var _getQuotes = function()
+    $scope.createQuote = function(quote)
     {
-        var _onSuccess = function(quotes)
+        var _onSuccess = function()
         {
-            $scope.quotes = quotes;
-            $scope.quotesKeeper = angular.copy($scope.quotes);
+            $scope.errorQuoteCreation = null;
+            $scope.quoteInstance = new QuotesModel();
 
-            $scope.$broadcast('quotes-ready');
+            quote.likes = 0;
+            $scope.quotes.push(quote);
+        }
+
+        var _onError = function(error)
+        {
+            $scope.errorQuoteCreation = error.msg;
         }
 
         QuotesDAO
-            .getAll()
-            .then(_onSuccess);
+            .createQuote(quote)
+            .then(_onSuccess, _onError);
     }
 
     $scope.setSingle = function(quotes)

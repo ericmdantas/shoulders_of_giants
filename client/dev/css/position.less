@@ -6,26 +6,27 @@
 #to-the-top {position: fixed; bottom: 1em; padding: 1em; right: 1em;}
 #randomize {width: @full-width; padding: .3em 1em .3em; margin: 0 0 .2em 0; font-size: 4em; line-height: .8;}
 #main-header {text-align: center; padding: .5em 0; border-radius: 0; overflow: hidden;}
-#options div, #options h3, #options nav {display: inline-block;}
-#options {padding: .5em .5em 1em; z-index: 3; text-align: center;}
+#options {padding: .5em; z-index: 3; text-align: center; position: fixed; bottom: 0; right: 0;}
 
 .modal .btn-group-grande {width: @full-width;}
 .no-padding {padding: 0;}
 .icone-star {font-size: @likes-size; margin-top: 5px; margin-right: .1em;}
 .center {margin: 0 auto !important;}
 .search {position: absolute; right: .5em; top: 0; color: gray;}
-.filter {font-size: 1.2em; text-indent: 10px;}
+.filter {font-size: @bigger-font-size; text-indent: 10px;}
 .author {position: absolute; right: .5em; bottom: .2em;}
 .like-container {position: absolute; right: .3em; top: .3em;}
 .like {width: 2em; padding: 5px;}
-.number-likes {position: absolute; top: -1px; right: 2em; font-size: @likes-size; font-weight: bold;}
+.number-likes {position: absolute; top: -3px; right: 1.5em; font-size: @likes-size; font-weight: bold;}
 .cards {padding: 4em 1.5em; position: relative;}
 .cards.espaco-bottom {margin-bottom: .5em;}
 .text-centered {text-align: center;}
-.title {padding: .3em; margin: 0 .3em;}
+.title {padding: 1em; margin: 0 .3em;}
 .filter-container {text-align: right; padding-bottom: .5em; position: relative;}
 .modal-body button.col-sm-6 {width: 50%;}
 .modal-body button.col-sm-4 {width: 33%;}
+.modal-body textarea {max-width: 100%; font-size: @bigger-font-size; min-height: 350px;}
+.modal-body .form-control {font-size: @bigger-font-size;}
 
 body {margin: 0;}
 ul {margin: 0; padding: 0;}

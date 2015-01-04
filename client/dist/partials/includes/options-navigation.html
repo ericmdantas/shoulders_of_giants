@@ -1,15 +1,18 @@
 <div id="options" aling="center" class="transition">
+
+    <div class="opt not-selectable visible-sm visible-md visible-lg" data-toggle="modal" data-target="#create-quote-modal" id="create-quote">
+        <h3 class="title hand"><span class="fa fa-pencil"></span></h3>
+    </div>
+
     <div class="opt not-selectable" data-toggle="modal" data-target="#myModal" id="type-of-visualization">
-        <h3 class="title hand" ng-click="onViewClick()">View</h3>
+        <h3 class="title hand" ng-click="onViewClick()"><span class="fa fa-eye"></span></h3>
     </div>
 
     <div class="opt not-selectable" data-toggle="modal" data-target="#myModal" id="order-by">
-        <h3 class="title hand" ng-click="onOrderByClick()">Order By</h3>
+        <h3 class="title hand" ng-click="onOrderByClick()"><span class="fa fa-reorder"></span></h3>
     </div>
 
     <div class="opt not-selectable" id="shuffle">
-        <h3 class="title hand" ng-click="onShuffleClick()">Shuffle</h3>
+        <h3 class="title hand" ng-click="onShuffleClick()"><span class="fa fa-random"></span></h3>
     </div>
-
-    <div id="configuration" class="title visible-lg">Options</div>
 </div>

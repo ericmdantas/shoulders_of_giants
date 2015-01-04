@@ -35,7 +35,7 @@ describe('emd-show-modal-when-no-quotes-directive', function()
     {
         it('should call the modal hiding right away', function()
         {
-            spyOn(_windowMock, '$').andCallThrough();
+            spyOn(_windowMock, '$').and.callThrough();
 
             var _html = '<show-modal-when-no-quotes></show-modal-when-no-quotes>';
 
@@ -63,7 +63,7 @@ describe('emd-show-modal-when-no-quotes-directive', function()
 
         it('should react to the quotes-ready event', function()
         {
-            spyOn(_scope, '$broadcast').andCallThrough();
+            spyOn(_scope, '$broadcast').and.callThrough();
 
             _scope.$broadcast('quotes-ready');
         })

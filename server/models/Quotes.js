@@ -2,7 +2,7 @@
 
 (function(mongoose, Promise, _, quotesSchema)
 {
-    quotesSchema.methods =
+    quotesSchema.statics =
     {
         getQuotes : function()
                     {
@@ -73,7 +73,29 @@
                                         })
 
                                     return deferred.promise;
-                             }
+                             },
+
+        createQuote : function(quote)
+        {
+            var deferred = Promise.pending();
+
+            if (!_.isObject(quote))
+            {
+                deferred.reject(new Error('Não é possível criar uma frase com um objeto vazio.'));
+                return deferred.promise;
+            }
+
+            var _onSave = function(error, saved)
+            {
+                error ? deferred.reject(error)
+                      : deferred.resolve(saved);
+            }
+
+            new Quote(quote)
+                    .save(_onSave);
+
+            return deferred.promise;
+        }
     }
 
     var Quote = mongoose.model('Quote', quotesSchema);

@@ -91,6 +91,7 @@ module.exports = function(grunt)
                                                          _tempDir + 'bower_components/angular/angular.min.js',
                                                          _tempDir + 'bower_components/angular-socket-io/socket.min.js',
                                                          _tempDir + 'bower_components/angular-resource/angular-resource.min.js',
+                                                         _tempDir + 'bower_components/ng-xtorage/ng-xtorage.min.js',
                                                          _tempDir + 'bower_components/bootstrap/dist/js/bootstrap.min.js',
                                                          _tempDir + 'js/frameworks/socket.io.js'],
 
