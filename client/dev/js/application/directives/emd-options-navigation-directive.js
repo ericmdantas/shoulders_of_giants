@@ -1,6 +1,6 @@
 "use strict";
 
-quotesApp.directive('emdOptionsNavigation', [function()
+quotesApp.directive('emdOptionsNavigation', ['$timeout', function($timeout)
 {
     var _templateUrl = 'partials/includes/options-navigation.html';
 
@@ -38,16 +38,17 @@ quotesApp.directive('emdOptionsNavigation', [function()
     {
         scope.$watch('modalOptions', function()
         {
-            if (scope.modalOptions.conteudo.length === 2)
+            $timeout(function()
             {
-                $('.modal-body button').addClass('col-sm-6 col-md-6 col-lg-6');
-            }
+                switch(scope.modalOptions.conteudo.length)
+                {
+                    case 2: $('.modal-body .btn-group .btn').addClass('col-xs-6');
+                        break;
 
-            if (scope.modalOptions.conteudo.length === 3)
-            {
-
-                $('.modal-body button').addClass('col-sm-4 col-md-4 col-lg-4');
-            }
+                    case 3: $('.modal-body .btn-group .btn').addClass('col-xs-4');
+                        break;
+                }
+            }, 3);
         });
     }
 

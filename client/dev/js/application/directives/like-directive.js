@@ -1,6 +1,6 @@
 "use strict";
 
-quotesApp.directive('like', ['ClientStorageService', function(ClientStorageService)
+quotesApp.directive('like', [function()
 {
     var _templateUrl = 'partials/includes/likes.html';
 

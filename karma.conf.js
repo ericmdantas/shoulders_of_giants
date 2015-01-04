@@ -21,8 +21,8 @@ module.exports = function(config)
 	  'client/dev/bower_components/angular-socket-io/socket.min.js',
       'client/dev/bower_components/angular-resource/angular-resource.min.js',
       'client/dev/bower_components/bootstrap/dist/js/bootstrap.min.js',
+      'client/dev/bower_components/ng-xtorage/ng-xtorage.min.js',
 
-      'client/dev/js/modules/client-storage-module.js',
       'client/dev/js/modules/client-socket-module.js',
 
  	  'client/dev/js/application/app.js',

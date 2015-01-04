@@ -140,16 +140,26 @@ describe('emd-options-navigation-directive', function()
     {
         it('should activate the watch - 2 buttons', function()
         {
+            spyOn($.fn, 'addClass').and.callFake(angular.noop);
+
             _scope.modalOptions = {conteudo: [1, 2]};
 
+            _timeoutMock.flush(5);
             _scope.$digest();
+
+            expect($('.algumaCoisa').addClass).toHaveBeenCalledWith('col-xs-6');
         })
 
         it('should activate the watch - 3 buttons', function()
         {
+            spyOn($.fn, 'addClass').and.callFake(angular.noop);
+
             _scope.modalOptions = {conteudo: [1, 2, 3]};
 
+            _timeoutMock.flush(5);
             _scope.$digest();
+
+            expect($('.algumaCoisa').addClass).toHaveBeenCalledWith('col-xs-4');
         })
     })
 })

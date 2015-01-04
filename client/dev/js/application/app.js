@@ -1,4 +1,4 @@
 var quotesApp = angular.module('quotes', ['ngResource',
-                                          'emd.client.storage.module',
+                                          'btford.socket-io',
                                           'emd.client.socket.module',
                                           'emd.ng-xtorage']);
