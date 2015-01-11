@@ -1,6 +1,6 @@
 "use strict";
 
-quotesApp.controller('QuotesController', ['$scope', '$xtorage', 'QuotesModel', 'QuotesDAO', 'SocketService', 'Randomizer', function($scope, $xtorage, QuotesModel, QuotesDAO, SocketService, Randomizer)
+quotesApp.controller('QuotesController', ['$rootScope', '$scope', 'QuotesModel', 'QuotesDAO', 'SocketService', 'Randomizer', '$timeout', function($rootScope, $scope, QuotesModel, QuotesDAO, SocketService, Randomizer, $timeout)
 {
     $scope.quotes = [];
     $scope.quotesKeeper = [];
@@ -16,7 +16,10 @@ quotesApp.controller('QuotesController', ['$scope', '$xtorage', 'QuotesModel', '
             $scope.quotes = quotes;
             $scope.quotesKeeper = angular.copy($scope.quotes);
 
-            $scope.$broadcast('quotes-ready');
+            $timeout(function()
+            {
+                $rootScope.$broadcast('quotes-ready');
+            }, 2000);
         }
 
         QuotesDAO
@@ -46,12 +49,11 @@ quotesApp.controller('QuotesController', ['$scope', '$xtorage', 'QuotesModel', '
 
     $scope.createQuote = function(quote)
     {
-        var _onSuccess = function()
+        var _onSuccess = function(quote)
         {
             $scope.errorQuoteCreation = null;
             $scope.quoteInstance = new QuotesModel();
 
-            quote.likes = 0;
             $scope.quotes.push(quote);
         }
 

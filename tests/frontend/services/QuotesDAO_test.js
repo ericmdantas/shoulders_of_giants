@@ -158,13 +158,16 @@ describe('QuotesDAO', function()
 
         it('should create the quote correctly - server ok', function()
         {
+            var _responsePOST = {author: 'eric', quote: 'abcdef', _id: "123", likes: 0};
+
             var _quote = new _QuoteModel({author: 'eric', quote: 'abcdef'});
 
-            _httpMock.expectPOST('/api/quotes', _quote).respond(200);
+            _httpMock.expectPOST('/api/quotes', _quote).respond(200, _responsePOST);
 
-            var _onSuccess = function()
+            var _onSuccess = function(quote)
             {
-                expect(true).toBeTruthy();
+                expect(quote instanceof _QuoteModel).toBeTruthy();
+                expect(angular.equals(quote, _responsePOST)).toBeTruthy();
             }
 
             var _onError = function(error)

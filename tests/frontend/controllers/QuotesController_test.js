@@ -2,18 +2,25 @@
 
 describe('QuotesController', function()
 {
-    var _scope, _httpMock, _SocketService, _QuotesDAO, _SocketService, _QuotesModel;
+    var _rootScope, _scope, _httpMock, _timeoutMock, _SocketService, _QuotesDAO, _SocketService, _QuotesModel, _xtorage;
     var CONTROLLER_NAME = 'QuotesController';
 
     beforeEach(module('quotes'));
+
     beforeEach(inject(function($injector)
     {
-        _scope = $injector.get('$rootScope').$new();
+        _rootScope = $injector.get('$rootScope');
+        _scope = _rootScope.$new();
         _httpMock = $injector.get('$httpBackend');
+        _timeoutMock = $injector.get('$timeout');
         _SocketService = $injector.get('SocketService');
+        _xtorage = $injector.get('$xtorage');
 
         _QuotesDAO = $injector.get('QuotesDAO');
         _QuotesModel = $injector.get('QuotesModel');
+
+        spyOn(_xtorage, 'save').and.callFake(angular.noop);
+        spyOn(_xtorage, 'get').and.returnValue(null);
     }))
 
     describe('creation', function()
@@ -73,6 +80,20 @@ describe('QuotesController', function()
             expect(_scope.quotesKeeper[0].quote).toEqual("Alo");
             expect(_scope.quotesKeeper[0].likes).toEqual(0);
         }))
+
+        it('should call that the quotes are ready', inject(function($controller)
+        {
+            spyOn(_rootScope, '$broadcast').and.callThrough();
+
+            _httpMock.expectGET('/api/quotes').respond([]);
+
+            $controller(CONTROLLER_NAME, {$scope: _scope});
+
+            _httpMock.flush();
+            _timeoutMock.flush(2001);
+
+            expect(_rootScope.$broadcast).toHaveBeenCalledWith('quotes-ready');
+        }));
     })
 
     describe('setOrder / getOrder', function()
@@ -322,26 +343,24 @@ describe('QuotesController', function()
         it('should call the right method, promise resolved correctly', inject(function($controller)
         {
             var _responseGET = [{author: 'a', quote: 'b', likes: 1}];
+            var _responsePOST = {_id: "abc123", author: 'eric', quote: 'abcdef', likes: 0};
 
             var _quote = new _QuotesModel({author: 'eric', quote: 'abcdef'});
 
             _httpMock.expectGET('/api/quotes').respond(200, _responseGET);
-            _httpMock.expectPOST('/api/quotes', _quote).respond(200);
+            _httpMock.expectPOST('/api/quotes', _quote).respond(_responsePOST);
 
             $controller(CONTROLLER_NAME, {$scope: _scope});
 
             _scope.createQuote(_quote);
 
             _httpMock.flush();
-            _scope.$digest();
 
             expect(_scope.errorQuoteCreation).toBeNull();
             expect(_scope.quotes.length).toBe(2);
 
-            _quote.likes = 0;
-
             expect(angular.equals(_scope.quotes[0], _responseGET[0])).toBeTruthy();
-            expect(angular.equals(_scope.quotes[1], _quote)).toBeTruthy();
+            expect(angular.equals(_scope.quotes[1], _responsePOST)).toBeTruthy();
 
             expect(_scope.quoteInstance.author).toBeNull();
             expect(_scope.quoteInstance.quote).toBeNull();

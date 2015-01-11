@@ -41,16 +41,24 @@ describe('view', function()
 
         it('start to filter something - zero results', function()
         {
-            $('.filter').sendKeys('abcdef');
+            $('.filter').sendKeys('abcdefasdasdasdasdasd');
 
-            expect(element(by.className('cards')).isPresent()).toBeFalsy();
+            expect($$('.cards').count()).toEqual(1); // nothing found card
         })
 
         it('start to filter something', function()
         {
             $('.filter').sendKeys('courage');
 
-            expect(element(by.className('cards')).isPresent()).toBeTruthy();
+            expect($$('.cards').count()).toBeGreaterThan(0);
+        })
+    })
+
+    describe('createPost', function()
+    {
+        afterEach(function()
+        {
+
         })
     })
 })

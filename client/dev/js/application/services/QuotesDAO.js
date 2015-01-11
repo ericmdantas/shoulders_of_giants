@@ -1,10 +1,15 @@
 "use strict";
 
-quotesApp.service('QuotesDAO', ['$q', 'SocketService', 'QuotesModel', 'QuotesResource', function($q, SocketService, QuotesModel, QuotesResource)
+quotesApp.service('QuotesDAO', ['$q', 'SocketService', 'QuotesModel', 'QuotesCache', 'QuotesResource', function($q, SocketService, QuotesModel, QuotesCache, QuotesResource)
 {
     var _getAll = function ()
     {
         var deferred = $q.defer();
+
+        var _quotes = QuotesCache.getArray();
+
+        if (_quotes)
+            return $q.when(_quotes);
 
         var _onSuccess = function(quotes)
         {
@@ -14,6 +19,8 @@ quotesApp.service('QuotesDAO', ['$q', 'SocketService', 'QuotesModel', 'QuotesRes
             {
                 _quotes.push(new QuotesModel(quote));
             })
+
+            QuotesCache.saveArray(_quotes);
 
             deferred.resolve(_quotes);
         }
@@ -38,9 +45,11 @@ quotesApp.service('QuotesDAO', ['$q', 'SocketService', 'QuotesModel', 'QuotesRes
     {
         var deferred = $q.defer();
 
-        var _onSuccess = function()
+        var _onSuccess = function(quote)
         {
-            deferred.resolve();
+            var _quote = new QuotesModel(quote);
+
+            deferred.resolve(_quote);
         }
 
         var _onError = function(error)

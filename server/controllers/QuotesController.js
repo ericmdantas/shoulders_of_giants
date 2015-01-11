@@ -99,11 +99,11 @@ QuotesController.prototype =
     {
         var _quote = req.body;
 
-        var _onSuccess = function()
+        var _onSuccess = function(quote)
         {
             res
                 .status(200)
-                .end();
+                .json(quote);
         }
 
         var _onError = function(error)

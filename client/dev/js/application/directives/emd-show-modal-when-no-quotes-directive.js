@@ -1,20 +1,28 @@
 "use strict";
 
-quotesApp.directive('showModalWhenNoQuotes', [function()
+quotesApp.directive('showModalWhenNoQuotes', ['$rootScope', function($rootScope)
 {
     var _templateUrl = 'partials/includes/modal-loading.html';
 
-    var _link = function(scope, element, attrs)
+    var _compile = function()
     {
         var MODAL_ID = '#modal-loading-quotes';
 
-        $(MODAL_ID).modal('show');
-
-        var _destroy = scope.$on('quotes-ready', function(event, obj)
+        var _pre = function()
         {
-            $(MODAL_ID).modal('hide');
-            _destroy();
-        });
+            $(MODAL_ID).modal('show');
+        }
+
+        var _post = function()
+        {
+            var _destroy = $rootScope.$on('quotes-ready', function()
+            {
+                $(MODAL_ID).modal('hide');
+                _destroy();
+            });
+        }
+
+        return {pre: _pre, post: _post};
     };
 
     var _scope = {};
@@ -22,7 +30,7 @@ quotesApp.directive('showModalWhenNoQuotes', [function()
     return {
                 restrict: 'E',
                 templateUrl: _templateUrl,
-                link: _link,
+                compile: _compile,
                 scope: _scope
            }
 }])
