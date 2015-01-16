@@ -3,7 +3,7 @@ var quotesApp = angular.module('quotes', ['ngResource',
                                           'emd.client.socket.module',
                                           'emd.ng-xtorage']);
 
-quotesApp.config(['$xtorageDefaultStorageProvider', function($xtorageDefaultStorageProvider)
+quotesApp.config(['$xtorageProvider', function($xtorageProvider)
 {
-    $xtorageDefaultStorageProvider.storage = 'sessionStorage';
+    $xtorageProvider.storage = 'sessionStorage';
 }])

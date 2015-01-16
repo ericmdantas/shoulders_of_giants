@@ -64,4 +64,49 @@ describe('QuotesModel', function()
             expect(_quote.isValid()).toBeTruthy();
         })
     })
+
+    describe('removeQuotationMarks', function()
+    {
+        it('should not touch the quote, no quotation marks', function()
+        {
+            var _quote = new _QuotesModel({author: 'eric', quote: 'abcdedede'});
+
+            expect(_quote.removeQuotationMarks()).toEqual(_quote.quote);
+        })
+
+        it('should remove the quotes from the begining of the quote', function()
+        {
+            var _quote = new _QuotesModel({author: 'eric', quote: '"abcdedede'});
+
+            expect(_quote.removeQuotationMarks()).toEqual(_quote.quote.replace("\"",''));
+        })
+
+        it('should remove the quotes from the end of the quote', function()
+        {
+            var _quote = new _QuotesModel({author: 'eric', quote: 'abcdedede"'});
+
+            expect(_quote.removeQuotationMarks()).toEqual(_quote.quote.replace("\"",''));
+        })
+
+        it('should remove the quotes both from the begining and end of the quote', function()
+        {
+            var _quote = new _QuotesModel({author: 'eric', quote: '"abcdedede"'});
+
+            expect(_quote.removeQuotationMarks()).toEqual(_quote.quote.replace("\"",'').replace("\"", ''));
+        })
+
+        it('should remove only quotes from the begining and end, not from the middle', function()
+        {
+            var _quote = new _QuotesModel({author: 'eric', quote: '"abcd\"edede"'});
+
+            expect(_quote.removeQuotationMarks()).toEqual('abcd"edede');
+        })
+
+        it('should remove only quotes from the begining and end, not from the middle - single quotes', function()
+        {
+            var _quote = new _QuotesModel({author: 'eric', quote: "'abcd\'edede'"});
+
+            expect(_quote.removeQuotationMarks()).toEqual("abcd'edede");
+        })
+    })
 })

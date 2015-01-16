@@ -1,10 +1,13 @@
 "use strict";
 
-(function(content, quotes)
+(function(content, validator, quotes)
 {
     function _init(app)
     {
         var _base = '/api/quotes';
+
+        app.post('*', validator.checkContentLength);
+        app.put('*', validator.checkContentLength);
 
         app.get('/', content.index);
 
@@ -19,4 +22,5 @@
     exports.init = _init;
 
 }(require('../controllers/ContentController'),
+  require('../services/validator'),
   require('../controllers/QuotesController')))

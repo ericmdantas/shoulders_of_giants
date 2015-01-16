@@ -16,6 +16,16 @@ quotesApp.factory('QuotesModel', [function()
         isValid: function()
         {
             return angular.isString(this.author) && angular.isString(this.quote);
+        },
+
+        removeQuotationMarks: function()
+        {
+            var _quote = this.quote;
+            var _cleanQuote = /^"|^'|"$|'$/g;
+
+            _quote = _quote.replace(_cleanQuote, '');
+
+            return _quote;
         }
     }
 

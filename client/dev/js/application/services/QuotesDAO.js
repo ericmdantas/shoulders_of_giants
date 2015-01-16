@@ -8,8 +8,9 @@ quotesApp.service('QuotesDAO', ['$q', 'SocketService', 'QuotesModel', 'QuotesCac
 
         var _quotes = QuotesCache.getArray();
 
-        if (_quotes)
-            return $q.when(_quotes);
+        //TODO: improve this so it expires sometime...
+        //if (_quotes)
+        //    return $q.when(_quotes);
 
         var _onSuccess = function(quotes)
         {
@@ -64,6 +65,8 @@ quotesApp.service('QuotesDAO', ['$q', 'SocketService', 'QuotesModel', 'QuotesCac
             deferred.reject(new Error('Não é possível criar uma nova frase, pois a mesma não é válida.'));
             return deferred.promise;
         }
+
+        quote.quote = quote.removeQuotationMarks();
 
         QuotesResource
             .save(quote)

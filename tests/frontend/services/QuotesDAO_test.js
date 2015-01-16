@@ -181,5 +181,33 @@ describe('QuotesDAO', function()
 
             _httpMock.flush();
         })
+
+        it('should not save quotes with quotation marks', function()
+        {
+            var _responsePOST = {author: 'eric', quote: 'abcdef', _id: "123", likes: 0};
+
+            var _quote = new _QuoteModel({author: 'eric', quote: '"abcdef"'});
+
+            _quote.quote = 'abcdef';
+
+            _httpMock.expectPOST('/api/quotes', _quote).respond(200, _responsePOST);
+
+            var _onSuccess = function(quote)
+            {
+                expect(quote instanceof _QuoteModel).toBeTruthy();
+                expect(angular.equals(quote, _responsePOST)).toBeTruthy();
+            }
+
+            var _onError = function(error)
+            {
+                expect(false).toBeTruthy(); // should not come here
+            }
+
+            _QuotesDAO
+                .createQuote(_quote)
+                .then(_onSuccess, _onError);
+
+            _httpMock.flush();
+        })
     })
 })
