@@ -1,6 +1,6 @@
 "use strict";
 
-xdescribe('QuotesCache', function()
+describe('QuotesCache', function()
 {
     var _QuotesCache, _xtorage, _windowMock;
 

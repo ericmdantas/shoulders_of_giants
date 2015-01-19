@@ -2,17 +2,20 @@
 
 describe('QuotesDAO', function()
 {
-    var _QuotesDAO, _QuoteModel, _httpMock, _SocketService;
+    var _QuotesDAO, _QuoteModel, _httpMock, _SocketService, _QuotesCache;
 
     beforeEach(module('quotes'));
 
     beforeEach(inject(function($injector)
     {
         _httpMock = $injector.get('$httpBackend');
+        _QuotesCache = $injector.get('QuotesCache');
 
         _QuotesDAO = $injector.get('QuotesDAO');
         _QuoteModel = $injector.get('QuotesModel');
         _SocketService = $injector.get('SocketService');
+
+        spyOn(_QuotesCache, 'getArray').and.callFake(angular.noop);
     }))
 
     describe('getAll', function()

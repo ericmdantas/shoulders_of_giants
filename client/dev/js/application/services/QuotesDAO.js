@@ -8,9 +8,8 @@ quotesApp.service('QuotesDAO', ['$q', 'SocketService', 'QuotesModel', 'QuotesCac
 
         var _quotes = QuotesCache.getArray();
 
-        //TODO: improve this so it expires sometime...
-        //if (_quotes)
-        //    return $q.when(_quotes);
+        if (_quotes)
+            return $q.when(_quotes);
 
         var _onSuccess = function(quotes)
         {
@@ -72,6 +71,7 @@ quotesApp.service('QuotesDAO', ['$q', 'SocketService', 'QuotesModel', 'QuotesCac
             .save(quote)
             .$promise
             .then(_onSuccess, _onError);
+
 
         return deferred.promise;
     }
