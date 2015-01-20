@@ -1,6 +1,6 @@
 .idea/
 node_modules/
 *.log
-coverage/
+unit_coverage/
 client/temp/
 client/dev/bower_components/

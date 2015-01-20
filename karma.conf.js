@@ -62,7 +62,7 @@ module.exports = function(config)
     coverageReporter:
     {
       type : 'html',
-      dir : 'coverage/'
+      dir : 'unit_coverage/'
     },
 
     // web server port

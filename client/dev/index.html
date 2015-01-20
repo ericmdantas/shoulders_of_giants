@@ -38,6 +38,7 @@
                 <div class="input-group">
                     <input type="text"
                            ng-model="search"
+
                            class="form-control filter"
                            placeholder="I wanna read about.."
                            maxlength="22"
@@ -53,7 +54,7 @@
 
         <emd-options-navigation></emd-options-navigation>
 
-        <div class="container">
+        <div class="container" id="main-container">
 
             <show-modal-when-no-quotes></show-modal-when-no-quotes>
 
@@ -120,6 +121,7 @@
         <script type="text/javascript" src="js/application/directives/emd-show-modal-when-no-quotes-directive.js"></script>
         <script type="text/javascript" src="js/application/directives/activable-directive.js"></script>
         <script type="text/javascript" src="js/application/directives/like-directive.js"></script>
+        <script type="text/javascript" src="js/application/directives/show-other-options-directive.js"></script>
         <!-- endbuild -->
 
     </body>
