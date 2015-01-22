@@ -6,7 +6,6 @@ quotesApp.controller('QuotesController', ['$rootScope', '$scope', 'QuotesModel',
     $scope.quotesKeeper = [];
     $scope.errorQuoteCreation = null;
     $scope.favQuote = QuotesDAO.favQuote;
-
     $scope.quoteInstance = new QuotesModel();
 
     var _getQuotes = function()

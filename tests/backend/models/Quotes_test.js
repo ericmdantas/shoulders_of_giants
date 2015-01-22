@@ -345,6 +345,7 @@ describe('quotes', function()
             var _onSuccess = function(saved)
             {
                 expect(saved).to.be.defined;
+                expect(saved).to.an.instanceof(Quotes);
                 expect(saved).to.have.property('author');
                 expect(saved).to.have.property('quote');
                 expect(saved).to.have.property('likes');
