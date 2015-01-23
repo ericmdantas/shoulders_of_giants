@@ -48,7 +48,6 @@
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha tests/backend --watch --recursive --check-leaks --reporter min",
-    //"test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS",
     "start": "node server.js"
   },
   "repository": {
