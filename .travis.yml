@@ -1,14 +1,17 @@
 language: node_js
 
 install:
-  - sudo npm install -g bower
-  - sudo npm install -g grunt
+  - npm install -g bower
+  - npm install -g grunt
 
 node_js:
-  - "0.10"
+  - "0.11"
 
 before_script:
   - bower install
 
 script:
   - grunt test
+
+services:
+  - mongodb
