@@ -47,7 +47,7 @@
     "newrelic": "^1.14.0"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha tests/backend --watch --recursive --check-leaks --reporter min",
+    "test": "mocha tests/backend --watch --recursive --check-leaks --reporter min",
     "start": "node server.js"
   },
   "repository": {
