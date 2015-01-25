@@ -47,6 +47,7 @@
   },
   "scripts": {
     "test": "mocha tests/backend --watch --recursive --check-leaks --reporter min",
+    "test-on-travis": "mocha tests/backend --recursive --check-leaks --reporter min",
     "start": "node server.js"
   },
   "repository": {
