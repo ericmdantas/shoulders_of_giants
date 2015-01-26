@@ -34,6 +34,15 @@ module.exports = function(grunt)
             }
         },
 
+        coveralls:
+        {
+            options:
+            {
+                debug: true,
+                coverageDir: 'unit_coverage'
+            }
+        },
+
         clean:
         {
             temp:
@@ -143,7 +152,7 @@ module.exports = function(grunt)
     _loadTasks();
 
     // register tasks
-    grunt.registerTask('test', ['karma:unit']);
+    grunt.registerTask('test', ['karma:unit', 'coveralls']);
     grunt.registerTask('build', ['clean:temp', 'clean:dist', 'copy:temp', 'uglify', 'less', 'cssmin', 'copy:dist', 'replace', 'usemin', 'clean:temp']);
     grunt.registerTask('dist', ['karma:unit', 'clean:temp', 'clean:dist', 'copy:temp', 'uglify', 'less', 'cssmin', 'copy:dist', 'replace', 'usemin', 'clean:temp']);
 };
