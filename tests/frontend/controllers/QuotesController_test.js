@@ -2,7 +2,7 @@
 
 describe('QuotesController', function()
 {
-    var _rootScope, _scope, _httpMock, _timeoutMock, _SocketService, _QuotesDAO, _SocketService, _QuotesModel, _xtorage;
+    var _rootScope, _scope, _httpMock, _timeoutMock, _SocketService, _QuotesDAO, _SocketService, _QuotesModel, _xtorage, Randomizer;
     var CONTROLLER_NAME = 'QuotesController';
 
     beforeEach(module('quotes'));
@@ -18,6 +18,7 @@ describe('QuotesController', function()
 
         _QuotesDAO = $injector.get('QuotesDAO');
         _QuotesModel = $injector.get('QuotesModel');
+        Randomizer = $injector.get('Randomizer');
 
         spyOn(_xtorage, 'save').and.callFake(angular.noop);
         spyOn(_xtorage, 'get').and.returnValue(null);
@@ -365,6 +366,43 @@ describe('QuotesController', function()
             expect(_scope.quoteInstance.author).toBeNull();
             expect(_scope.quoteInstance.quote).toBeNull();
             expect(_scope.quoteInstance.likes).toBe(0);
+        }))
+    })
+
+    describe('randomize', function()
+    {
+        it('should call the right service/method', inject(function($controller)
+        {
+            var _responseGET = [{author: 'a', quote: 'b', likes: 1}];
+            spyOn(Randomizer, 'shuffleSingle').and.callFake(angular.noop);
+
+            _httpMock.expectGET('/api/quotes').respond(200, _responseGET);
+
+            $controller(CONTROLLER_NAME, {$scope: _scope});
+
+            _httpMock.flush();
+
+            _scope.randomize();
+
+            expect(Randomizer.shuffleSingle).toHaveBeenCalledWith(_responseGET);
+        }))
+    })
+
+    xdescribe('quotes:faved', function()
+    {
+        it('should call the right method', inject(function($controller)
+        {
+            spyOn(_SocketService, 'on').and.callThrough();
+
+            var _responseGET = [{author: 'a', quote: 'b', likes: 1, _id: '1'}];
+
+            _httpMock.expectGET('/api/quotes').respond(200, _responseGET);
+
+            $controller(CONTROLLER_NAME, {$scope: _scope});
+
+            _SocketService.emit('quote:faved', '1');
+
+            expect(_SocketService.on).toHaveBeenCalled();
         }))
     })
 })

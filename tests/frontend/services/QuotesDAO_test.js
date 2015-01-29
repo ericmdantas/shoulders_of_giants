@@ -2,34 +2,67 @@
 
 describe('QuotesDAO', function()
 {
-    var _QuotesDAO, _QuoteModel, _httpMock, _SocketService, _QuotesCache;
+    var _rootScope, _QuotesDAO, _QuoteModel, _httpMock, _SocketService, _QuotesCache, _xtorage;
 
     beforeEach(module('quotes'));
 
     beforeEach(inject(function($injector)
     {
+        _rootScope = $injector.get('$rootScope');
         _httpMock = $injector.get('$httpBackend');
         _QuotesCache = $injector.get('QuotesCache');
 
         _QuotesDAO = $injector.get('QuotesDAO');
         _QuoteModel = $injector.get('QuotesModel');
         _SocketService = $injector.get('SocketService');
-
-        spyOn(_QuotesCache, 'getArray').and.callFake(angular.noop);
+        _xtorage = $injector.get('$xtorage');
     }))
 
     describe('getAll', function()
     {
         it('should fetch request correctly', function()
         {
+            spyOn(_QuotesCache, 'getArray').and.callFake(angular.noop);
+
             _httpMock.expectGET('/api/quotes').respond();
             _QuotesDAO.getAll();
             _httpMock.flush();
         })
+
+        it('should get from the storage', function()
+        {
+            spyOn(_QuotesCache, 'getArray').and.callThrough();
+
+            var _fromStorage = [{author: 'a', quote: 'b', likes: 1, _id: '1'}];
+
+            _xtorage.save('q', _fromStorage);
+
+            var _onSuccess = function(quotes)
+            {
+                expect(quotes).toEqual(_fromStorage);
+            }
+
+            var _onError = function(error)
+            {
+                expect(true).toBeFalsy();
+            }
+
+            _QuotesDAO
+                .getAll()
+                .then(_onSuccess, _onError);
+
+            _rootScope.$digest();
+        })
+
     })
 
     describe('favQuote', function()
     {
+        beforeEach(function()
+        {
+            spyOn(_QuotesCache, 'getArray').and.callFake(angular.noop);
+        })
+
         it('should throw and error - wrong id param', function()
         {
             var _wrongParam = [null, undefined, true, false, function(){}, 1, 0, {}, []];

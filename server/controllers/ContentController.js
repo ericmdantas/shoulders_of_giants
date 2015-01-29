@@ -1,18 +1,13 @@
 "use strict";
 
-function ContentController(){}
-
-ContentController.prototype =
+var _index = function(req, res)
 {
-    index: function(req, res)
-           {
-               res.setHeader('Content-Type', 'text/html');
-               res.sendfile('dist/index.html', function(err)
-               {
-                   if (err)
-                       throw err;
-               })
-           }
+    res.setHeader('Content-Type', 'text/html');
+    res.sendfile('dist/index.html', function(err)
+    {
+        if (err)
+            throw err;
+    })
 }
 
-module.exports = new ContentController();
+exports.index = _index;

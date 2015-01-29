@@ -1,15 +1,13 @@
 "use strict";
 
-(function(morgan, bodyParser)
+var morgan = require('morgan');
+var bodyParser = require('body-parser');
+
+var _me = function(application, exp, dir)
 {
-    function configuracaoInicial(application, exp, dir)
-    {
-        application.use(exp.static(dir + '/client/dist/'));
-        application.use(bodyParser());
-        application.use(morgan('dev'));
-    }
+    application.use(exp.static(dir + '/client/dist/'));
+    application.use(bodyParser());
+    application.use(morgan('dev'));
+}
 
-    exports.me = configuracaoInicial;
-
-}(require('morgan'),
-  require('body-parser')))
+exports.me = _me;
