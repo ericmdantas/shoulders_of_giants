@@ -7,95 +7,83 @@ var quotesSchema = require('../schemas/quotesSchema').quotesSchema;
 
 quotesSchema.statics.getQuotes = function()
 {
-    var deferred = Promise.pending();
+    return new Promise(function(resolve, reject)
+    {
+        var _query = {};
+        var _projection = {};
 
-    var _query = {};
-    var _projection = {};
-
-    Quote
-        .find(_query, _projection)
-        .sort('quote')
-        .exec(function(err, quotes)
-        {
-            err ? deferred.reject(err)
-                : deferred.resolve(quotes);
-        })
-
-    return deferred.promise;
+        Quote
+            .find(_query, _projection)
+            .sort('quote')
+            .exec(function(err, quotes)
+            {
+                err ? reject(err)
+                    : resolve(quotes);
+            });
+    })
 };
 
 quotesSchema.statics.favSpecificQuote = function(id)
 {
-        var deferred = Promise.pending();
-
-        if (!_.isString(id))
+        return new Promise(function(resolve, reject)
         {
-            deferred.reject(new Error('Impossível favoritar mensagem. Id deve ser uma string.'));
-            return deferred.promise;
-        }
-
-
-        var _query = {_id: id};
-        var _updt = {$inc: {likes: 1}};
-
-        Quote
-            .findOneAndUpdate(_query, _updt)
-            .exec(function(err, updated)
+            if (!_.isString(id))
             {
-                err ? deferred.reject(err)
-                    : deferred.resolve(updated);
-            })
+                reject(new Error('Impossível favoritar mensagem. Id deve ser uma string.'));
+            }
 
-        return deferred.promise;
+            var _query = {_id: id};
+            var _updt = {$inc: {likes: 1}};
+
+            Quote
+                .findOneAndUpdate(_query, _updt)
+                .exec(function(err, updated)
+                {
+                    err ? reject(err)
+                        : resolve(updated);
+                })
+        })
 };
 
 quotesSchema.statics.getQuotesOrderedBy = function(order)
 {
-    var deferred = Promise.pending();
-
-    if (!_.isString(order))
+    return new Promise(function(resolve, reject)
     {
-        deferred.reject(new Error('Não é possível ordenar as frases com o parâmetro passado. Parâmetro order errado.'));
-        return deferred.promise;
-    }
+        if (!_.isString(order))
+            reject(new Error('Não é possível ordenar as frases com o parâmetro passado. Parâmetro order errado.'));
 
-    var _order = order.toLowerCase();
+        var _order = order.toLowerCase();
 
-    var _query = {};
-    var _projection = {};
+        var _query = {};
+        var _projection = {};
 
-    Quote
-        .find(_query, _projection)
-        .sort(_order)
-        .exec(function(err, quotes)
-        {
-            err ? deferred.reject(err)
-                : deferred.resolve(quotes);
-        })
-
-    return deferred.promise;
+        Quote
+            .find(_query, _projection)
+            .sort(_order)
+            .exec(function(err, quotes)
+            {
+                err ? reject(err)
+                    : resolve(quotes);
+            });
+    });
 }
 
 quotesSchema.statics.createQuote = function(quote)
 {
-    var deferred = Promise.pending();
-
-    if (!_.isObject(quote))
+    return new Promise(function(resolve, reject)
     {
-        deferred.reject(new Error('Não é possível criar uma frase com um objeto vazio.'));
-        return deferred.promise;
-    }
+        if (!_.isObject(quote))
+            reject(new Error('Não é possível criar uma frase com um objeto vazio.'));
 
-    var _onSave = function(error, saved)
-    {
-        error ? deferred.reject(error)
-            : deferred.resolve(saved);
-    }
+        var _onSave = function(error, saved)
+        {
+            error ? reject(error)
+                  : resolve(saved);
+        }
 
-    new Quote(quote)
-        .save(_onSave);
-
-    return deferred.promise;
+        new Quote(quote)
+            .save(_onSave);
+    });
 }
 
 var Quote = mongoose.model('Quote', quotesSchema);

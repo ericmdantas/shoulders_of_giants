@@ -1,17 +1,11 @@
 "use strict";
 
 var content = require('../controllers/ContentController');
-var contentLength = require('express-content-length-validator');
 var quotes = require('../controllers/QuotesController');
 
 var _init = function(app)
 {
     var _base = '/api/quotes';
-
-    contentLength({max: 666});
-
-    app.post('*', contentLength.validateMax);
-    app.put('*', contentLength.validateMax);
 
     app.get('/', content.index);
 
