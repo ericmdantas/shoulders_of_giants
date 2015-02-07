@@ -30,6 +30,7 @@ quotesSchema.statics.favSpecificQuote = function(id)
             if (!_.isString(id))
             {
                 reject(new Error('Impossível favoritar mensagem. Id deve ser uma string.'));
+                return;
             }
 
             var _query = {_id: id};
@@ -41,7 +42,7 @@ quotesSchema.statics.favSpecificQuote = function(id)
                 {
                     err ? reject(err)
                         : resolve(updated);
-                })
+                });
         })
 };
 
@@ -50,7 +51,10 @@ quotesSchema.statics.getQuotesOrderedBy = function(order)
     return new Promise(function(resolve, reject)
     {
         if (!_.isString(order))
+        {
             reject(new Error('Não é possível ordenar as frases com o parâmetro passado. Parâmetro order errado.'));
+            return;
+        }
 
         var _order = order.toLowerCase();
 
@@ -73,7 +77,10 @@ quotesSchema.statics.createQuote = function(quote)
     return new Promise(function(resolve, reject)
     {
         if (!_.isObject(quote))
+        {
             reject(new Error('Não é possível criar uma frase com um objeto vazio.'));
+            return;
+        }
 
         var _onSave = function(error, saved)
         {

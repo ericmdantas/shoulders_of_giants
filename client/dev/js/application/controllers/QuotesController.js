@@ -14,11 +14,6 @@ quotesApp.controller('QuotesController', ['$rootScope', '$scope', 'QuotesModel',
         {
             $scope.quotes = quotes;
             $scope.quotesKeeper = angular.copy($scope.quotes);
-
-            $timeout(function()
-            {
-                $rootScope.$broadcast('quotes-ready');
-            }, 2000);
         }
 
         QuotesDAO
@@ -71,17 +66,14 @@ quotesApp.controller('QuotesController', ['$rootScope', '$scope', 'QuotesModel',
         if (!angular.isArray(quotes))
             throw new Error('Houve um erro ao randomizar as mensagens. O objeto passado não é um objeto ou array válido.');
 
-        var _quotesLength = quotes.length;
-        var _random = Math.floor(Math.random() * _quotesLength);
-
-        $scope.quotes = [quotes[_random]];
+        $scope.quotes = Randomizer.shuffleSingle($scope.quotes);
         $scope.singleView = true;
     }
 
     $scope.setMultiple = function()
     {
-        $scope.singleView = false;
         $scope.quotes = $scope.quotesKeeper;
+        $scope.singleView = false;
     }
 
     $scope.randomize = function()

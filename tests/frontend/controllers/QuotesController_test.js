@@ -81,20 +81,6 @@ describe('QuotesController', function()
             expect(_scope.quotesKeeper[0].quote).toEqual("Alo");
             expect(_scope.quotesKeeper[0].likes).toEqual(0);
         }))
-
-        it('should call that the quotes are ready', inject(function($controller)
-        {
-            spyOn(_rootScope, '$broadcast').and.callThrough();
-
-            _httpMock.expectGET('/api/quotes').respond([]);
-
-            $controller(CONTROLLER_NAME, {$scope: _scope});
-
-            _httpMock.flush();
-            _timeoutMock.flush(2001);
-
-            expect(_rootScope.$broadcast).toHaveBeenCalledWith('quotes-ready');
-        }));
     })
 
     describe('setOrder / getOrder', function()
@@ -276,10 +262,13 @@ describe('QuotesController', function()
                               likes: i});
             }
 
+            _scope.quotes = _quotes;
+
             _scope.setSingle(_quotes);
 
             expect(_scope.quotes).toBeDefined();
             expect(_scope.quotes.length).toBe(1);
+
             expect(_scope.quotes[0].author).toBeDefined();
             expect(_scope.quotes[0].quote).toBeDefined();
             expect(_scope.quotes[0].likes).toBeDefined();
