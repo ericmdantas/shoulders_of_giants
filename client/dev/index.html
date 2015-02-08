@@ -22,16 +22,18 @@
     <body ng-controller="QuotesController">
 
         <div ng-include="'partials/includes/create-quote-modal.tpl.html'"></div>
-        <div ng-include="'partials/includes/options-views-order-random-modal.tpl.html'"></div>
+        <div ng-include="'partials/includes/options-navigation.html'"></div>
+        <div ng-include="'partials/includes/view-modal.tpl.html'"></div>
+        <div ng-include="'partials/includes/order-modal.tpl.html'"></div>
 
         <header class="container">
-            <div class="col-md-4">
+            <aside class="logo" ng-class="{'go-to-center': singleView}">
                 <div id="logo-container" class="transition">
-                    <div ng-class="{'center': singleView}">
+                    <div>
                         <img src="img/quotes.svg" id="logo" title="shoulders of giants"/>
                     </div>
                 </div>
-            </div>
+            </aside>
 
             <div class="filter-container invisible-mobile col-md-5 pull-right no-padding" ng-hide="singleView">
 
@@ -52,8 +54,6 @@
             </div>
         </header>
 
-        <emd-options-navigation></emd-options-navigation>
-
         <div class="container" id="main-container">
 
             <show-modal-when-no-quotes></show-modal-when-no-quotes>
@@ -65,7 +65,7 @@
                     </div>
                 </div>
 
-                <div ng-repeat="q in filteredQuotes = (quotes | filter: search) | orderBy: getOrder track by $index" class="cards transition espaco-bottom">
+                <div ng-repeat="q in filteredQuotes = (quotes | filter: search) | orderBy: order track by $index" class="cards transition espaco-bottom">
                     <like liked="favQuote(q._id)" numberlikes="{{q.likes}}"></like>
                     <p class="quote" ng-bind="q.quote"></p>
                     <span class="author transition" ng-bind="q.author"></span>
@@ -121,6 +121,7 @@
         <script type="text/javascript" src="js/application/directives/activable-directive.js"></script>
         <script type="text/javascript" src="js/application/directives/like-directive.js"></script>
         <script type="text/javascript" src="js/application/directives/show-other-options-directive.js"></script>
+        <script type="text/javascript" src="js/application/directives/emd-options-navigation-directive.js"></script>
         <!-- endbuild -->
 
     </body>

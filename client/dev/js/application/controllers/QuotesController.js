@@ -1,12 +1,13 @@
 "use strict";
 
-quotesApp.controller('QuotesController', ['$rootScope', '$scope', 'QuotesModel', 'QuotesDAO', 'SocketService', 'Randomizer', '$timeout', function($rootScope, $scope, QuotesModel, QuotesDAO, SocketService, Randomizer, $timeout)
+quotesApp.controller('QuotesController', ['$rootScope', '$scope', 'QuotesModel', 'QuotesDAO', 'SocketService', 'Randomizer', function($rootScope, $scope, QuotesModel, QuotesDAO, SocketService, Randomizer)
 {
     $scope.quotes = [];
     $scope.quotesKeeper = [];
     $scope.errorQuoteCreation = null;
     $scope.favQuote = QuotesDAO.favQuote;
     $scope.quoteInstance = new QuotesModel();
+    $scope.order = 'author';
 
     var _getQuotes = function()
     {
@@ -23,23 +24,12 @@ quotesApp.controller('QuotesController', ['$rootScope', '$scope', 'QuotesModel',
 
     SocketService.on('quote:faved', function(id)
     {
-        for (var i = 0; i < $scope.quotes.length; i++)
+        angular.forEach($scope.quotes, function(quote, index)
         {
-            if (id === $scope.quotes[i]._id)
-            {
-                $scope.quotes[i].likes += 1;
-                break;
-            }
-        }
+            if (quote._id === id)
+                $scope.quotes[index].likes += 1;
+        })
     });
-
-    $scope.setOrder = function(order)
-    {
-        if (!angular.isString(order))
-            throw new Error('Ordenação incorreta. O tipo do parâmetro deve ser uma string.');
-
-        $scope.getOrder = order;
-    }
 
     $scope.createQuote = function(quote)
     {
@@ -76,12 +66,22 @@ quotesApp.controller('QuotesController', ['$rootScope', '$scope', 'QuotesModel',
         $scope.singleView = false;
     }
 
+    $scope.setOrder = function(order)
+    {
+        $scope.order = order;
+    }
+
     $scope.randomize = function()
     {
         $scope.quotes = Randomizer.shuffleSingle($scope.quotesKeeper);
     }
 
-    $scope.setOrder('author');
+    $scope.shuffle = function()
+    {
+        $scope.setOrder(null);
+
+        Randomizer.shuffle($scope.quotes);
+    };
 
     _getQuotes();
 }])

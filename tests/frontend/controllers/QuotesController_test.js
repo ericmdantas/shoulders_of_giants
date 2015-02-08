@@ -83,37 +83,22 @@ describe('QuotesController', function()
         }))
     })
 
-    describe('setOrder / getOrder', function()
+    describe('order', function()
     {
-        it('getOrder should be \'quote\'', inject(function($controller)
+        it('order should be author', inject(function($controller)
         {
             $controller(CONTROLLER_NAME, {$scope: _scope});
 
-            expect(_scope.getOrder).toEqual('author');
+            expect(_scope.order).toEqual('author');
         }))
 
-        it('should throw error - wrong order param', inject(function($controller)
-        {
-            $controller(CONTROLLER_NAME, {$scope: _scope});
-
-            var _wrongParams = [null, undefined, true, false, function(){}, 1, 0, {}, []];
-
-            for (var i = 0; i < _wrongParams.length; i++)
-            {
-                expect(function()
-                {
-                    _scope.setOrder(_wrongParams[i]);
-                }).toThrow(new Error('Ordenação incorreta. O tipo do parâmetro deve ser uma string.'));
-            }
-        }))
-
-        it('should change getOrder', inject(function($controller)
+        it('should change order', inject(function($controller)
         {
             $controller(CONTROLLER_NAME, {$scope: _scope});
 
             _scope.setOrder('someKindOfOrder');
 
-            expect(_scope.getOrder).toEqual('someKindOfOrder');
+            expect(_scope.order).toEqual('someKindOfOrder');
         }))
     })
 
@@ -218,8 +203,6 @@ describe('QuotesController', function()
                                         {_id: '1123', author: 'outraPessoa', quote: 'abc', likes: 0},
                                         {_id: 'a123', author: 'eu', quote: 'blablabla', likes: 99}];
 
-            var _specificQuoteFromServer = {_id: 'a123', author: 'eu', quote: 'blablabla', likes: 100};
-
             _httpMock.expectGET('/api/quotes').respond(_allQuotesFromServer);
 
             $controller(CONTROLLER_NAME, {$scope: _scope});
@@ -229,6 +212,23 @@ describe('QuotesController', function()
             _scope.favQuote(_id);
 
             expect(_SocketService.emit).toHaveBeenCalledWith('fav:quote', _id);
+        }))
+    })
+
+    describe('shuffle', function()
+    {
+        it('should call the right method from the service', inject(function($controller)
+        {
+            spyOn(Randomizer, 'shuffle').and.callFake(angular.noop);
+
+            $controller(CONTROLLER_NAME, {$scope: _scope});
+
+            _scope.quotes = [1, 2];
+
+            _scope.shuffle();
+
+            expect(_scope.order).toBeNull();
+            expect(Randomizer.shuffle).toHaveBeenCalledWith(_scope.quotes);
         }))
     })
 
@@ -377,7 +377,7 @@ describe('QuotesController', function()
         }))
     })
 
-    xdescribe('quotes:faved', function()
+    describe('quotes:faved', function()
     {
         it('should call the right method', inject(function($controller)
         {
@@ -388,8 +388,6 @@ describe('QuotesController', function()
             _httpMock.expectGET('/api/quotes').respond(200, _responseGET);
 
             $controller(CONTROLLER_NAME, {$scope: _scope});
-
-            _SocketService.emit('quote:faved', '1');
 
             expect(_SocketService.on).toHaveBeenCalled();
         }))

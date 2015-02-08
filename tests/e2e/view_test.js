@@ -2,9 +2,12 @@
 
 describe('view', function()
 {
+    var _viewContainer = "#views-modal-container";
+    var _orderContainer = "#order-modal-container";
+
     browser.get('/#');
 
-    describe('inicialization', function()
+    describe('init', function()
     {
         it('should have the right title', function()
         {
@@ -37,7 +40,7 @@ describe('view', function()
         })
     })
 
-    describe('click on #show-other-options', function()
+    describe('options should be visible', function()
     {
         it('should reveal the hidden options', function()
         {
@@ -53,29 +56,26 @@ describe('view', function()
         })
     })
 
-    describe('click on each option', function()
-    {
-        it('should show the type of visualization modal - single or multiple', function()
-        {
+    describe('view', function() {
+        it('should show the type of visualization modal - single or multiple', function () {
             $('#show-other-options')
                 .click()
-                .then(function()
-                {
+                .then(function () {
                     return $('#type-of-visualization').click();
                 })
-                .then(function()
-                {
+                .then(function () {
                     browser.sleep(333);
 
-                    expect($$('.modal-body .btn').count()).toEqual(2);
-
-                    expect($$('.modal-body .btn').get(0).getText()).toEqual('Single');
-                    expect($$('.modal-body .btn').get(1).getText()).toEqual('Multiple');
+                    expect($$(_viewContainer + ' .modal-body .btn').get(0).getText()).toEqual('Single');
+                    expect($$(_viewContainer + ' .modal-body .btn').get(1).getText()).toEqual('Multiple');
 
                     $('.modal-backdrop').click();
                 })
         })
+    })
 
+    describe('order', function()
+    {
         it('should show the order by - author, quote or most liked', function()
         {
             $('#show-other-options')
@@ -88,18 +88,23 @@ describe('view', function()
                 {
                     browser.sleep(333);
 
-                    expect($$('.modal-body .btn').count()).toEqual(3);
+                    expect($$(_orderContainer + ' .modal-body .btn').count()).toEqual(3);
 
-                    expect($$('.modal-body .btn').get(0).getText()).toEqual('Quote');
-                    expect($$('.modal-body .btn').get(1).getText()).toEqual('Author');
-                    expect($$('.modal-body .btn').get(2).getText()).toEqual('Most liked');
+                    expect($$(_orderContainer + ' .modal-body .btn').get(0).getText()).toEqual('Author');
+                    expect($$(_orderContainer + ' .modal-body .btn').get(1).getText()).toEqual('Best');
+                    expect($$(_orderContainer + ' .modal-body .btn').get(2).getText()).toEqual('Quotes');
 
                     $('.modal-backdrop').click();
                 })
         })
+    })
 
+    describe('shuffle', function()
+    {
         it('should shuffle the quotes', function()
         {
+            browser.sleep(333);
+
             var _primeiraFrase = $$('.quote').get(0).getText();
 
             $('#shuffle')
