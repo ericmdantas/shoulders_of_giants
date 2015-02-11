@@ -7,6 +7,8 @@ var usemin = require('gulp-usemin');
 var rev = require('gulp-rev');
 var less = require('gulp-less');
 var del = require('del');
+var coveralls = require('gulp-coveralls');
+var karma = require('karma').server;
 
 var _developmentDir = './client/dev/';
 var _distributionDir = './client/dist/';
@@ -17,11 +19,11 @@ var _partials = _developmentDir + 'partials/**/*';
 
 var _indexHTML = _developmentDir + 'index.html';
 
-gulp.task('build', ['del_dist'], function()
+gulp.task('build', ['del_dist', 'karma'], function()
 {
     gulp
         .src(_indexHTML)
-        .pipe(usemin({js0: [rev(), uglify()], js1: [rev(), uglify()], css0: [less(), cssmin()]}))
+        .pipe(usemin({js0: [rev(), uglify()], js1: [rev(), uglify()], css0: [cssmin(), rev(), less()]}))
         .pipe(gulp.dest(_distributionDir));
 
     gulp
@@ -35,9 +37,23 @@ gulp.task('build', ['del_dist'], function()
     gulp
         .src(_fonts)
         .pipe(gulp.dest(_distributionDir + 'fonts/'));
+
+    gulp
+        .src('unit_coverage/**/*.info')
+        .pipe(coveralls());
 });
 
 gulp.task('del_dist', function()
 {
-    del([_distributionDir]);
+    return del([_distributionDir]);
+})
+
+gulp.task('unit_test', function(done)
+{
+    karma
+        .start({
+            configFile: __dirname + '/karma.conf.js',
+            browsers: ['PhantomJS'],
+            singleRun: true
+        }, done);
 })

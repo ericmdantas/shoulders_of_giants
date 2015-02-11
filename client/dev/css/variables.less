@@ -3,7 +3,9 @@
 @default-transition: all 666ms;
 @card-background: #f1f2f3;
 @not-selectable: none;
-@body-background-mobile: url(../img/bkg.png) #bcd4e6;
+@img-body-background: url(../img/bkg.png);
+@cor-body-background: #bcd4e6;
+@body-background-mobile: @img-body-background @cor-body-background;
 @body-background-desktop: @body-background-mobile;
 @call-attention-color: gold;
 @dont-call-attention-options: rgba(39, 83, 109, .7);
