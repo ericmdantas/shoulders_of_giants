@@ -10,7 +10,7 @@ before_script:
   - "sh -e /etc/init.d/xvfb start"
 
 script:
-  - gulp test
+  - gulp unit_test
   - npm run-script test-on-travis
 
 services: mongodb
