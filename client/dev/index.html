@@ -6,15 +6,16 @@
         <title>shoulders of giants</title>
         <link rel="shortcut icon" type="image/ico" href="img/favicon.ico"/>
 
-        <!-- build:css css/estilo.min.css?hash=@@hash -->
+        <!-- build:css0 css/estilo.min.css -->
         <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="css/frameworks_overrides.css">
         <link rel="stylesheet" type="text/css" href="css/fonts.css">
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-        <link rel="stylesheet" type="text/css" href="css/position.css">
-        <link rel="stylesheet" type="text/css" href="css/media_queries.css">
-        <link rel="stylesheet" type="text/css" href="css/events.css">
+        <link rel="stylesheet" type="text/css" href="css/variables.less">
+        <link rel="stylesheet" type="text/css" href="css/frameworks_overrides.less">
+        <link rel="stylesheet" type="text/css" href="css/style.less">
+        <link rel="stylesheet" type="text/css" href="css/position.less">
+        <link rel="stylesheet" type="text/css" href="css/media_queries.less">
+        <link rel="stylesheet" type="text/css" href="css/events.less">
         <!-- endbuild -->
         
     </head>
@@ -79,49 +80,37 @@
             </div>
         </div>
 
-        <!-- frameworks -->
-        <!-- build:js js/frameworks.min.js?hash=@@hash -->
-        <script type="text/javascript" src="js/frameworks/jquery-2.1.1.min.js"></script>
-        <script type="text/javascript" src="js/frameworks/angular.min.js"></script>
-        <script type="text/javascript" src="js/frameworks/angular-resource.min.js"></script>
-        <script type="text/javascript" src="js/frameworks/bootstrap.min.js"></script>
-        <script type="text/javascript" src="js/frameworks/socket.io.js"></script>
+        <!-- build:js0 js/frameworks.min.js -->
+        <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+        <script type="text/javascript" src="bower_components/angular-resource/angular-resource.min.js"></script>
+        <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="bower_components/angular-socket-io/socket.min.js"></script>
+        <script type="text/javascript" src="bower_components/angular-resource/angular-resource.min.js"></script>
+        <script type="text/javascript" src="bower_components/ng-xtorage/ng-xtorage.min.js"></script>
+        <script type="text/javascript" src="../../node_modules/socket.io-client/socket.io.js"></script>
         <!-- endbuild -->
 
-        <!-- modules -->
-        <!-- build:js js/emd-quotes.min.js?hash=@@hash -->
+        <!-- build:js1 js/emd-quotes.min.js -->
         <script type="text/javascript" src="js/modules/client-socket-module.js"></script>
 
-        <!-- lib -->
-
-        <script type="text/javascript" src="js/application/lib/lib.js"></script>
-
-        <!-- application -->
         <script type="text/javascript" src="js/application/app.js"></script>
 
-        <!-- constants -->
         <script type="text/javascript" src="js/application/constants/author.js"></script>
 
-        <!-- resources -->
         <script type="text/javascript" src="js/application/resources/QuotesResource.js"></script>
 
-        <!-- services -->
         <script type="text/javascript" src="js/application/services/Randomizer.js"></script>
         <script type="text/javascript" src="js/application/services/QuotesDAO.js"></script>
         <script type="text/javascript" src="js/application/services/QuotesCache.js"></script>
 
-        <!-- models -->
         <script type="text/javascript" src="js/application/models/QuotesModel.js"></script>
 
-        <!-- controllers -->
         <script type="text/javascript" src="js/application/controllers/QuotesController.js"></script>
 
-        <!-- directives -->
-        <script type="text/javascript" src="js/application/directives/emd-options-navigation-directive.js"></script>
         <script type="text/javascript" src="js/application/directives/activable-directive.js"></script>
         <script type="text/javascript" src="js/application/directives/like-directive.js"></script>
         <script type="text/javascript" src="js/application/directives/show-other-options-directive.js"></script>
-        <script type="text/javascript" src="js/application/directives/emd-options-navigation-directive.js"></script>
         <!-- endbuild -->
 
     </body>
