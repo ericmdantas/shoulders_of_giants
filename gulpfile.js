@@ -37,10 +37,6 @@ gulp.task('build', ['del_dist', 'karma'], function()
     gulp
         .src(_fonts)
         .pipe(gulp.dest(_distributionDir + 'fonts/'));
-
-    gulp
-        .src('unit_coverage/**/*.info')
-        .pipe(coveralls());
 });
 
 gulp.task('del_dist', function()
@@ -56,4 +52,11 @@ gulp.task('unit_test', function(done)
             browsers: ['PhantomJS'],
             singleRun: true
         }, done);
+})
+
+gulp.task('coverage_frontend', ['unit_test'], function()
+{
+    gulp
+        .src('unit_coverage/**/lcov.info')
+        .pipe(coveralls());
 })
