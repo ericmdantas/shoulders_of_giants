@@ -88,8 +88,9 @@ quotesSchema.statics.createQuote = function(quote)
                   : resolve(saved);
         }
 
-        new Quote(quote)
-            .save(_onSave);
+        var _quote = new Quote(quote);
+
+        _quote.save(_onSave);
     });
 }
 
