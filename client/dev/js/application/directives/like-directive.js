@@ -1,6 +1,6 @@
 "use strict";
 
-quotesApp.directive('like', [function()
+quotesApp.directive('like', ['$xtorage', function($xtorage)
 {
     var _templateUrl = 'partials/includes/likes.html';
 
@@ -19,6 +19,6 @@ quotesApp.directive('like', [function()
                 restrict: 'E',
                 templateUrl: _templateUrl,
                 link: _link,
-                scope: {liked: '&', numberlikes: '@'}
+                scope: {liked: '&', numberlikes: '@', qid: "@"}
            }
 }]);
