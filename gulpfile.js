@@ -19,7 +19,7 @@ var _partials = _developmentDir + 'partials/**/*';
 
 var _indexHTML = _developmentDir + 'index.html';
 
-gulp.task('build', ['del_dist', 'karma'], function()
+gulp.task('build', ['del_dist', 'unit_test'], function()
 {
     gulp
         .src(_indexHTML)

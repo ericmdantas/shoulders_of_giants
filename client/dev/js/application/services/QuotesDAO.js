@@ -1,26 +1,38 @@
 "use strict";
 
-quotesApp.service('QuotesDAO', ['$q', 'SocketService', 'QuotesModel', 'QuotesCache', 'QuotesResource', function($q, SocketService, QuotesModel, QuotesCache, QuotesResource)
+quotesApp.service('QuotesDAO', ['$q', '$xtorage', 'SocketService', 'QuotesModel', 'QuotesCache', 'QuotesResource', 'QUOTE_LIKED_KEY', function($q, $xtorage, SocketService, QuotesModel, QuotesCache, QuotesResource, QUOTE_LIKED_KEY)
 {
     var _getAll = function ()
     {
         var deferred = $q.defer();
 
+        /*
+
+        TODO: remove comment when the logic behind expiration is good enough
+
         var _quotes = QuotesCache.getArray();
 
         if (_quotes)
-            return $q.when(_quotes);
+            return $q.when(_quotes);*/
 
         var _onSuccess = function(quotes)
         {
             var _quotes = [];
+            var _quotesLiked = $xtorage.getFromLocalStorage(QUOTE_LIKED_KEY) || [];
 
             angular.forEach(quotes, function(quote)
             {
+                angular.forEach(_quotesLiked, function(qLiked)
+                {
+                    if (qLiked === quote._id)
+                        quote.alreadyLiked = true;
+
+                })
+
                 _quotes.push(new QuotesModel(quote));
             })
 
-            QuotesCache.saveArray(_quotes);
+            //QuotesCache.saveArray(_quotes);
 
             deferred.resolve(_quotes);
         }

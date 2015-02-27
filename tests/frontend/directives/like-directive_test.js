@@ -2,7 +2,7 @@
 
 describe('like-directive', function()
 {
-    var _scope, _element, _compile;
+    var _scope, _element, _compile, _xtorage;
 
     beforeEach(module('quotes'));
     beforeEach(module('my.includes'));
@@ -11,8 +11,9 @@ describe('like-directive', function()
     {
         _scope = $injector.get('$rootScope').$new();
         _compile = $injector.get('$compile');
+        _xtorage = $injector.get('$xtorage');
 
-        var _html = '<like></like>';
+        var _html = '<like qid="123"></like>';
 
         _element = angular.element(_html);
 
@@ -31,15 +32,56 @@ describe('like-directive', function()
         {
             expect(_element.isolateScope().star).toEqual('fa-star-o');
         })
+
+        it('should have the right class for the icon - liked', function()
+        {
+            var _html = '<like qid="123" already-liked="true"></like>';
+
+            _element = angular.element(_html);
+
+            _compile(_element)(_scope);
+            _scope.$digest();
+
+            expect(_element.isolateScope().star).toEqual('fa-star');
+        })
     })
 
     describe('onClick', function()
     {
         it('should change the class to fa-star', function()
         {
+            spyOn(_xtorage, 'saveInLocalStorage').and.callFake(angular.noop);
+            spyOn(_xtorage, 'getFromLocalStorage').and.callFake(angular.noop);
+
             _element.click();
 
             expect(_element.isolateScope().star).toEqual('fa-star');
+            expect(_xtorage.getFromLocalStorage).toHaveBeenCalledWith('q_liked');
+            expect(_xtorage.saveInLocalStorage).toHaveBeenCalledWith('q_liked', ['123']);
+        })
+
+        it('should change the class to fa-star - null returned', function()
+        {
+            spyOn(_xtorage, 'saveInLocalStorage').and.callFake(angular.noop);
+            spyOn(_xtorage, 'getFromLocalStorage').and.returnValue(null);
+
+            _element.click();
+
+            expect(_element.isolateScope().star).toEqual('fa-star');
+            expect(_xtorage.getFromLocalStorage).toHaveBeenCalledWith('q_liked');
+            expect(_xtorage.saveInLocalStorage).toHaveBeenCalledWith('q_liked', ['123']);
+        })
+
+        it('should add more one info to the storage', function()
+        {
+            spyOn(_xtorage, 'saveInLocalStorage').and.callFake(angular.noop);
+            spyOn(_xtorage, 'getFromLocalStorage').and.returnValue(['abc', 'a123']);
+
+            _element.click();
+
+            expect(_element.isolateScope().star).toEqual('fa-star');
+            expect(_xtorage.getFromLocalStorage).toHaveBeenCalledWith('q_liked');
+            expect(_xtorage.saveInLocalStorage).toHaveBeenCalledWith('q_liked', ['abc', 'a123', '123']);
         })
     })
 })

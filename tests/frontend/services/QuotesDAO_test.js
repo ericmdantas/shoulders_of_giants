@@ -29,6 +29,65 @@ describe('QuotesDAO', function()
             _httpMock.flush();
         })
 
+        it('should parse the object from the server and add the alreadyLiked prop', function()
+        {
+            spyOn(_xtorage, 'getFromLocalStorage').and.returnValue(["123"]);
+
+            var _serverResponse = [{quote: "abc", author: "eu", _id: "123"}];
+
+            _httpMock.expectGET('/api/quotes').respond(_serverResponse);
+
+            var _onSuccess = function(quotes)
+            {
+                expect(quotes).toBeDefined();
+                expect(quotes.length).toBe(1);
+                expect(quotes[0].alreadyLiked).toBeTruthy();
+            }
+
+            var _onError = function()
+            {
+                expect(true).toBeFalsy();
+            }
+
+            _QuotesDAO
+                .getAll()
+                .then(_onSuccess, _onError);
+
+            _httpMock.flush();
+        })
+
+        it('should parse the object from the server and add the alreadyLiked prop - only the second one', function()
+        {
+            spyOn(_xtorage, 'getFromLocalStorage').and.returnValue(["321"]);
+
+            var _serverResponse = [{quote: "abc", author: "eu", _id: "123"}, {quote: "abc", author: "eu", _id: "321"}];
+
+            _httpMock.expectGET('/api/quotes').respond(_serverResponse);
+
+            var _onSuccess = function(quotes)
+            {
+                expect(quotes).toBeDefined();
+                expect(quotes.length).toBe(2);
+                expect(quotes[0].alreadyLiked).toBeUndefined();
+                expect(quotes[1].alreadyLiked).toBeTruthy();
+            }
+
+            var _onError = function()
+            {
+                expect(true).toBeFalsy();
+            }
+
+            _QuotesDAO
+                .getAll()
+                .then(_onSuccess, _onError);
+
+            _httpMock.flush();
+        })
+
+        /*
+
+        TODO: uncomment this when the logic behind expiration is good enough
+
         it('should get from the storage', function()
         {
             spyOn(_QuotesCache, 'getArray').and.callThrough();
@@ -52,7 +111,7 @@ describe('QuotesDAO', function()
                 .then(_onSuccess, _onError);
 
             _rootScope.$digest();
-        })
+        })*/
 
     })
 

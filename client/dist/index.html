@@ -57,7 +57,7 @@
                 </div>
 
                 <div ng-repeat="q in filteredQuotes = (quotes | filter: search) | orderBy: order track by $index" class="cards transition espaco-bottom">
-                    <like liked="favQuote(q._id)" numberlikes="{{q.likes}}"></like>
+                    <like liked="favQuote(q._id)" numberlikes="{{q.likes}}" qid="{{q._id}}" already-liked="{{q.alreadyLiked}}"></like>
                     <p class="quote" ng-bind="q.quote"></p>
                     <span class="author transition" ng-bind="q.author"></span>
                 </div>
@@ -70,9 +70,9 @@
             </div>
         </div>
 
-        <script src="js/frameworks.min-fa66e095.js"></script>
+        <script src="js/frameworks.min-0b707ea4.js"></script>
 
-        <script src="js/emd-quotes.min-be1da60f.js"></script>
+        <script src="js/emd-quotes.min-c967202e.js"></script>
 
     </body>
 </html>

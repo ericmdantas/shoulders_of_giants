@@ -9,4 +9,5 @@ quotesApp.config(['$xtorageProvider', function($xtorageProvider)
     $xtorageProvider.storageExpiration = 21600000; // 6 hours
 }]);
 
+quotesApp.constant('QUOTE_LIKED_KEY', 'q_liked');
 quotesApp.constant('VERSION', '0.0.1');
