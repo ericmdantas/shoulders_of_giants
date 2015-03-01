@@ -12,11 +12,7 @@ quotesApp.directive('like', ['$xtorage', 'QUOTE_LIKED_KEY', function($xtorage, Q
         element
             .on('click', function()
             {
-                var _quotesLiked = $xtorage.getFromLocalStorage(QUOTE_LIKED_KEY) || [];
-
-                _quotesLiked.push(scope.qid);
-
-                $xtorage.saveInLocalStorage(QUOTE_LIKED_KEY, _quotesLiked);
+                $xtorage.pushIntoLocalStorage(QUOTE_LIKED_KEY, scope.qid);
 
                 scope.star = 'fa-star';
             });

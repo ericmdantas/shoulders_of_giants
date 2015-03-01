@@ -4,45 +4,44 @@ quotesApp.service('QuotesDAO', ['$q', '$xtorage', 'SocketService', 'QuotesModel'
 {
     var _getAll = function ()
     {
-        var deferred = $q.defer();
-
-        /*
-
-        TODO: remove comment when the logic behind expiration is good enough
-
-        var _quotes = QuotesCache.getArray();
-
-        if (_quotes)
-            return $q.when(_quotes);*/
-
-        var _onSuccess = function(quotes)
+        return $q(function(resolve, reject)
         {
-            var _quotes = [];
-            var _quotesLiked = $xtorage.getFromLocalStorage(QUOTE_LIKED_KEY) || [];
+            /*
 
-            angular.forEach(quotes, function(quote)
+             TODO: remove comment when the logic behind expiration is good enough
+
+             var _quotes = QuotesCache.getArray();
+
+             if (_quotes)
+             return $q.when(_quotes);*/
+
+            var _onSuccess = function(quotes)
             {
-                angular.forEach(_quotesLiked, function(qLiked)
-                {
-                    if (qLiked === quote._id)
-                        quote.alreadyLiked = true;
+                var _quotes = [];
+                var _quotesLiked = $xtorage.getFromLocalStorage(QUOTE_LIKED_KEY) || [];
 
+                angular.forEach(quotes, function(quote)
+                {
+                    angular.forEach(_quotesLiked, function(qLiked)
+                    {
+                        if (qLiked === quote._id)
+                            quote.alreadyLiked = true;
+
+                    })
+
+                    _quotes.push(new QuotesModel(quote));
                 })
 
-                _quotes.push(new QuotesModel(quote));
-            })
+                //QuotesCache.saveArray(_quotes);
 
-            //QuotesCache.saveArray(_quotes);
+                resolve(_quotes);
+            }
 
-            deferred.resolve(_quotes);
-        }
-
-        QuotesResource
-            .query()
-            .$promise
-            .then(_onSuccess);
-
-        return deferred.promise;
+            QuotesResource
+                .query()
+                .$promise
+                .then(_onSuccess);
+        })
     };
 
     var _favQuote = function(id)
@@ -55,37 +54,34 @@ quotesApp.service('QuotesDAO', ['$q', '$xtorage', 'SocketService', 'QuotesModel'
 
     var _createQuote = function(quote)
     {
-        var deferred = $q.defer();
-
-        var _onSuccess = function(quote)
+        return $q(function(resolve, reject)
         {
-            var _quote = new QuotesModel(quote);
+            var _onSuccess = function(quote)
+            {
+                var _quote = new QuotesModel(quote);
 
-            deferred.resolve(_quote);
-        }
+                resolve(_quote);
+            }
 
-        var _onError = function(error)
-        {
-            var _error = {msg: error.data.error, status: error.status};
+            var _onError = function(error)
+            {
+                var _error = {msg: error.data.error, status: error.status};
 
-            deferred.reject(_error);
-        }
+                reject(_error);
+            }
 
-        if (!angular.isObject(quote) || !(quote instanceof QuotesModel) || !quote.isValid())
-        {
-            deferred.reject(new Error('Não é possível criar uma nova frase, pois a mesma não é válida.'));
-            return deferred.promise;
-        }
+            if (!angular.isObject(quote) || !(quote instanceof QuotesModel) || !quote.isValid())
+                return reject(new Error('Não é possível criar uma nova frase, pois a mesma não é válida.'));
 
-        quote.quote = quote.removeQuotationMarks();
+            quote.quote = quote.removeQuotationMarks();
 
-        QuotesResource
-            .save(quote)
-            .$promise
-            .then(_onSuccess, _onError);
+            QuotesResource
+                .save(quote, _onSuccess, _onError)
+                .$promise
+                .then(_onSuccess)
+                .catch(_onError);
+        })
 
-
-        return deferred.promise;
     }
 
     this.getAll = _getAll;

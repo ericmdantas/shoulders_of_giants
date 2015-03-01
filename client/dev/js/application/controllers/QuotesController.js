@@ -4,7 +4,6 @@ quotesApp.controller('QuotesController', ['$rootScope', '$scope', 'QuotesModel',
 {
     $scope.quotes = [];
     $scope.quotesKeeper = [];
-    $scope.errorQuoteCreation = null;
     $scope.favQuote = QuotesDAO.favQuote;
     $scope.quoteInstance = new QuotesModel();
     $scope.order = 'author';
@@ -35,20 +34,14 @@ quotesApp.controller('QuotesController', ['$rootScope', '$scope', 'QuotesModel',
     {
         var _onSuccess = function(quote)
         {
-            $scope.errorQuoteCreation = null;
             $scope.quoteInstance = new QuotesModel();
 
             $scope.quotes.push(quote);
         }
 
-        var _onError = function(error)
-        {
-            $scope.errorQuoteCreation = error.msg;
-        }
-
         QuotesDAO
             .createQuote(quote)
-            .then(_onSuccess, _onError);
+            .then(_onSuccess);
     }
 
     $scope.setSingle = function(quotes)

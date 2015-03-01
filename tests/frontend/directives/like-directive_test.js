@@ -50,38 +50,32 @@ describe('like-directive', function()
     {
         it('should change the class to fa-star', function()
         {
-            spyOn(_xtorage, 'saveInLocalStorage').and.callFake(angular.noop);
-            spyOn(_xtorage, 'getFromLocalStorage').and.callFake(angular.noop);
+            spyOn(_xtorage, 'pushIntoLocalStorage').and.callFake(angular.noop);
 
             _element.click();
 
             expect(_element.isolateScope().star).toEqual('fa-star');
-            expect(_xtorage.getFromLocalStorage).toHaveBeenCalledWith('q_liked');
-            expect(_xtorage.saveInLocalStorage).toHaveBeenCalledWith('q_liked', ['123']);
+            expect(_xtorage.pushIntoLocalStorage).toHaveBeenCalledWith('q_liked', '123');
         })
 
         it('should change the class to fa-star - null returned', function()
         {
-            spyOn(_xtorage, 'saveInLocalStorage').and.callFake(angular.noop);
-            spyOn(_xtorage, 'getFromLocalStorage').and.returnValue(null);
+            spyOn(_xtorage, 'pushIntoLocalStorage').and.callFake(angular.noop);
 
             _element.click();
 
             expect(_element.isolateScope().star).toEqual('fa-star');
-            expect(_xtorage.getFromLocalStorage).toHaveBeenCalledWith('q_liked');
-            expect(_xtorage.saveInLocalStorage).toHaveBeenCalledWith('q_liked', ['123']);
+            expect(_xtorage.pushIntoLocalStorage).toHaveBeenCalledWith('q_liked', '123');
         })
 
         it('should add more one info to the storage', function()
         {
-            spyOn(_xtorage, 'saveInLocalStorage').and.callFake(angular.noop);
-            spyOn(_xtorage, 'getFromLocalStorage').and.returnValue(['abc', 'a123']);
+            spyOn(_xtorage, 'pushIntoLocalStorage').and.callFake(angular.noop);
 
             _element.click();
 
             expect(_element.isolateScope().star).toEqual('fa-star');
-            expect(_xtorage.getFromLocalStorage).toHaveBeenCalledWith('q_liked');
-            expect(_xtorage.saveInLocalStorage).toHaveBeenCalledWith('q_liked', ['abc', 'a123', '123']);
+            expect(_xtorage.pushIntoLocalStorage).toHaveBeenCalledWith('q_liked', '123');
         })
     })
 })

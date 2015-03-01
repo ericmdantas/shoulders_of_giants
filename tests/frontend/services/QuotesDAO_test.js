@@ -166,7 +166,8 @@ describe('QuotesDAO', function()
 
             _QuotesDAO
                 .createQuote(_quote)
-                .then(_onSuccess, _onError);
+                .then(_onSuccess)
+                .catch(_onError);
         })
 
         it('should not create the quote, empty object - not an instance of Quote', function()
@@ -185,7 +186,8 @@ describe('QuotesDAO', function()
 
             _QuotesDAO
                 .createQuote(_quote)
-                .then(_onSuccess, _onError);
+                .then(_onSuccess)
+                .catch(_onError);
         })
 
         it('should not create the quote, quote missing', function()
@@ -204,7 +206,8 @@ describe('QuotesDAO', function()
 
             _QuotesDAO
                 .createQuote(_quote)
-                .then(_onSuccess, _onError);
+                .then(_onSuccess)
+                .catch(_onError);
         })
 
         it('should not create the quote, author missing', function()
@@ -223,7 +226,8 @@ describe('QuotesDAO', function()
 
             _QuotesDAO
                 .createQuote(_quote)
-                .then(_onSuccess, _onError);
+                .then(_onSuccess)
+                .catch(_onError);
         })
 
         it('should create the quote correctly - but server returns error', function()
@@ -232,8 +236,10 @@ describe('QuotesDAO', function()
 
             _httpMock.expectPOST('/api/quotes', _quote).respond(400, {error: 'some error'});
 
-            var _onSuccess = function()
+            var _onSuccess = function(s)
             {
+                console.log(s);
+
                 expect(true).toBeFalsy(); // should not come here
             }
 
@@ -246,7 +252,8 @@ describe('QuotesDAO', function()
 
             _QuotesDAO
                 .createQuote(_quote)
-                .then(_onSuccess, _onError);
+                .then(_onSuccess)
+                .catch(_onError);
 
             _httpMock.flush();
         })
@@ -272,7 +279,8 @@ describe('QuotesDAO', function()
 
             _QuotesDAO
                 .createQuote(_quote)
-                .then(_onSuccess, _onError);
+                .then(_onSuccess)
+                .catch(_onError);
 
             _httpMock.flush();
         })
@@ -300,7 +308,8 @@ describe('QuotesDAO', function()
 
             _QuotesDAO
                 .createQuote(_quote)
-                .then(_onSuccess, _onError);
+                .then(_onSuccess)
+                .catch(_onError);
 
             _httpMock.flush();
         })

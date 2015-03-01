@@ -33,7 +33,6 @@ describe('QuotesController', function()
             expect(angular.equals(_scope.quotes, [])).toBeTruthy();
             expect(angular.equals(_scope.quotesKeeper, [])).toBeTruthy();
             expect(_scope.quoteInstance instanceof _QuotesModel).toBeTruthy();
-            expect(_scope.errorQuoteCreation).toBeNull();
         }))
     })
 
@@ -326,8 +325,6 @@ describe('QuotesController', function()
             _scope.createQuote(_quote);
 
             _httpMock.flush();
-
-            expect(_scope.errorQuoteCreation).toEqual('error here');
         }))
 
         it('should call the right method, promise resolved correctly', inject(function($controller)
@@ -346,7 +343,6 @@ describe('QuotesController', function()
 
             _httpMock.flush();
 
-            expect(_scope.errorQuoteCreation).toBeNull();
             expect(_scope.quotes.length).toBe(2);
 
             expect(angular.equals(_scope.quotes[0], _responseGET[0])).toBeTruthy();
