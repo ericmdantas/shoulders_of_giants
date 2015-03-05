@@ -5,14 +5,14 @@ var quotes = require('../controllers/QuotesController');
 
 var _init = function(app)
 {
-    var _base = '/api/quotes';
+    const BASE = '/api/quotes';
 
     app.get('/', content.index);
 
-    app.get(_base, quotes.getAllQuotes);
-    app.get(_base + '/ordered', quotes.getQuotesOrdered);
-    app.post(_base, quotes.createQuote);
-    app.put(_base + '/:id', quotes.favSpecificQuote);
+    app.get(BASE, quotes.getAllQuotes);
+    app.get(BASE+ '/ordered', quotes.getQuotesOrdered);
+    app.post(BASE, quotes.createQuote);
+    app.put(BASE + '/:id', quotes.favSpecificQuote);
 
     app.get('/*', content.index);
 };

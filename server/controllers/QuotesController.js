@@ -1,6 +1,6 @@
 "use strict";
 
-var Quotes = require('../DAL/QuotesDAO');
+var Quotes = require('../dal/QuotesDAO');
 var _ = require('lodash');
 
 function QuotesController(){}
@@ -38,19 +38,19 @@ QuotesController.getAllQuotes = function(req, res)
 
 QuotesController.favSpecificQuote = function(io, id)
 {
-   var quoteId = id;
+   let quoteId = id;
 
-   var _successCallback = function(updated)
+   let _successCallback = function(updated)
    {
        io.emit('quote:faved', updated);
    }
 
-   var _errorCallback = function(err)
+   let _errorCallback = function(err)
    {
        io.emit('fav:error', err);
    }
 
-   var _exceptionCallback = function(ex)
+   let _exceptionCallback = function(ex)
    {
        io.emit('fav:exception', ex);
    }
@@ -64,23 +64,23 @@ QuotesController.favSpecificQuote = function(io, id)
 
 QuotesController.getQuotesOrdered = function(req, res)
 {
-   var _order = req.query.sort;
+   let _order = req.query.sort;
 
-   var _successCallback = function(quotes)
+   let _successCallback = function(quotes)
    {
         res
             .status(200)
             .json(quotes);
    }
 
-   var _errorCallback = function(err)
+   let _errorCallback = function(err)
    {
        res
            .status(400)
            .json({error: 'Houve um erro no momento da ordenação das frases.'});
    }
 
-   var _exceptionCallback = function(err)
+   let _exceptionCallback = function(err)
    {
        res
            .status(500)
@@ -96,23 +96,23 @@ QuotesController.getQuotesOrdered = function(req, res)
 
 QuotesController.createQuote = function(req, res)
 {
-    var _quote = req.body;
+    let _quote = req.body;
 
-    var _onSuccess = function(quote)
+    let _onSuccess = function(quote)
     {
         res
             .status(200)
             .json(quote);
     }
 
-    var _onError = function(error)
+    let _onError = function(error)
     {
         res
             .status(400)
             .json(error);
     }
 
-    var _onException = function(ex)
+    let _onException = function(ex)
     {
         res
             .status(500)
