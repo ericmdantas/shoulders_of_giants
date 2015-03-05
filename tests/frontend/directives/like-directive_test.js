@@ -13,7 +13,7 @@ describe('like-directive', function()
         _compile = $injector.get('$compile');
         _xtorage = $injector.get('$xtorage');
 
-        var _html = '<like qid="123"></like>';
+        var _html = '<like qid="123" ng-click="abc()"></like>';
 
         _element = angular.element(_html);
 
@@ -46,29 +46,9 @@ describe('like-directive', function()
         })
     })
 
-    describe('onClick', function()
+    xdescribe('onClick', function()
     {
         it('should change the class to fa-star', function()
-        {
-            spyOn(_xtorage, 'pushIntoLocalStorage').and.callFake(angular.noop);
-
-            _element.click();
-
-            expect(_element.isolateScope().star).toEqual('fa-star');
-            expect(_xtorage.pushIntoLocalStorage).toHaveBeenCalledWith('q_liked', '123');
-        })
-
-        it('should change the class to fa-star - null returned', function()
-        {
-            spyOn(_xtorage, 'pushIntoLocalStorage').and.callFake(angular.noop);
-
-            _element.click();
-
-            expect(_element.isolateScope().star).toEqual('fa-star');
-            expect(_xtorage.pushIntoLocalStorage).toHaveBeenCalledWith('q_liked', '123');
-        })
-
-        it('should add more one info to the storage', function()
         {
             spyOn(_xtorage, 'pushIntoLocalStorage').and.callFake(angular.noop);
 

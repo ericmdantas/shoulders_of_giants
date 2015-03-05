@@ -3,7 +3,7 @@
 var expect = require('chai').expect;
 var quotes = require('../../../server/controllers/QuotesController');
 var helper = require('../helper');
-var Quotes = require('../../../server/models/Quotes');
+var Quotes = require('../../../server/DAL/QuotesDAO');
 
 describe('QuotesController', function()
 {

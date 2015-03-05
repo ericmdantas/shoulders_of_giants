@@ -21,12 +21,12 @@ quotesApp.controller('QuotesController', ['$rootScope', '$scope', 'QuotesModel',
             .then(_onSuccess);
     }
 
-    SocketService.on('quote:faved', function(id)
+    SocketService.on('quote:faved', function(quoteUpdated)
     {
         angular.forEach($scope.quotes, function(quote, index)
         {
-            if (quote._id === id)
-                $scope.quotes[index].likes += 1;
+            if (quote._id === quoteUpdated._id)
+                $scope.quotes[index].likes = quoteUpdated.likes;
         })
     });
 

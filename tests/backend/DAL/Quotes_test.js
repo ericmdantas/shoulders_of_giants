@@ -2,7 +2,7 @@
 
 var expect = require('chai').expect;
 var mongoose = require('mongoose');
-var Quotes = require('../../../server/models/Quotes');
+var Quotes = require('../../../server/DAL/QuotesDAO');
 var db = require('../config/db.json');
 var helper = require('../helper');
 
@@ -85,6 +85,7 @@ describe('quotes', function()
             {
                 expect(updated).to.be.defined;
                 expect(updated).to.have.property('likes').and.to.equal(1);
+                expect(updated).to.have.property('lastLiked').and.to.be.below(Date.now());
 
                 done();
             }
@@ -101,6 +102,8 @@ describe('quotes', function()
             var _successCallback = function(updated)
             {
                 expect(updated).to.have.property('likes').and.to.equal(4);
+                expect(updated).to.have.property('lastLiked').and.to.be.below(Date.now());
+
                 done();
             }
 

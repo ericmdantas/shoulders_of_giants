@@ -1,6 +1,6 @@
 "use strict";
 
-var Quotes = require('../models/Quotes');
+var Quotes = require('../DAL/QuotesDAO');
 var _ = require('lodash');
 
 function QuotesController(){}
@@ -42,7 +42,7 @@ QuotesController.favSpecificQuote = function(io, id)
 
    var _successCallback = function(updated)
    {
-       io.emit('quote:faved', updated._id);
+       io.emit('quote:faved', updated);
    }
 
    var _errorCallback = function(err)

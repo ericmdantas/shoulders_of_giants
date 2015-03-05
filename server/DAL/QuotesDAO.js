@@ -34,7 +34,7 @@ quotesSchema.statics.favSpecificQuote = function(id)
             }
 
             var _query = {_id: id};
-            var _updt = {$inc: {likes: 1}};
+            var _updt = {$inc: {likes: 1}, lastLiked: Date.now()};
 
             Quote
                 .findOneAndUpdate(_query, _updt)
