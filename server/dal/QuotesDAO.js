@@ -9,8 +9,8 @@ quotesSchema.statics.getQuotes = function()
 {
     return new Promise(function(resolve, reject)
     {
-        let _query = {};
-        let _projection = {};
+        var _query = {};
+        var _projection = {};
 
         Quote
             .find(_query, _projection)
@@ -33,8 +33,8 @@ quotesSchema.statics.favSpecificQuote = function(id)
                 return;
             }
 
-            let _query = {_id: id};
-            let _updt = {$inc: {likes: 1}, lastLiked: Date.now()};
+            var _query = {_id: id};
+            var _updt = {$inc: {likes: 1}, lastLiked: Date.now()};
 
             Quote
                 .findOneAndUpdate(_query, _updt)
@@ -56,10 +56,10 @@ quotesSchema.statics.getQuotesOrderedBy = function(order)
             return;
         }
 
-        let _order = order.toLowerCase();
+        var _order = order.toLowerCase();
 
-        let _query = {};
-        let _projection = {};
+        var _query = {};
+        var _projection = {};
 
         Quote
             .find(_query, _projection)
@@ -82,13 +82,13 @@ quotesSchema.statics.createQuote = function(quote)
             return;
         }
 
-        let _onSave = function(error, saved)
+        var _onSave = function(error, saved)
         {
             error ? reject(error)
                   : resolve(saved);
         }
 
-        let _quote = new Quote(quote);
+        var _quote = new Quote(quote);
 
         _quote.save(_onSave);
     });
