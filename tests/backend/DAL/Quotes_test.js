@@ -85,7 +85,8 @@ describe('quotes', function()
             {
                 expect(updated).to.be.defined;
                 expect(updated).to.have.property('likes').and.to.equal(1);
-                expect(updated).to.have.property('lastLiked').and.to.be.below(Date.now());
+                expect(updated).to.have.property('lastLiked');
+                expect(updated.lastLiked).not.to.equal(Date.now());
 
                 done();
             }
