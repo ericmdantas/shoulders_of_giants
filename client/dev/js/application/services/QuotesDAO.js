@@ -4,44 +4,32 @@ quotesApp.service('QuotesDAO', ['$q', '$xtorage', 'SocketService', 'QuotesModel'
 {
     var _getAll = function ()
     {
-        return $q(function(resolve, reject)
+        var _onSuccess = function(quotes)
         {
-            /*
+            var _quotes = [];
+            var _quotesLiked = $xtorage.getFromLocalStorage(QUOTE_LIKED_KEY) || [];
 
-             TODO: remove comment when the logic behind expiration is good enough
-
-             var _quotes = QuotesCache.getArray();
-
-             if (_quotes)
-             return $q.when(_quotes);*/
-
-            var _onSuccess = function(quotes)
+            angular.forEach(quotes, function(quote)
             {
-                var _quotes = [];
-                var _quotesLiked = $xtorage.getFromLocalStorage(QUOTE_LIKED_KEY) || [];
-
-                angular.forEach(quotes, function(quote)
+                angular.forEach(_quotesLiked, function(qLiked)
                 {
-                    angular.forEach(_quotesLiked, function(qLiked)
-                    {
-                        if (qLiked === quote._id)
-                            quote.alreadyLiked = true;
+                    if (qLiked === quote._id)
+                        quote.alreadyLiked = true;
 
-                    })
-
-                    _quotes.push(new QuotesModel(quote));
                 })
 
-                //QuotesCache.saveArray(_quotes);
+                _quotes.push(new QuotesModel(quote));
+            })
 
-                resolve(_quotes);
-            }
+            //QuotesCache.saveArray(_quotes);
 
-            QuotesResource
-                .query()
-                .$promise
-                .then(_onSuccess);
-        })
+            return _quotes;
+        }
+
+        return QuotesResource
+                    .query()
+                    .$promise
+                    .then(_onSuccess);
     };
 
     var _favQuote = function(id)
@@ -54,34 +42,30 @@ quotesApp.service('QuotesDAO', ['$q', '$xtorage', 'SocketService', 'QuotesModel'
 
     var _createQuote = function(quote)
     {
-        return $q(function(resolve, reject)
+        var _onSuccess = function(quote)
         {
-            var _onSuccess = function(quote)
-            {
-                var _quote = new QuotesModel(quote);
+            var _quote = new QuotesModel(quote);
 
-                resolve(_quote);
-            }
+            return _quote;
+        }
 
-            var _onError = function(error)
-            {
-                var _error = {msg: error.data.error, status: error.status};
+        var _onError = function(error)
+        {
+            var _error = {msg: error.data.error, status: error.status};
 
-                reject(_error);
-            }
+            return $q.reject(_error);
+        }
 
-            if (!angular.isObject(quote) || !(quote instanceof QuotesModel) || !quote.isValid())
-                return reject(new Error('Não é possível criar uma nova frase, pois a mesma não é válida.'));
+        if (!angular.isObject(quote) || !(quote instanceof QuotesModel) || !quote.isValid())
+            return $q.reject(new Error('Não é possível criar uma nova frase, pois a mesma não é válida.'));
 
-            quote.quote = quote.removeQuotationMarks();
+        quote.quote = quote.removeQuotationMarks();
 
-            QuotesResource
-                .save(quote, _onSuccess, _onError)
-                .$promise
-                .then(_onSuccess)
-                .catch(_onError);
-        })
-
+        return QuotesResource
+                    .save(quote)
+                    .$promise
+                    .then(_onSuccess)
+                    .catch(_onError);
     }
 
     this.getAll = _getAll;

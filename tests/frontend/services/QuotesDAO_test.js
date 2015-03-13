@@ -230,16 +230,14 @@ describe('QuotesDAO', function()
                 .catch(_onError);
         })
 
-        it('should create the quote correctly - but server returns error', function()
+        it('should try to create the quote, but server returns error', function()
         {
             var _quote = new _QuoteModel({author: 'eric', quote: 'abcdef'});
 
             _httpMock.expectPOST('/api/quotes', _quote).respond(400, {error: 'some error'});
 
-            var _onSuccess = function(s)
+            var _onSuccess = function()
             {
-                console.log(s);
-
                 expect(true).toBeFalsy(); // should not come here
             }
 
