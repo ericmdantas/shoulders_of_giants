@@ -1,6 +1,6 @@
 <div class="like-container transition hand"
      ng-click="liked(id);"
      ng-class="{'fa-start': quoteLiked}">
-        <span class="number-likes transition">{{numberlikes}}</span>
+        <span class="number-likes transition" ng-bind="numberlikes"></span>
         <span class="icone-star transition fa {{star}}"></span>
 </div>
