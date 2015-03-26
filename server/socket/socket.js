@@ -1,17 +1,17 @@
 "use strict";
 
-var quotesCtrl = require('../controllers/QuotesController');
+import quotesCtrl from '../controllers/QuotesController';
 
-var _init = function(io)
+export default class SocketEvents
 {
-    io.on('connection', function(client)
+    static init(io)
     {
-        client.on('fav:quote', function(id)
+        io.on('connection', function(client)
         {
-            quotesCtrl.favSpecificQuote(io, id)
-        });
-    })
+            client.on('fav:quote', function(id)
+            {
+                quotesCtrl.favSpecificQuote(io, id)
+            });
+        })
+    }
 }
-
-exports.init = _init;
-

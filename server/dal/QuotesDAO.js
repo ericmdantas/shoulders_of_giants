@@ -1,11 +1,11 @@
 "use strict";
 
-var mongoose = require('mongoose');
-var Promise = require('bluebird');
-var _ = require('lodash');
-var quotesSchema = require('../schemas/quotesSchema').quotesSchema;
+import mongoose from 'mongoose';
+import Promise from 'bluebird';
+import _ from 'lodash';
+import {quotesSchema} from '../schemas/quotesSchema';
 
-quotesSchema.statics.getQuotes = function()
+quotesSchema.statics.getQuotes = () =>
 {
     return new Promise(function(resolve, reject)
     {
@@ -23,7 +23,7 @@ quotesSchema.statics.getQuotes = function()
     })
 };
 
-quotesSchema.statics.favSpecificQuote = function(id)
+quotesSchema.statics.favSpecificQuote = id =>
 {
         return new Promise(function(resolve, reject)
         {
@@ -46,7 +46,7 @@ quotesSchema.statics.favSpecificQuote = function(id)
         })
 };
 
-quotesSchema.statics.getQuotesOrderedBy = function(order)
+quotesSchema.statics.getQuotesOrderedBy = order =>
 {
     return new Promise(function(resolve, reject)
     {
@@ -72,7 +72,7 @@ quotesSchema.statics.getQuotesOrderedBy = function(order)
     });
 }
 
-quotesSchema.statics.createQuote = function(quote)
+quotesSchema.statics.createQuote = quote =>
 {
     return new Promise(function(resolve, reject)
     {
@@ -96,4 +96,4 @@ quotesSchema.statics.createQuote = function(quote)
 
 var Quote = mongoose.model('Quote', quotesSchema);
 
-module.exports = Quote;
+export default Quote;

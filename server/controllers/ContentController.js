@@ -2,13 +2,13 @@
 
 var fs = require('fs');
 
-var _index = function(req, res)
+export default class StaticController
 {
-    res.setHeader('Content-Type', 'text/html');
+    static sendIndex(req, res)
+    {
+        res.setHeader('Content-Type', 'text/html');
 
-    fs
-        .createReadStream('dist/index.html')
-        .pipe(res);
+        fs.createReadStream('dist/index.html')
+          .pipe(res);
+    }
 }
-
-exports.index = _index;

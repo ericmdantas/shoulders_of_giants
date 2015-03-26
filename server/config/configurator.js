@@ -1,15 +1,16 @@
 "use strict";
 
-var morgan = require('morgan');
-var bodyParser = require('body-parser');
-var contentLength = require('express-content-length-validator');
+import morgan from 'morgan';
+import bodyParser from 'body-parser';
+import contentLength from 'express-content-length-validator';
 
-var _me = function(application, exp, dir)
+export default class RouteConfigurator
 {
-    application.use(exp.static(dir + '/client/dist/'));
-    application.use(bodyParser());
-    application.use(morgan('dev'));
-    application.use(contentLength.validateMax({max: 666}));
+    static init(application, exp, dir)
+    {
+        application.use(exp.static(dir + '/client/dist/'));
+        application.use(bodyParser());
+        application.use(morgan('dev'));
+        application.use(contentLength.validateMax({max: 666}));
+    }
 }
-
-exports.me = _me;

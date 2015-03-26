@@ -1,15 +1,16 @@
 "use strict";
 
-var mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-var _init = function()
+export default class DBaseConfig
 {
-    const URL_BANCO = (process.env.NODE_ENV === 'production') ? process.env.MONGOHQ_URL
-                                                              : 'mongodb://localhost/quotes';
+    static init()
+    {
+        const URL_BANCO = (process.env.NODE_ENV === 'production') ? process.env.MONGOHQ_URL
+                                                                  : 'mongodb://localhost/quotes';
 
-    mongoose.connect(URL_BANCO);
-    var db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'deu ruim: '));
-};
-
-exports.init = _init;
+        mongoose.connect(URL_BANCO);
+        var db = mongoose.connection;
+        db.on('error', console.error.bind(console, 'deu ruim: '));
+    }
+}

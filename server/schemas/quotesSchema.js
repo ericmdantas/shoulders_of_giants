@@ -1,8 +1,8 @@
 "use strict";
 
-var mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-var _quotesSchema = mongoose.Schema
+const _quotesSchema = mongoose.Schema
 ({
     quote: {type: String, trim: true, required: true, index: true},
     author: {type: String, trim: true, required: true, index: true},
@@ -11,4 +11,4 @@ var _quotesSchema = mongoose.Schema
     createdAt: {type: Date, default: Date.now}
 });
 
-exports.quotesSchema = _quotesSchema;
+export var quotesSchema = _quotesSchema;
