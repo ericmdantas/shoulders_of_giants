@@ -3,7 +3,7 @@
 describe('QuotesController', function()
 {
     var _rootScope, _scope, _httpMock, _timeoutMock, _SocketService, _QuotesDAO, _SocketService, _QuotesModel, _xtorage, Randomizer;
-    var CONTROLLER_NAME = 'QuotesController';
+    var CONTROLLER_NAME = 'QuoteController as quoteCtrl';
 
     beforeEach(module('quotes'));
 
@@ -30,9 +30,9 @@ describe('QuotesController', function()
         {
             $controller(CONTROLLER_NAME, {$scope: _scope});
 
-            expect(angular.equals(_scope.quotes, [])).toBeTruthy();
-            expect(angular.equals(_scope.quotesKeeper, [])).toBeTruthy();
-            expect(_scope.quoteInstance instanceof _QuotesModel).toBeTruthy();
+            expect(angular.equals(_scope.quoteCtrl.quotes, [])).toBeTruthy();
+            expect(angular.equals(_scope.quoteCtrl.quotesKeeper, [])).toBeTruthy();
+            expect(_scope.quoteCtrl.quoteInstance instanceof _QuotesModel).toBeTruthy();
         }))
     })
 
@@ -50,8 +50,8 @@ describe('QuotesController', function()
             _httpMock.expectGET('/api/quotes').respond()
             $controller(CONTROLLER_NAME, {$scope: _scope});
             _httpMock.flush();
-            expect(_scope.quotes.length).toEqual(0);
-            expect(_scope.quotesKeeper.length).toEqual(0);
+            expect(_scope.quoteCtrl.quotes.length).toEqual(0);
+            expect(_scope.quoteCtrl.quotesKeeper.length).toEqual(0);
         }))
 
         it('should save the response from the server - no quotes', inject(function($controller)
@@ -59,8 +59,8 @@ describe('QuotesController', function()
             _httpMock.expectGET('/api/quotes').respond([])
             $controller(CONTROLLER_NAME, {$scope: _scope});
             _httpMock.flush();
-            expect(_scope.quotes.length).toEqual(0);
-            expect(_scope.quotesKeeper.length).toEqual(0);
+            expect(_scope.quoteCtrl.quotes.length).toEqual(0);
+            expect(_scope.quoteCtrl.quotesKeeper.length).toEqual(0);
         }))
 
         it('should save the response from the server', inject(function($controller)
@@ -70,15 +70,15 @@ describe('QuotesController', function()
 
             _httpMock.flush();
 
-            expect(_scope.quotes.length).toEqual(1);
-            expect(_scope.quotesKeeper.length).toEqual(1);
-            expect(_scope.quotes[0].author).toEqual("Eric");
-            expect(_scope.quotes[0].quote).toEqual("Alo");
-            expect(_scope.quotes[0].likes).toEqual(0);
+            expect(_scope.quoteCtrl.quotes.length).toEqual(1);
+            expect(_scope.quoteCtrl.quotesKeeper.length).toEqual(1);
+            expect(_scope.quoteCtrl.quotes[0].author).toEqual("Eric");
+            expect(_scope.quoteCtrl.quotes[0].quote).toEqual("Alo");
+            expect(_scope.quoteCtrl.quotes[0].likes).toEqual(0);
 
-            expect(_scope.quotesKeeper[0].author).toEqual("Eric");
-            expect(_scope.quotesKeeper[0].quote).toEqual("Alo");
-            expect(_scope.quotesKeeper[0].likes).toEqual(0);
+            expect(_scope.quoteCtrl.quotesKeeper[0].author).toEqual("Eric");
+            expect(_scope.quoteCtrl.quotesKeeper[0].quote).toEqual("Alo");
+            expect(_scope.quoteCtrl.quotesKeeper[0].likes).toEqual(0);
         }))
     })
 
@@ -88,16 +88,16 @@ describe('QuotesController', function()
         {
             $controller(CONTROLLER_NAME, {$scope: _scope});
 
-            expect(_scope.order).toEqual('author');
+            expect(_scope.quoteCtrl.order).toEqual('author');
         }))
 
         it('should change order', inject(function($controller)
         {
             $controller(CONTROLLER_NAME, {$scope: _scope});
 
-            _scope.setOrder('someKindOfOrder');
+            _scope.quoteCtrl.setOrder('someKindOfOrder');
 
-            expect(_scope.order).toEqual('someKindOfOrder');
+            expect(_scope.quoteCtrl.order).toEqual('someKindOfOrder');
         }))
     })
 
@@ -113,7 +113,7 @@ describe('QuotesController', function()
 
             for (var i = 0; i < _wrongParams.length; i++)
             {
-                _scope.favQuote(_wrongParams[i]);
+                _scope.quoteCtrl.favQuote(_wrongParams[i]);
 
                 expect(_QuotesDAO.favQuote).toHaveBeenCalledWith(_wrongParams[i]);
                 expect(_SocketService.emit).not.toHaveBeenCalled();
@@ -130,7 +130,7 @@ describe('QuotesController', function()
 
             var _id = 'a123';
 
-            _scope.favQuote(_id);
+            _scope.quoteCtrl.favQuote(_id);
 
             expect(_SocketService.emit).toHaveBeenCalledWith('fav:quote', _id);
         }))
@@ -151,7 +151,7 @@ describe('QuotesController', function()
 
             var _id = 'a123';
 
-            _scope.favQuote(_id);
+            _scope.quoteCtrl.favQuote(_id);
 
             expect(_SocketService.emit).toHaveBeenCalledWith('fav:quote', _id);
         }))
@@ -170,7 +170,7 @@ describe('QuotesController', function()
 
             var _id = 'a123';
 
-            _scope.favQuote(_id);
+            _scope.quoteCtrl.favQuote(_id);
 
             expect(_SocketService.emit).toHaveBeenCalledWith('fav:quote', _id);
         }))
@@ -189,7 +189,7 @@ describe('QuotesController', function()
 
             var _id = 'a123';
 
-            _scope.favQuote(_id);
+            _scope.quoteCtrl.favQuote(_id);
 
             expect(_SocketService.emit).toHaveBeenCalledWith('fav:quote', _id);
         }))
@@ -208,7 +208,7 @@ describe('QuotesController', function()
 
             var _id = 'a123';
 
-            _scope.favQuote(_id);
+            _scope.quoteCtrl.favQuote(_id);
 
             expect(_SocketService.emit).toHaveBeenCalledWith('fav:quote', _id);
         }))
@@ -222,12 +222,12 @@ describe('QuotesController', function()
 
             $controller(CONTROLLER_NAME, {$scope: _scope});
 
-            _scope.quotes = [1, 2];
+            _scope.quoteCtrl.quotes = [1, 2];
 
-            _scope.shuffle();
+            _scope.quoteCtrl.shuffle();
 
-            expect(_scope.order).toBeNull();
-            expect(Randomizer.shuffle).toHaveBeenCalledWith(_scope.quotes);
+            expect(_scope.quoteCtrl.order).toBeNull();
+            expect(Randomizer.shuffle).toHaveBeenCalledWith(_scope.quoteCtrl.quotes);
         }))
     })
 
@@ -243,7 +243,7 @@ describe('QuotesController', function()
             {
                 expect(function()
                 {
-                    _scope.setSingle(_wrongParams[i]);
+                    _scope.quoteCtrl.setSingle(_wrongParams[i]);
                 }).toThrow(new Error('Houve um erro ao randomizar as mensagens. O objeto passado não é um objeto ou array válido.'));
             }
         }))
@@ -261,16 +261,16 @@ describe('QuotesController', function()
                               likes: i});
             }
 
-            _scope.quotes = _quotes;
+            _scope.quoteCtrl.quotes = _quotes;
 
-            _scope.setSingle(_quotes);
+            _scope.quoteCtrl.setSingle(_quotes);
 
-            expect(_scope.quotes).toBeDefined();
-            expect(_scope.quotes.length).toBe(1);
+            expect(_scope.quoteCtrl.quotes).toBeDefined();
+            expect(_scope.quoteCtrl.quotes.length).toBe(1);
 
-            expect(_scope.quotes[0].author).toBeDefined();
-            expect(_scope.quotes[0].quote).toBeDefined();
-            expect(_scope.quotes[0].likes).toBeDefined();
+            expect(_scope.quoteCtrl.quotes[0].author).toBeDefined();
+            expect(_scope.quoteCtrl.quotes[0].quote).toBeDefined();
+            expect(_scope.quoteCtrl.quotes[0].likes).toBeDefined();
         }))
     })
 
@@ -280,21 +280,21 @@ describe('QuotesController', function()
         {
             $controller(CONTROLLER_NAME, {$scope: _scope});
 
-            _scope.quotes = [];
+            _scope.quoteCtrl.quotes = [];
 
             for (var i = 0; i < 1000; i++)
             {
-                _scope.quotes.push({author: 'Eric'+i,
+                _scope.quoteCtrl.quotes.push({author: 'Eric'+i,
                                     quote: 'Alguma Coisa'+i,
                                     likes: i});
             }
 
-            _scope.quotesKeeper = _scope.quotes;
-            _scope.setSingle(_scope.quotes);
-            _scope.setMultiple();
+            _scope.quoteCtrl.quotesKeeper = _scope.quoteCtrl.quotes;
+            _scope.quoteCtrl.setSingle(_scope.quoteCtrl.quotes);
+            _scope.quoteCtrl.setMultiple();
 
-            expect(_scope.quotes.length).toBe(1000);
-            expect(_scope.singleView).toBeFalsy();
+            expect(_scope.quoteCtrl.quotes.length).toBe(1000);
+            expect(_scope.quoteCtrl.singleView).toBeFalsy();
         }))
     })
 
@@ -308,7 +308,7 @@ describe('QuotesController', function()
 
             $controller(CONTROLLER_NAME, {$scope: _scope});
 
-            _scope.createQuote(_quote);
+            _scope.quoteCtrl.createQuote(_quote);
 
             expect(_QuotesDAO.createQuote).toHaveBeenCalledWith(_quote);
         }))
@@ -322,7 +322,7 @@ describe('QuotesController', function()
 
             $controller(CONTROLLER_NAME, {$scope: _scope});
 
-            _scope.createQuote(_quote);
+            _scope.quoteCtrl.createQuote(_quote);
 
             _httpMock.flush();
         }))
@@ -339,18 +339,18 @@ describe('QuotesController', function()
 
             $controller(CONTROLLER_NAME, {$scope: _scope});
 
-            _scope.createQuote(_quote);
+            _scope.quoteCtrl.createQuote(_quote);
 
             _httpMock.flush();
 
-            expect(_scope.quotes.length).toBe(2);
+            expect(_scope.quoteCtrl.quotes.length).toBe(2);
 
-            expect(angular.equals(_scope.quotes[0], _responseGET[0])).toBeTruthy();
-            expect(angular.equals(_scope.quotes[1], _responsePOST)).toBeTruthy();
+            expect(angular.equals(_scope.quoteCtrl.quotes[0], _responseGET[0])).toBeTruthy();
+            expect(angular.equals(_scope.quoteCtrl.quotes[1], _responsePOST)).toBeTruthy();
 
-            expect(_scope.quoteInstance.author).toBeNull();
-            expect(_scope.quoteInstance.quote).toBeNull();
-            expect(_scope.quoteInstance.likes).toBe(0);
+            expect(_scope.quoteCtrl.quoteInstance.author).toBeNull();
+            expect(_scope.quoteCtrl.quoteInstance.quote).toBeNull();
+            expect(_scope.quoteCtrl.quoteInstance.likes).toBe(0);
         }))
     })
 
@@ -367,7 +367,7 @@ describe('QuotesController', function()
 
             _httpMock.flush();
 
-            _scope.randomize();
+            _scope.quoteCtrl.randomize();
 
             expect(Randomizer.shuffleSingle).toHaveBeenCalledWith(_responseGET);
         }))
@@ -386,6 +386,54 @@ describe('QuotesController', function()
             $controller(CONTROLLER_NAME, {$scope: _scope});
 
             expect(_SocketService.on).toHaveBeenCalled();
+        }))
+    })
+
+    describe('__onFavorited', function()
+    {
+        it('should NOT update the likes in quotes - different ids', inject(function($controller)
+        {
+            var _responseGET = [{author: 'a', quote: 'b', likes: 1, _id: 1}];
+
+            _httpMock.expectGET('/api/quotes').respond(200, _responseGET);
+
+            $controller(CONTROLLER_NAME, {$scope: _scope});
+
+            _httpMock.flush();
+
+            _scope.quoteCtrl.__onFavorited({_id: 0, likes: 999});
+
+            expect(_scope.quoteCtrl.quotes[0].likes).toEqual(1);
+        }))
+
+        it('should update the likes in quotes - same id', inject(function($controller)
+        {
+            var _responseGET = [{author: 'a', quote: 'b', likes: 1, _id: 0}];
+
+            _httpMock.expectGET('/api/quotes').respond(200, _responseGET);
+
+            $controller(CONTROLLER_NAME, {$scope: _scope});
+
+            _httpMock.flush();
+
+            _scope.quoteCtrl.__onFavorited({_id: 0, likes: 999});
+
+            expect(_scope.quoteCtrl.quotes[0].likes).toEqual(999);
+        }))
+
+        it('should update the likes in quotes - same id - array returned in the first GET', inject(function($controller)
+        {
+            var _responseGET = [{author: 'a', quote: 'b', likes: 1, _id: 0}, {author: 'a', quote: 'b', likes: 1, _id: 999}, {author: 'a', quote: 'b', likes: 15, _id: 111}];
+
+            _httpMock.expectGET('/api/quotes').respond(200, _responseGET);
+
+            $controller(CONTROLLER_NAME, {$scope: _scope});
+
+            _httpMock.flush();
+
+            _scope.quoteCtrl.__onFavorited({_id: 111, likes: 15});
+
+            expect(_scope.quoteCtrl.quotes[2].likes).toEqual(15);
         }))
     })
 })

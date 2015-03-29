@@ -46,7 +46,7 @@ describe('like-directive', function()
         })
     })
 
-    xdescribe('onClick', function()
+    describe('onClick', function()
     {
         it('should change the class to fa-star', function()
         {

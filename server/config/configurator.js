@@ -8,7 +8,9 @@ export default class RouteConfigurator
 {
     static init(application, exp, dir)
     {
-        application.use(exp.static(dir + '/client/dist/'));
+        var _root = process.cwd();
+
+        application.use(exp.static(_root + '/client/dist/'));
         application.use(bodyParser());
         application.use(morgan('dev'));
         application.use(contentLength.validateMax({max: 666}));

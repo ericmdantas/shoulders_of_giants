@@ -1,0 +1,59 @@
+<div>
+    <div ng-include="'partials/includes/create-quote-modal.tpl.html'"></div>
+    <div ng-include="'partials/includes/options-navigation.html'"></div>
+    <div ng-include="'partials/includes/view-modal.tpl.html'"></div>
+    <div ng-include="'partials/includes/order-modal.tpl.html'"></div>
+
+    <header class="container">
+        <aside class="logo" ng-class="{'go-to-center': singleView}">
+            <div id="logo-container" class="transition">
+                <div>
+                    <img src="img/quotes.svg" id="logo" title="shoulders of giants"/>
+                </div>
+            </div>
+        </aside>
+
+        <div class="filter-container invisible-mobile col-md-5 pull-right no-padding" ng-hide="quote.singleView">
+
+            <div class="input-group">
+                <input type="text"
+                       ng-model="search"
+
+                       class="form-control filter"
+                       placeholder="I wanna read about.."
+                       maxlength="22"
+                       autofocus/>
+
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </span>
+
+            </div>
+        </div>
+    </header>
+
+    <div class="container" id="main-container">
+
+        <show-modal-when-no-quotes></show-modal-when-no-quotes>
+
+        <div class="transition">
+            <div id="randomize-container" ng-show="quote.singleView">
+                <div class="text-centered">
+                    <h1 id="randomize" ng-click="quote.randomize()" class="transition not-selectable fa fa-random"></h1>
+                </div>
+            </div>
+
+            <div ng-repeat="q in filteredQuotes = (quote.quotes | filter: search) | orderBy: quote.order track by $index" class="cards transition espaco-bottom">
+                <like liked="quote.favQuote(q._id)" numberlikes="{{q.likes}}" qid="{{q._id}}" already-liked="{{q.alreadyLiked}}"></like>
+                <p class="quote" ng-bind="q.quote"></p>
+                <span class="author transition" ng-bind="q.author"></span>
+            </div>
+
+            <div class="cards transition"
+                 ng-hide="filteredQuotes.length">
+                <p class="quote">Looks like there's no quote that contains: "<span ng-bind="search"></span>". Sorry :(</p>
+                <span class="author transition">Eric Mendes Dantas</span>
+            </div>
+        </div>
+    </div>
+</div>

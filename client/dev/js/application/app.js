@@ -1,12 +1,13 @@
 var quotesApp = angular.module('quotes', ['ngResource',
+                                          'ngNewRouter',
                                           'btford.socket-io',
                                           'emd.client.socket.module',
                                           'emd.ng-xtorage']);
 
-quotesApp.config(['$xtorageProvider', function($xtorageProvider)
+quotesApp.config(['$locationProvider', '$xtorageProvider', function($locationProvider, $xtorageProvider)
 {
+    $locationProvider.html5Mode(true);
     $xtorageProvider.storage = 'sessionStorage';
-    $xtorageProvider.storageExpiration = 21600000; // 6 hours
 }]);
 
 quotesApp.constant('QUOTE_LIKED_KEY', 'q_liked');

@@ -16,6 +16,7 @@ var _distributionDir = './client/dist/';
 var _images = _developmentDir + 'img/*';
 var _fonts = _developmentDir + 'fonts/*';
 var _partials = _developmentDir + 'partials/**/*';
+var _components = _developmentDir + 'components/**/*';
 
 var _indexHTML = _developmentDir + 'index.html';
 
@@ -37,6 +38,10 @@ gulp.task('build', ['del_dist', 'unit_test'], function()
     gulp
         .src(_fonts)
         .pipe(gulp.dest(_distributionDir + 'fonts/'));
+
+    gulp
+        .src(_components)
+        .pipe(gulp.dest(_distributionDir + 'components/'));
 });
 
 gulp.task('del_dist', function()

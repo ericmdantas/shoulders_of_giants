@@ -9,7 +9,7 @@ quotesApp.directive('showOtherOptions', [function()
             $('.opt').not(element).slideToggle();
             element.find('.fa').toggleClass('fa-minus');
         });
-    }
+    };
 
     return _link;
 }])
