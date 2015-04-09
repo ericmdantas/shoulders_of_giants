@@ -1,24 +1,43 @@
 'use strict';
 
-if ('production' === process.env.NODE_ENV)
-    require('newrelic');
+var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
 
-import express from 'express';
-const app = express();
-const port = process.env.PORT || 3333;
+var _express = require('express');
 
-import RouteConfigurator from './server/config/configurator';
-import SocketEvents from './server/socket/socket';
-import DBaseConfig from './server/config/dbase';
-import Routes from './server/routes/routes';
-import os from 'os';
-const server          = app.listen(port);
-var io              = require('socket.io').listen(server);
+var _express2 = _interopRequireWildcard(_express);
 
-RouteConfigurator.init(app, express, __dirname);
-DBaseConfig.init();
-Routes.init(app);
-SocketEvents.init(io);
+var _RouteConfigurator = require('./server/config/configurator');
 
-console.log(`up and running @: ${os.hostname()} on port: ${port}`);
-console.log(`enviroment: ${process.env.NODE_ENV}`);
+var _RouteConfigurator2 = _interopRequireWildcard(_RouteConfigurator);
+
+var _SocketEvents = require('./server/socket/socket');
+
+var _SocketEvents2 = _interopRequireWildcard(_SocketEvents);
+
+var _DBaseConfig = require('./server/config/dbase');
+
+var _DBaseConfig2 = _interopRequireWildcard(_DBaseConfig);
+
+var _Routes = require('./server/routes/routes');
+
+var _Routes2 = _interopRequireWildcard(_Routes);
+
+var _os = require('os');
+
+var _os2 = _interopRequireWildcard(_os);
+
+if ('production' === process.env.NODE_ENV) require('newrelic');
+
+var app = _express2['default']();
+var port = process.env.PORT || 3333;
+
+var server = app.listen(port);
+var io = require('socket.io').listen(server);
+
+_RouteConfigurator2['default'].init(app, _express2['default'], __dirname);
+_DBaseConfig2['default'].init();
+_Routes2['default'].init(app);
+_SocketEvents2['default'].init(io);
+
+console.log('up and running @: ' + _os2['default'].hostname() + ' on port: ' + port);
+console.log('enviroment: ' + process.env.NODE_ENV);

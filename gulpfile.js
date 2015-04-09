@@ -1,24 +1,38 @@
 "use strict";
 
-var gulp = require('gulp');
-var uglify = require('gulp-uglify');
-var cssmin = require('gulp-minify-css');
-var usemin = require('gulp-usemin');
-var rev = require('gulp-rev');
-var less = require('gulp-less');
-var del = require('del');
-var coveralls = require('gulp-coveralls');
-var karma = require('karma').server;
+const gulp = require('gulp');
+const uglify = require('gulp-uglify');
+const cssmin = require('gulp-minify-css');
+const usemin = require('gulp-usemin');
+const rev = require('gulp-rev');
+const less = require('gulp-less');
+const del = require('del');
+const coveralls = require('gulp-coveralls');
+const karma = require('karma').server;
 
-var _developmentDir = './client/dev/';
-var _distributionDir = './client/dist/';
+const babel = require('gulp-babel');
 
-var _images = _developmentDir + 'img/*';
-var _fonts = _developmentDir + 'fonts/*';
-var _partials = _developmentDir + 'partials/**/*';
-var _components = _developmentDir + 'components/**/*';
+const _developmentDir = './client/dev/';
+const _distributionDir = './client/dist/';
 
-var _indexHTML = _developmentDir + 'index.html';
+const _images = _developmentDir + 'img/*';
+const _fonts = _developmentDir + 'fonts/*';
+const _partials = _developmentDir + 'partials/**/*';
+const _components = _developmentDir + 'components/**/*';
+
+const _indexHTML = _developmentDir + 'index.html';
+
+gulp.task('build:esnext', function()
+{
+    return gulp.src(['**/*.es6', '!node_modules/**'])
+               .pipe(babel({optional: ["es7.decorators"]}))
+               .pipe(gulp.dest('.'));
+});
+
+gulp.task('watch:esnext', ['build:esnext'], function()
+{
+    return gulp.watch('**/*.es6', ['build:esnext']);
+});
 
 gulp.task('build', ['del_dist', 'unit_test'], function()
 {

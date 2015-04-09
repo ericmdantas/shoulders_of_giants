@@ -10,42 +10,42 @@ describe('quotes', function()
 {
     var _quote;
 
-    before(function()
+    before(() =>
     {
         mongoose.models = {};
         mongoose.connect(db.db.test.url);
         mongoose.connection.on('error', function() {});
     })
 
-    beforeEach(function(done)
+    beforeEach(done =>
     {
         helper.create('quotes', done);
         _quote = new Quotes();
     })
 
-    afterEach(function(done)
+    afterEach(done =>
     {
         Quotes.remove(done);
     })
 
-    describe('getQuotes', function()
+    describe('getQuotes', () =>
     {
-        it('should be no errors', function(done)
+        it('should be no errors', done =>
         {
             Quotes
                 .getQuotes()
-                .then(function(quotes)
+                .then(quotes =>
                      {
                          expect(quotes).to.have.length(11);
                          done();
                      })
         })
 
-        it('should return the object correctly', function(done)
+        it('should return the object correctly', done =>
         {
             Quotes
                 .getQuotes()
-                .then(function(quotes)
+                .then(quotes =>
                       {
                             expect(quotes[0]).to.have.property('author').and.to.equal("eric0");
                             expect(quotes[0]).to.have.property('quote').and.to.equal("mensagem0");
@@ -55,13 +55,13 @@ describe('quotes', function()
         })
     })
 
-    describe('favoriteSpecificQuote', function()
+    describe('favoriteSpecificQuote', () =>
     {
-        it('should throw error - wrong id param', function(done)
+        it('should throw error - wrong id param', done =>
         {
             var _wrongParams = [null, undefined, function(){}, true, false, 1, 0, {}, []];
 
-            var _errorCallback = function(err)
+            var _errorCallback = err =>
             {
                 expect(err).to.be.defined;
                 expect(err instanceof Error).to.be.true;
@@ -77,11 +77,11 @@ describe('quotes', function()
             done();
         })
 
-        it('should increment by one the first quote correctly', function(done)
+        it('should increment by one the first quote correctly', done =>
         {
             var _id = '535d85946ab81777bf583d26';
 
-            var _resolvedCallback = function(updated)
+            var _resolvedCallback = updated =>
             {
                 expect(updated).to.be.defined;
                 expect(updated).to.have.property('likes').and.to.equal(1);
@@ -96,11 +96,11 @@ describe('quotes', function()
                 .then(_resolvedCallback);
         })
 
-        it('should increment by one the third quote correctly', function(done)
+        it('should increment by one the third quote correctly', done =>
         {
             var _id = '535d85946ab81777bf583d28';
 
-            var _successCallback = function(updated)
+            var _successCallback = updated =>
             {
                 expect(updated).to.have.property('likes').and.to.equal(4);
                 expect(updated).to.have.property('lastLiked').and.to.be.below(Date.now());
@@ -114,11 +114,11 @@ describe('quotes', function()
         })
     })
 
-    describe('getQuotesOrderedBy', function()
+    describe('getQuotesOrderedBy', () =>
     {
-        it('should throw an error, no order specified', function(done)
+        it('should throw an error, no order specified', done =>
         {
-            var _rejectCallback = function(err)
+            var _rejectCallback = err =>
             {
                 expect(err).to.be.defined;
                 expect(err).to.be.an.instanceof(Error);
@@ -137,11 +137,11 @@ describe('quotes', function()
             done();
         })
 
-        it('should return ordered by author asc', function(done)
+        it('should return ordered by author asc', done =>
         {
             var _order = 'author';
 
-            var _successCallback = function(quotes)
+            var _successCallback = quotes =>
             {
                 expect(quotes).to.be.defined;
                 expect(quotes).to.have.length(11);
@@ -156,11 +156,11 @@ describe('quotes', function()
                 .then(_successCallback);
         })
 
-        it('should return ordered by author desc', function(done)
+        it('should return ordered by author desc', done =>
         {
             var _order = '-author';
 
-            var _successCallback = function(quotes)
+            var _successCallback = quotes =>
             {
                 expect(quotes).to.be.defined;
                 expect(quotes).to.have.length(11);
@@ -175,11 +175,11 @@ describe('quotes', function()
                 .then(_successCallback);
         })
 
-        it('should return ordered by quote asc', function(done)
+        it('should return ordered by quote asc', done =>
         {
             var _order = 'quote';
 
-            var _successCallback = function(quotes)
+            var _successCallback = quotes =>
             {
                 expect(quotes).to.be.defined;
                 expect(quotes).to.have.length(11);
@@ -194,11 +194,11 @@ describe('quotes', function()
                 .then(_successCallback);
         })
 
-        it('should return ordered by quote desc', function(done)
+        it('should return ordered by quote desc', done =>
         {
             var _order = '-quote';
 
-            var _successCallback = function(quotes)
+            var _successCallback = quotes =>
             {
                 expect(quotes).to.be.defined;
                 expect(quotes).to.have.length(11);
@@ -213,11 +213,11 @@ describe('quotes', function()
                 .then(_successCallback);
         })
 
-        it('should return ordered by likes asc', function(done)
+        it('should return ordered by likes asc', done =>
         {
             var _order = 'likes';
 
-            var _successCallback = function(quotes)
+            var _successCallback = quotes =>
             {
                 expect(quotes).to.be.defined;
                 expect(quotes).to.have.length(11);
@@ -232,11 +232,11 @@ describe('quotes', function()
                 .then(_successCallback);
         })
 
-        it('should return ordered by likes desc', function(done)
+        it('should return ordered by likes desc', done =>
         {
             var _order = '-likes';
 
-            var _successCallback = function(quotes)
+            var _successCallback = quotes =>
             {
                 expect(quotes).to.be.defined;
                 expect(quotes).to.have.length(11);
@@ -251,11 +251,11 @@ describe('quotes', function()
                 .then(_successCallback);
         })
 
-        it('should return ordered by likes desc - ALL ON CAPS', function(done)
+        it('should return ordered by likes desc - ALL ON CAPS', done =>
         {
             var _order = '-LIKES';
 
-            var _successCallback = function(quotes)
+            var _successCallback = quotes =>
             {
                 expect(quotes).to.be.defined;
                 expect(quotes).to.have.length(11);
@@ -273,16 +273,16 @@ describe('quotes', function()
 
     describe('createQuote', function()
     {
-        it('should not create a quote, empty object', function(done)
+        it('should not create a quote, empty object', done =>
         {
             var _invalidObjects = [null, undefined, '', 1, 0, false, true, [], {}];
 
-            var _onSuccess = function()
+            var _onSuccess = () =>
             {
                 expect(true).to.be.false;
             }
 
-            var _onError = function(error)
+            var _onError = error =>
             {
                 expect(error).to.be.defined;
                 expect(error).to.be.an.instanceof(Error);
@@ -298,16 +298,16 @@ describe('quotes', function()
             done();
         })
 
-        it('should not create a quote, no author', function(done)
+        it('should not create a quote, no author', done =>
         {
             var _quote = {author: null, quote: 'abcdef12'};
 
-            var _onSuccess = function()
+            var _onSuccess = () =>
             {
                 expect(true).to.be.false;
             }
 
-            var _onError = function(error)
+            var _onError = error =>
             {
                 expect(error).to.be.defined;
                 expect(error).to.be.an.instanceof(Error);
@@ -320,16 +320,16 @@ describe('quotes', function()
                 .then(_onSuccess, _onError);
         })
 
-        it('should not create a quote, no quote', function(done)
+        it('should not create a quote, no quote', done =>
         {
             var _quote = {author: 'ericmdantas', quote: null};
 
-            var _onSuccess = function()
+            var _onSuccess = () =>
             {
                 expect(true).to.be.false;
             }
 
-            var _onError = function(error)
+            var _onError = error =>
             {
                 expect(error).to.be.defined;
                 expect(error).to.be.an.instanceof(Error);
@@ -342,11 +342,11 @@ describe('quotes', function()
                 .then(_onSuccess, _onError);
         })
 
-        it('should create a quote correctly', function(done)
+        it('should create a quote correctly', done =>
         {
             var _quote = {author: 'ericmdantas', quote: 'wawaweewa'};
 
-            var _onSuccess = function(saved)
+            var _onSuccess = saved =>
             {
                 expect(saved).to.be.defined;
                 expect(saved).to.an.instanceof(Quotes);
@@ -363,7 +363,7 @@ describe('quotes', function()
                 done();
             }
 
-            var _onError = function(error)
+            var _onError = error =>
             {
                 expect(true).to.be.false;
             }

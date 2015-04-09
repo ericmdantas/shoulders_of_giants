@@ -1,100 +1,88 @@
-"use strict";
+'use strict';
 
-import Quotes from '../dal/QuotesDAO';
+var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
 
-export default class QuotesController
-{
-    static getAllQuotes(req, res)
-    {
-        var _successCallback = function(quotes)
-        {
-            res
-                .status(200)
-                .json(quotes);
-        }
+var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
 
-        var _errorCallback = function(err)
-        {
-            res
-                .status(400)
-                .json({error: err});
-        }
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-        Quotes
-            .getQuotes()
-            .then(_successCallback)
-            .catch(_errorCallback)
-            .done();
-    };
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
 
-    static favSpecificQuote(io, id)
-    {
-        var quoteId = id;
+var _Quotes = require('../dal/QuotesDAO');
 
-        var _successCallback = function(updated)
-        {
-            io.emit('quote:faved', updated);
-        }
+var _Quotes2 = _interopRequireWildcard(_Quotes);
 
-        var _errorCallback = function(err)
-        {
-            io.emit('fav:error', err);
-        }
+'use strict';
 
-        Quotes
-            .favSpecificQuote(quoteId)
-            .then(_successCallback)
-            .catch(_errorCallback)
-            .done();
+var QuotesController = (function () {
+    function QuotesController() {
+        _classCallCheck(this, QuotesController);
     }
 
-    static getQuotesOrdered(req, res)
-    {
-        var _order = req.query.sort;
+    _createClass(QuotesController, null, [{
+        key: 'getAllQuotes',
+        value: function getAllQuotes(req, res) {
+            var _successCallback = function _successCallback(quotes) {
+                res.status(200).json(quotes);
+            };
 
-        var _successCallback = function(quotes)
-        {
-            res
-                .status(200)
-                .json(quotes);
+            var _errorCallback = function _errorCallback(err) {
+                res.status(400).json({ error: err });
+            };
+
+            _Quotes2['default'].getQuotes().then(_successCallback)['catch'](_errorCallback).done();
         }
+    }, {
+        key: 'favSpecificQuote',
+        value: function favSpecificQuote(io, id) {
+            var quoteId = id;
 
-        var _errorCallback = function(err)
-        {
-            res
-                .status(400)
-                .json({error: 'Houve um erro no momento da ordenação das frases.'});
+            var _successCallback = function _successCallback(updated) {
+                io.emit('quote:faved', updated);
+            };
+
+            var _errorCallback = function _errorCallback(err) {
+                io.emit('fav:error', err);
+            };
+
+            _Quotes2['default'].favSpecificQuote(quoteId).then(_successCallback)['catch'](_errorCallback).done();
         }
+    }, {
+        key: 'getQuotesOrdered',
+        value: function getQuotesOrdered(req, res) {
+            var _order = req.query.sort;
 
-        Quotes
-            .getQuotesOrderedBy(_order)
-            .then(_successCallback)
-            .catch(_errorCallback)
-            .done();
-    }
+            var _successCallback = function _successCallback(quotes) {
+                res.status(200).json(quotes);
+            };
 
-    static createQuote(req, res)
-    {
-        var _quote = req.body;
+            var _errorCallback = function _errorCallback(err) {
+                res.status(400).json({ error: 'Houve um erro no momento da ordenação das frases.' });
+            };
 
-        var _onSuccess = function(quote)
-        {
-            res
-                .status(200)
-                .json(quote);
+            _Quotes2['default'].getQuotesOrderedBy(_order).then(_successCallback)['catch'](_errorCallback).done();
         }
+    }, {
+        key: 'createQuote',
+        value: function createQuote(req, res) {
+            var _quote = req.body;
 
-        var _onError = function(error)
-        {
-            res
-                .status(400)
-                .json(error);
+            var _onSuccess = function _onSuccess(quote) {
+                res.status(200).json(quote);
+            };
+
+            var _onError = function _onError(error) {
+                res.status(400).json(error);
+            };
+
+            _Quotes2['default'].createQuote(_quote).then(_onSuccess)['catch'](_onError).done();
         }
+    }]);
 
-        Quotes
-            .createQuote(_quote)
-            .then(_onSuccess)
-            .catch(_onError)
-            .done();
-    }
-}
+    return QuotesController;
+})();
+
+exports['default'] = QuotesController;
+module.exports = exports['default'];
