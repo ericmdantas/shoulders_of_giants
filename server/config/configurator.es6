@@ -6,7 +6,7 @@ import contentLength from 'express-content-length-validator';
 
 export default class RouteConfigurator
 {
-    static init(application, exp, dir)
+    static init(application, exp)
     {
         var _root = process.cwd();
 

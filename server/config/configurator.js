@@ -31,7 +31,7 @@ var RouteConfigurator = (function () {
 
     _createClass(RouteConfigurator, null, [{
         key: 'init',
-        value: function init(application, exp, dir) {
+        value: function init(application, exp) {
             var _root = process.cwd();
 
             var _folder = process.env !== 'production' ? '__tmp' : 'dist';

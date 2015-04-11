@@ -34,7 +34,7 @@ var port = process.env.PORT || 3333;
 var server = app.listen(port);
 var io = require('socket.io').listen(server);
 
-_RouteConfigurator2['default'].init(app, _express2['default'], __dirname);
+_RouteConfigurator2['default'].init(app, _express2['default']);
 _DBaseConfig2['default'].init();
 _Routes2['default'].init(app, _express2['default'].Router());
 _SocketEvents2['default'].init(io);

@@ -15,7 +15,7 @@ import os from 'os';
 const server          = app.listen(port);
 var io              = require('socket.io').listen(server);
 
-RouteConfigurator.init(app, express, __dirname);
+RouteConfigurator.init(app, express);
 DBaseConfig.init();
 Routes.init(app, express.Router());
 SocketEvents.init(io);
