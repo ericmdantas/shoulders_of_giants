@@ -1,9 +1,9 @@
 "use strict";
 
 var expect = require('chai').expect;
-var quotes = require('../../../server/controllers/QuotesController');
+var quotes = require('../../../server/api/quotes/controllers/QuotesController');
 var helper = require('../helper');
-var Quotes = require('../../../server/dal/QuotesDAO');
+var Quotes = require('../../../server/api/quotes/dao/QuotesDAO');
 
 describe('QuotesController', function()
 {

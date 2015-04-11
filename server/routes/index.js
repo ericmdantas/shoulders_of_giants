@@ -7,33 +7,37 @@ var _classCallCheck = function (instance, Constructor) { if (!(instance instance
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 Object.defineProperty(exports, '__esModule', {
-    value: true
+  value: true
 });
 
-var _quotesCtrl = require('../api/quotes/controllers/QuotesController');
+var _QuotesRoutes = require('../api/quotes/routes/routes');
 
-var _quotesCtrl2 = _interopRequireWildcard(_quotesCtrl);
+var _QuotesRoutes2 = _interopRequireWildcard(_QuotesRoutes);
+
+var _StaticDispatcher = require('../commons/static/index');
+
+var _StaticDispatcher2 = _interopRequireWildcard(_StaticDispatcher);
 
 'use strict';
 
-var SocketEvents = (function () {
-    function SocketEvents() {
-        _classCallCheck(this, SocketEvents);
+var Routes = (function () {
+  function Routes() {
+    _classCallCheck(this, Routes);
+  }
+
+  _createClass(Routes, null, [{
+    key: 'init',
+    value: function init(app, router) {
+      _QuotesRoutes2['default'].init(router);
+
+      router.route('*').get(_StaticDispatcher2['default'].sendIndex);
+
+      app.use('/', router);
     }
+  }]);
 
-    _createClass(SocketEvents, null, [{
-        key: 'init',
-        value: function init(io) {
-            io.on('connection', function (client) {
-                client.on('fav:quote', function (id) {
-                    _quotesCtrl2['default'].favSpecificQuote(io, id);
-                });
-            });
-        }
-    }]);
-
-    return SocketEvents;
+  return Routes;
 })();
 
-exports['default'] = SocketEvents;
+exports['default'] = Routes;
 module.exports = exports['default'];

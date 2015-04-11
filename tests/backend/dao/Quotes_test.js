@@ -2,7 +2,7 @@
 
 var expect = require('chai').expect;
 var mongoose = require('mongoose');
-var Quotes = require('../../../server/dal/QuotesDAO');
+var Quotes = require('../../../server/api/quotes/dao/QuotesDAO');
 var db = require('../config/db.json');
 var helper = require('../helper');
 

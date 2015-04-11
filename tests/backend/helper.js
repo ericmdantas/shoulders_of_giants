@@ -1,6 +1,6 @@
 "use strict";
 
-var Quotes = require('../../server/dal/QuotesDAO');
+var Quotes = require('../../server/api/quotes/dao/QuotesDAO');
 
 (function()
 {

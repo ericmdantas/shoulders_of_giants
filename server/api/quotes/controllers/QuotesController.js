@@ -10,7 +10,7 @@ Object.defineProperty(exports, '__esModule', {
     value: true
 });
 
-var _Quotes = require('../dal/QuotesDAO');
+var _Quotes = require('../dao/QuotesDAO');
 
 var _Quotes2 = _interopRequireWildcard(_Quotes);
 

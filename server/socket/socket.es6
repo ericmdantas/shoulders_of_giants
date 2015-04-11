@@ -1,6 +1,6 @@
 "use strict";
 
-import quotesCtrl from '../controllers/QuotesController';
+import quotesCtrl from '../api/quotes/controllers/QuotesController';
 
 export default class SocketEvents
 {

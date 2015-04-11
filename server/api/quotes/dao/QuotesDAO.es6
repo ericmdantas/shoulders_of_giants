@@ -3,7 +3,7 @@
 import mongoose from 'mongoose';
 import Promise from 'bluebird';
 import _ from 'lodash';
-import {quotesSchema} from '../schemas/quotesSchema';
+import {quotesSchema} from '../model/quotesSchema';
 
 quotesSchema.statics.getQuotes = () =>
 {

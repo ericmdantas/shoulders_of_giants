@@ -1,6 +1,6 @@
 "use strict";
 
-import Quotes from '../dal/QuotesDAO';
+import Quotes from '../dao/QuotesDAO';
 
 export default class QuotesController
 {

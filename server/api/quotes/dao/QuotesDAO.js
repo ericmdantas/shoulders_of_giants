@@ -18,7 +18,7 @@ var _import = require('lodash');
 
 var _import2 = _interopRequireWildcard(_import);
 
-var _quotesSchema = require('../schemas/quotesSchema');
+var _quotesSchema = require('../model/quotesSchema');
 
 'use strict';
 

@@ -7,17 +7,17 @@ import express from 'express';
 const app = express();
 const port = process.env.PORT || 3333;
 
-import RouteConfigurator from './server/config/configurator';
-import SocketEvents from './server/socket/socket';
-import DBaseConfig from './server/config/dbase';
-import Routes from './server/routes/routes';
+import RouteConfigurator from './config/configurator';
+import SocketEvents from './socket/socket';
+import DBaseConfig from './config/dbase';
+import Routes from './routes/index';
 import os from 'os';
 const server          = app.listen(port);
 var io              = require('socket.io').listen(server);
 
 RouteConfigurator.init(app, express, __dirname);
 DBaseConfig.init();
-Routes.init(app);
+Routes.init(app, express.Router());
 SocketEvents.init(io);
 
 console.log(`up and running @: ${os.hostname()} on port: ${port}`);
