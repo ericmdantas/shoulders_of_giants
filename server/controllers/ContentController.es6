@@ -10,7 +10,9 @@ export default class StaticController
 
         res.setHeader('Content-Type', 'text/html');
 
-        fs.createReadStream(_root + '/client/dist/index.html')
+        var _folder = process.env !== 'production' ? '__tmp' : 'dist';
+
+        fs.createReadStream(_root + `/client/${_folder}/index.html`)
           .pipe(res);
     }
 }

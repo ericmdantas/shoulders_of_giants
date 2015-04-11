@@ -13,6 +13,7 @@ const coveralls = require('gulp-coveralls');
 const karma = require('karma').server;
 const browserSync = require('browser-sync');
 const wiredep = require('wiredep').stream;
+const babel = require('gulp-babel');
 
 const DEV_DIR = './client/dev/';
 const TEMP_DIR = './client/__tmp/'; // working on it dir
@@ -66,7 +67,7 @@ gulp.task('html,css,js:temp', function()
 {
     return gulp
         .src(_indexHTML)
-        .pipe(usemin({js0: [rev()], js1: [rev()], css0: [rev(), less()]}))
+        .pipe(usemin({js0: [rev()], js1: [rev()], css0: [cssmin(), rev(), less()]}))
         .pipe(gulp.dest(TEMP_DIR));
 })
 
@@ -131,7 +132,7 @@ gulp.task('build_temp', ['del_temp', 'partials:temp', 'imgs:temp', 'fonts:temp',
 
 gulp.task('watch', ['del_temp', 'bower', 'build_temp', 'browser_sync'], function()
 {
-    browserSync({proxy: "http://localhost:3333", reloadDelay: 1000});
+    browserSync({proxy: "http://localhost:3333", reloadDelay: 3000});
 
     let _watchable = [];
 

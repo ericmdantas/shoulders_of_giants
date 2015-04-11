@@ -34,7 +34,9 @@ var RouteConfigurator = (function () {
         value: function init(application, exp, dir) {
             var _root = process.cwd();
 
-            application.use(exp['static'](_root + '/client/dist/'));
+            var _folder = process.env !== 'production' ? '__tmp' : 'dist';
+
+            application.use(exp['static'](_root + ('/client/' + _folder + '/')));
             application.use(_bodyParser2['default']());
             application.use(_morgan2['default']('dev'));
             application.use(_contentLength2['default'].validateMax({ max: 666 }));

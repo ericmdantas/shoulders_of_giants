@@ -10,7 +10,9 @@ export default class RouteConfigurator
     {
         var _root = process.cwd();
 
-        application.use(exp.static(_root + '/client/dist/'));
+        var _folder = process.env !== 'production' ? '__tmp' : 'dist';
+
+        application.use(exp.static(_root + `/client/${_folder}/`));
         application.use(bodyParser());
         application.use(morgan('dev'));
         application.use(contentLength.validateMax({max: 666}));
