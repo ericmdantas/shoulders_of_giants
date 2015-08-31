@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "watch": true,
+        "target": "es5",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true
+    },
+    "filesGlob": [
+        "client_ng2/**/*.ts"
+    ],
+    "files": [
+        "client_ng2/app/app.ts",
+        "client_ng2/app/app_cmp.ts",
+        "client_ng2/app/quotes/quote_model.ts",
+        "client_ng2/app/quotes/quotes.ts",
+        "client_ng2/app/quotes/quotes_cmp.ts",
+        "client_ng2/app/quotes/quotes_dao.ts"
+    ]
+}
