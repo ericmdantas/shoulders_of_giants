@@ -12,6 +12,9 @@ var QuotesDao = (function () {
     QuotesDao.prototype.edit = function () {
         return this._http.put(QuotesDao.URL_BASE).toRx();
     };
+    QuotesDao.prototype.like = function (id) {
+        return this._http.post(QuotesDao.URL_BASE).toRx();
+    };
     QuotesDao.URL_BASE = '/api/quotes';
     return QuotesDao;
 })();

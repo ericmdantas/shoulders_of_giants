@@ -1,16 +1,36 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 
-import {Component, View} from 'angular2/angular2';
+import {Component, View, LifecycleEvent, CORE_DIRECTIVES} from 'angular2/angular2';
+import {Inject, forwardRef} from 'angular2/di';
+import {Quote} from 'app/quotes/quotes_model.js';
+import {QuotesDao} from 'app/quotes/quotes_dao.js';
 
 @Component({
-  selector: 'quote'
+  selector: 'quote',
+  lifecycle: [LifecycleEvent.onInit]
 })
 @View({
   template: `
-    <h2>quote</h2>
-  `
+    <div>
+
+    </div>
+  `,
+  directives: [CORE_DIRECTIVES]
 })
 
 export class QuotesCmp {
-  
+  quotesList: Quote[] = [];
+
+  constructor(@Inject(QuotesDao) private _qDao: QuotesDao) {
+
+  }
+
+  onInit() {
+    this._qDao
+        .get()
+        .subscribe(qs => {
+          this.quotesList = qs;
+        })
+        .dispose();
+  }
 }

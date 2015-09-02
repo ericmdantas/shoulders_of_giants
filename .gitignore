@@ -1,5 +1,6 @@
 .idea/
 node_modules/
 unit_coverage/
+client_ng2/**/*.js
 client/__tmp/
 client/dev/bower_components/

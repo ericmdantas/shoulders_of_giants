@@ -22,4 +22,8 @@ export class QuotesDao {
   edit():EventEmitter {
     return this._http.put(QuotesDao.URL_BASE).toRx();
   }
+
+  like(id:string):EventEmitter {
+    return this._http.post(QuotesDao.URL_BASE).toRx();
+  }
 }
