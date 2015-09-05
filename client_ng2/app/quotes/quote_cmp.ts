@@ -6,31 +6,25 @@ import {Quote} from 'app/quotes/quotes_model.js';
 import {QuotesDao} from 'app/quotes/quotes_dao.js';
 
 @Component({
-  selector: 'quote',
+  selector: 'quote-cmp',
   lifecycle: [LifecycleEvent.onInit]
 })
 @View({
   template: `
-    <div>
-
+    <div class="quote-container">
+      <p class="quote"></p>
+      <span class="author"></span>
     </div>
   `,
   directives: [CORE_DIRECTIVES]
 })
 
-export class QuotesCmp {
-  quotesList: Quote[] = [];
-
-  constructor(@Inject(QuotesDao) private _qDao: QuotesDao) {
+export class QuoteCmp {
+  constructor(@Inject(Quote) public q: Quote) {
 
   }
 
   onInit() {
-    this._qDao
-        .get()
-        .subscribe(qs => {
-          this.quotesList = qs;
-        })
-        .dispose();
+    console.log('quote-cmp init');
   }
 }

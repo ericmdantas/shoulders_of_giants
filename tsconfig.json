@@ -12,10 +12,12 @@
     "files": [
         "client_ng2/app/app.ts",
         "client_ng2/app/app_cmp.ts",
-        "client_ng2/app/common/like_directive.ts",
+        "client_ng2/app/like/like_directive.ts",
+        "client_ng2/app/quotes/quote_cmp.ts",
         "client_ng2/app/quotes/quote_model.ts",
         "client_ng2/app/quotes/quotes.ts",
-        "client_ng2/app/quotes/quotes_cmp.ts",
-        "client_ng2/app/quotes/quotes_dao.ts"
+        "client_ng2/app/quotes/quotes_dao.ts",
+        "client_ng2/app/quotes/quotes_list_cmp.ts",
+        "client_ng2/app/socket/socket_wrapper.ts"
     ]
 }

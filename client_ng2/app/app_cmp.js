@@ -16,9 +16,13 @@ var http_1 = require('http/http');
 var App = (function () {
     function App() {
     }
+    App.prototype.onInit = function () {
+        console.log('app init');
+    };
     App = __decorate([
         angular2_1.Component({
-            selector: 'app'
+            selector: 'app',
+            lifecycle: [angular2_1.LifecycleEvent.onInit]
         }),
         angular2_1.View({
             template: "\n    <h2>app</h2>\n  "
