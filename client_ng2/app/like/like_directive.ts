@@ -23,7 +23,7 @@ export class LikeDirective {
     this._qDao
         .like(id)
         .subscribe(() => {
-
+            
         })
         .dispose();
   }
